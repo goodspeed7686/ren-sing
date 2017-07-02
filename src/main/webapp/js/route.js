@@ -4,8 +4,15 @@ app.config(function ($routeProvider) {
 
 	.when('/',{
 
+		templateUrl: 'pages/calendar.html',
+		controller: 'calendarCtrl'
+
+	})
+	
+	.when('/pets',{
+
 		templateUrl: 'pages/pets.html',
-		controller: 'petsController'
+		controller: 'petsCtrl'
 
 	})
 
