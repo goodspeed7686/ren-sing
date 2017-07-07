@@ -1,5 +1,5 @@
 app.controller('calendarCtrl',
-   function($scope, $compile, $timeout, uiCalendarConfig) {
+   function($scope, $compile, $timeout, uiCalendarConfig,apiService) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -101,6 +101,19 @@ app.controller('calendarCtrl',
     }
     
     $scope.eventSource = [];
+    
+    $scope.eventDB = function(){
+    	var events = [];
+    	apiService.getAPI("master")
+        .then(function(result) {
+        	$scope.porsen = result;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        }
+    );
+    }
+    
     
 //    $scope.handleAuthClick();
 
@@ -223,7 +236,7 @@ app.controller('calendarCtrl',
       }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.eventSource];
+    $scope.eventSources = [$scope.eventSource,$scope.eventDB];
 //    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
 //    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 });
