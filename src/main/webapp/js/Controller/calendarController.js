@@ -5,7 +5,7 @@ app.controller('calendarCtrl',
     var m = date.getMonth();
     var y = date.getFullYear();
 	
-	var clientId = "948794kwong@gmail.com";
+	var clientId = "213964118310-3me1v0lo536l9pu72fosn5gun1h5kkth.apps.googleusercontent.com";
     var scopes = 'https://www.googleapis.com/auth/calendar';
  
     function handleAuthResult(authResult) {
@@ -20,7 +20,8 @@ app.controller('calendarCtrl',
         }
     }
  
-    $scope.handleAuthClick=function (event) {
+//    $scope.handleAuthClick=function (event) {
+    $scope.handleAuthClick=function () {
         gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
         return false;
     }
@@ -39,19 +40,77 @@ app.controller('calendarCtrl',
              });
             request1.execute(function(resp){
                 $.each( resp.items, function( key, value ) {
-                    console.log(resp.items[key].id);// here you give all events from google calendar
+                    var title = resp.items[key].summary;
+                    var startTime;
+                    if (undefined == resp.items[key].start.dateTime)
+                    	startTime = resp.items[key].start.date;//"2016-11-27
+                    else
+                    	startTime = resp.items[key].start.dateTime;//"2016-11-27T16:00:00+08:00"
+                    
+                    var sDate = googleDateFormat(startTime);
+                    
+                    var endTime;//"2016-11-27T17:00:00+08:00""
+                    if (undefined == resp.items[key].end.dateTime)
+                    	endTime = resp.items[key].end.date;//"2016-11-27
+                    else
+                    	endTime = resp.items[key].end.dateTime;//"2016-11-27T16:00:00+08:00"
+                    var eDate = googleDateFormat(endTime);
+                    	
+                    $scope.eventSource.push({
+                    	title: title,
+                    	start: new Date(sDate.Y , sDate.M , sDate.D , sDate.h , sDate.m),
+                    	end: new Date(eDate.Y , eDate.M , eDate.D , eDate.h , eDate.m),
+                    	allDay: false
+                    });
                 });
             });
         });
-    } 
+    }
+    
+    function googleDateFormat(googleDate){
+    	
+    	var Y = googleDate.split("-")[0];
+    	var M = googleDate.split("-")[1];
+    	var D;
+    	var h = "00";
+    	var m = "00";
+    	
+    	//表示有時間
+    	if (googleDate.split("-")[2].length > 3){
+    		
+    		D = googleDate.split("-")[2].split("T")[0];
+    		
+    		var time = googleDate.split("-")[2].split("T")[1].split("+")[0];
+            h = time.split(":")[0];
+            m = time.split(":")[1];
+    		
+    	}else{
+    		
+    		D = googleDate.split("-")[2];
+    		
+    	}
+    	
+    	return {
+    		Y : Y,
+    		M : M,
+    		D : D,
+    		h : h,
+    		m : m
+    	};
+    	
+    }
+    
+    $scope.eventSource = [];
+    
+//    $scope.handleAuthClick();
 
-    $scope.changeTo = 'Hungarian';
+//    $scope.changeTo = 'Hungarian';
     /* event source that pulls from google.com */
-    $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-            className: 'gcal-event',           // an option!
-            currentTimezone: 'America/Chicago' // an option!
-    };
+//    $scope.eventSource = {
+//            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
+//            className: 'gcal-event',           // an option!
+//            currentTimezone: 'America/Chicago' // an option!
+//    };
     /* event source that contains custom events on the scope */
     $scope.events = [
       {title: 'All Day Event',start: new Date(y, m, 1)},
@@ -164,6 +223,7 @@ app.controller('calendarCtrl',
       }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+    $scope.eventSources = [$scope.eventSource];
+//    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+//    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 });
