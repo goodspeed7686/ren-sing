@@ -37,7 +37,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public void updateDetail(Map<String, Object> map) {
 		try {
-			classDetailDAO.getDetail(map);
+			classDetailDAO.updateDetail(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
