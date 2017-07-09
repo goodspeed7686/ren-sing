@@ -24,7 +24,10 @@ CREATE TABLE IF NOT EXISTS `account` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.account 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.achievement 結構
 CREATE TABLE IF NOT EXISTS `achievement` (
   `achievement_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -37,7 +40,10 @@ CREATE TABLE IF NOT EXISTS `achievement` (
   PRIMARY KEY (`achievement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.achievement 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `achievement` DISABLE KEYS */;
+/*!40000 ALTER TABLE `achievement` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.achievement_log 結構
 CREATE TABLE IF NOT EXISTS `achievement_log` (
   `achievement_log_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,7 +57,10 @@ CREATE TABLE IF NOT EXISTS `achievement_log` (
   UNIQUE KEY `id` (`achievement_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.achievement_log 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `achievement_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `achievement_log` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.bill 結構
 CREATE TABLE IF NOT EXISTS `bill` (
   `bill_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -67,7 +76,10 @@ CREATE TABLE IF NOT EXISTS `bill` (
   PRIMARY KEY (`bill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.bill 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `bill` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bill` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.bill_log 結構
 CREATE TABLE IF NOT EXISTS `bill_log` (
   `bill_log_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -84,7 +96,10 @@ CREATE TABLE IF NOT EXISTS `bill_log` (
   UNIQUE KEY `bill_log_id` (`bill_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.bill_log 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `bill_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bill_log` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.class_detail 結構
 CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_detail_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -102,7 +117,10 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.class_detail 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.class_master 結構
 CREATE TABLE IF NOT EXISTS `class_master` (
   `class_master_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -123,7 +141,13 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   PRIMARY KEY (`class_master_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1113 DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
+/*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
+REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `updater`, `update_time`) VALUES
+	(1111, '音樂課', '0', '0', 'Y', '25000', '10', '0', '10', '2017/7/2', '2017/9/2', '菜寮', '123564545', '0', '0'),
+	(1112, '喇叭樂課', '0', '0', 'Y', '25000', '5', '0', '5', '2017/9/2', '2017/10/2', '菜寮', '123564545', '0', '0');
+/*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.person 結構
 CREATE TABLE IF NOT EXISTS `person` (
   `person_id` varchar(15) NOT NULL COMMENT '會員編號',
@@ -148,7 +172,13 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 資料導出被取消選擇。
+-- 正在導出表  ren-sing.person 的資料：~2 rows (大約)
+/*!40000 ALTER TABLE `person` DISABLE KEYS */;
+REPLACE INTO `person` (`person_id`, `virtual_account`, `name`, `nickname`, `balance`, `id_number`, `sex`, `birthday`, `local_calls`, `phone`, `email`, `skype`, `career`, `recipient`, `rec_add`, `rec_num`, `company_tax_id`, `updater`, `update_time`) VALUES
+	('123564545', '0', '韋小寶', '小寶', '0', '1', '男', '19870806', '22', '11', '1', '11', '11', '11', '11', '11', '11', '11', '11'),
+	('1235645456', '0', '滅絕師太', '妖尼姑', '0', '1', '女', '19870806', '33', '22', '22', '2', '2', '22', '2', '2', '22', '2', '2');
+/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
