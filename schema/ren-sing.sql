@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- 主機:                           127.0.0.1
--- 服務器版本:                        5.7.17-log - MySQL Community Server (GPL)
+-- 服務器版本:                        5.7.18-log - MySQL Community Server (GPL)
 -- 服務器操作系統:                      Win64
 -- HeidiSQL 版本:                  9.4.0.5125
 -- --------------------------------------------------------
@@ -34,10 +34,8 @@ CREATE TABLE IF NOT EXISTS `achievement` (
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '分期檢定日期 (目前)',
   `updater` varchar(50) DEFAULT NULL,
   `update_time` varchar(50) DEFAULT NULL COMMENT 'yyyy/MM/dd hh:mm:ss',
-  PRIMARY KEY (`achievement_id`),
-  KEY `FK_achievement_student_id` (`student_id`),
-  CONSTRAINT `FK_achievement_student_id` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`achievement_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
 -- 導出  表 ren-sing.achievement_log 結構
@@ -50,11 +48,7 @@ CREATE TABLE IF NOT EXISTS `achievement_log` (
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '分期檢定日期',
   `updater` varchar(50) DEFAULT '0',
   `update_time` varchar(50) DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
-  UNIQUE KEY `id` (`achievement_log_id`),
-  KEY `Fk_achievement_log_achievement_id` (`achievement_id`),
-  KEY `Fk_achievement_log_student_id` (`student_id`),
-  CONSTRAINT `Fk_achievement_log_achievement_id` FOREIGN KEY (`achievement_id`) REFERENCES `achievement` (`achievement_id`),
-  CONSTRAINT `Fk_achievement_log_student_id` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
+  UNIQUE KEY `id` (`achievement_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
@@ -70,11 +64,7 @@ CREATE TABLE IF NOT EXISTS `bill` (
   `entry_date` varchar(50) NOT NULL DEFAULT '0' COMMENT '入賬日期  yyyy/MM/dd hh:mm:ss',
   `updater` varchar(50) NOT NULL DEFAULT '0',
   `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
-  PRIMARY KEY (`bill_id`),
-  KEY `FK_bill_class_master_id` (`class_master_id`),
-  KEY `FK_bill_student_id` (`student_id`),
-  CONSTRAINT `FK_bill_class_master_id` FOREIGN KEY (`class_master_id`) REFERENCES `class_master` (`class_master_id`),
-  CONSTRAINT `FK_bill_student_id` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
+  PRIMARY KEY (`bill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
@@ -91,13 +81,7 @@ CREATE TABLE IF NOT EXISTS `bill_log` (
   `entry_date` varchar(50) NOT NULL DEFAULT '0' COMMENT '入賬日期  yyyy/MM/dd hh:mm:ss',
   `updater` varchar(50) NOT NULL DEFAULT '0',
   `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
-  UNIQUE KEY `bill_log_id` (`bill_log_id`),
-  KEY `FK_bill_log_class_master_id` (`class_master_id`),
-  KEY `FK_bill_log_student_id` (`student_id`),
-  KEY `FK_bill_log_bill_id` (`bill.id`),
-  CONSTRAINT `FK_bill_log_bill_id` FOREIGN KEY (`bill.id`) REFERENCES `bill` (`bill_id`),
-  CONSTRAINT `FK_bill_log_class_master_id` FOREIGN KEY (`class_master_id`) REFERENCES `class_master` (`class_master_id`),
-  CONSTRAINT `FK_bill_log_student_id` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
+  UNIQUE KEY `bill_log_id` (`bill_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
@@ -115,13 +99,7 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `student_note` varchar(1000) DEFAULT '0' COMMENT '學生筆記',
   `updater` varchar(50) NOT NULL DEFAULT '0',
   `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
-  UNIQUE KEY `class_detail_id` (`class_detail_id`),
-  KEY `FK_class_detail_student_id` (`student_id`),
-  KEY `FK_class_detail_teacher_id` (`teacher_id`),
-  KEY `FK_class_detail_class_master_id` (`class_master_id`),
-  CONSTRAINT `FK_class_detail_class_master_id` FOREIGN KEY (`class_master_id`) REFERENCES `class_master` (`class_master_id`),
-  CONSTRAINT `FK_class_detail_student_id` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`),
-  CONSTRAINT `FK_class_detail_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `person` (`person_id`)
+  UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
@@ -142,10 +120,8 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
   `updater` varchar(50) NOT NULL DEFAULT '0',
   `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
-  PRIMARY KEY (`class_master_id`),
-  KEY `FK_class_mater_teacher_id` (`teacher_id`),
-  CONSTRAINT `FK_class_mater_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `person` (`person_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`class_master_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1113 DEFAULT CHARSET=utf8;
 
 -- 資料導出被取消選擇。
 -- 導出  表 ren-sing.person 結構
