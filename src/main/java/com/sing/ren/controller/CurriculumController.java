@@ -24,8 +24,11 @@ public class CurriculumController {
 
 	@RequestMapping(value = {"/curriculum/query"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<ClassDetail>> query(HttpSession session) {
-		
-		return new ResponseEntity<List<ClassDetail>>(curriculumService.getDetail(new HashMap<String,Object>()), HttpStatus.OK);
+		HashMap mm=new HashMap<String,Object>();
+		mm.put("classMasterId",1112);
+		ClassDetail dd=new ClassDetail();
+		dd.setClassMasterId(1112);
+		return new ResponseEntity<List<ClassDetail>>(curriculumService.getDetail(dd), HttpStatus.OK);
 	}
 	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public void detele(HttpSession session) {
@@ -39,7 +42,19 @@ public class CurriculumController {
 	}
 	@RequestMapping(value = {"/curriculum/insert"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public void insert(HttpSession session) {
-		
-		curriculumService.insertDetail(new HashMap<String,Object>());
+		ClassDetail dd=new ClassDetail();
+		dd.setClassDetailId(3);
+		dd.setClassMasterId(1112);
+		dd.setSong("鬥陣取");
+		dd.setTeacherId("1235645456");
+		dd.setStudentId("123564545");
+		dd.setDate("2009/09/09");
+		dd.setUpdateTime("0");
+		dd.setUpdater("0");
+		dd.setStudentNote("");
+		dd.setHw("");
+		dd.setTime("15:55");
+		curriculumService.insertDetail(dd);
 	}
+	
 }

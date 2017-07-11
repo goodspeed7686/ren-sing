@@ -27,6 +27,15 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		return null;
 	}
 	@Override
+	public List<ClassDetail> getDetail(ClassDetail map) {
+		try {
+			return classDetailDAO.getDetail(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
 	public void deleteDetail(Map<String, Object> map) {
 		try {
 			 classDetailDAO.deleteDB(map);
@@ -44,6 +53,14 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	}
 	@Override
 	public void insertDetail(Map<String, Object> map) {
+		try {
+		  classDetailDAO.insertDB(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void insertDetail(ClassDetail map) {
 		try {
 		  classDetailDAO.insertDB(map);
 		} catch (Exception e) {
