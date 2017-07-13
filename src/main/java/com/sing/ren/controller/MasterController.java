@@ -20,7 +20,7 @@ public class MasterController {
 	@Autowired
 	MasterService masterService;
 
-	@RequestMapping(value = {"/master"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {"/master/query"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<ClassMaster>> nav(HttpSession session) {
 		return new ResponseEntity<List<ClassMaster>>(masterService.getMaster(), HttpStatus.OK);
 	}
