@@ -20,7 +20,7 @@ public class PersonServiceImpl extends RSService implements PersonService{
 	@Override
 	public List<Person> getPerson() {
 		try {
-			return personDAO.getAll(new HashMap<String,Object>());
+			return personDAO.query(new Person());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

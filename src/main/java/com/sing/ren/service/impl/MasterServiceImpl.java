@@ -20,7 +20,7 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	@Override
 	public List<ClassMaster> getMaster() {
 		try {
-			return classMasterDAO.getAll(new HashMap<String,Object>());
+			return classMasterDAO.query(new ClassMaster());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

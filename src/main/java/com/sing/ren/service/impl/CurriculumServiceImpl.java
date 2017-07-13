@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.pojo.ClassDetail;
+import com.sing.ren.pojo.ClassMaster;
 import com.sing.ren.service.CurriculumService;
 import com.sing.ren.service.RSService;
 
@@ -18,7 +19,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	ClassDetailDAO classDetailDAO;
 
 	@Override
-	public List<ClassDetail> getDetail(Map<String, Object> map) {
+	public List<ClassDetail> query(Map<String, Object> map) {
 		try {
 			return classDetailDAO.getDetail(map);
 		} catch (Exception e) {
@@ -27,32 +28,32 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		return null;
 	}
 	@Override
-	public List<ClassDetail> getDetail(ClassDetail map) {
+	public List<ClassMaster> query(ClassDetail dto) {
 		try {
-			return classDetailDAO.getDetail(map);
+			return classDetailDAO.getDetail(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	@Override
-	public void deleteDetail(Map<String, Object> map) {
+	public void delete(ClassDetail dto) {
 		try {
-			 classDetailDAO.deleteDB(map);
+			 classDetailDAO.deleteDB(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	@Override
-	public void updateDetail(Map<String, Object> map) {
+	public void update(ClassDetail dto) {
 		try {
-			classDetailDAO.updateDetail(map);
+			classDetailDAO.updateDetail(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	@Override
-	public void insertDetail(Map<String, Object> map) {
+	public void insert(Map<String, Object> map) {
 		try {
 		  classDetailDAO.insertDB(map);
 		} catch (Exception e) {
@@ -60,9 +61,9 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		}
 	}
 	@Override
-	public void insertDetail(ClassDetail map) {
+	public void insert(ClassDetail dto) {
 		try {
-		  classDetailDAO.insertDB(map);
+		  classDetailDAO.insertDB(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
