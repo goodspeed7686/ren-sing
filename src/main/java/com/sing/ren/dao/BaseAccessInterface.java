@@ -1,12 +1,11 @@
 package com.sing.ren.dao;
 
 import java.util.List;
-import java.util.Map;
 
-public interface BaseAccessInterface {
+public interface BaseAccessInterface<T> {
 
-	public List<Map<String, Object>> query() throws Exception;
+	public List<?> query() throws Exception;
 	
-	public List<Map<String, Object>> query(Map<String, Object> params) throws Exception;
+	public List<?> query(T params) throws Exception;
 	
 }

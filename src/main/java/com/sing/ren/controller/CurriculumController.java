@@ -24,7 +24,7 @@ public class CurriculumController {
 	CurriculumService curriculumService;
 
 	@RequestMapping(value = {"/curriculum/query"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<List<ClassMaster>> query(HttpSession session) {
+	public ResponseEntity<List<ClassDetail>> query(HttpSession session) {
 		HashMap mm=new HashMap<String,Object>();
 		mm.put("classMasterId",1112);
 		ClassDetail dd=new ClassDetail();
@@ -32,7 +32,7 @@ public class CurriculumController {
 	//	dd.setDate("2009/09/09");
 	//	dd.setUpdater("小法師");
 		dd.setClassDetailId(1);
-		return new ResponseEntity<List<ClassMaster>>(curriculumService.query(dd), HttpStatus.OK);
+		return new ResponseEntity<List<ClassDetail>>(curriculumService.query(dd), HttpStatus.OK);
 	}
 	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public void detele(HttpSession session) {

@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -21,7 +20,8 @@ import com.sing.ren.exception.SqlAccessException;
 import com.sing.ren.ibatis.BatisRow;
 import com.sing.ren.pojo.DAOEntity;
 
-public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterface {
+@SuppressWarnings("deprecation")
+public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterface<Object> {
 
 	@Resource(name = "sqlMapClient")
 	private SqlMapClient sqlMapClient;
@@ -111,13 +111,14 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 	}
 	
 	@Override
-	public List<Map<String, Object>> query() throws Exception {
+	public List<?> query() throws Exception {
 		return query(new HashMap<String, Object>());
 	}
 	
+	@SuppressWarnings({ "unchecked" })
 	@Override
-	public List<Map<String, Object>> query(Map<String, Object> params) throws Exception {
-		List<Map<String, Object>> queryResult = new ArrayList<Map<String, Object>>();
+	public List<?> query(Object params) throws Exception {
+		List<?> queryResult = new ArrayList<>();
 		
 		try {
 			queryResult.addAll( getSqlMapClientTemplate().queryForList(statementIdForQuery(), params) );
@@ -128,37 +129,11 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 		return queryResult;
 	}
 	
-	@SuppressWarnings({ "unchecked", "deprecation" })
-	public List<Map<String, Object>> query(Map<String, Object> params, String stmtId) throws Exception {
-		List<Map<String, Object>> queryResult = new ArrayList<Map<String, Object>>();
-		
-		try {
-			queryResult.addAll( getSqlMapClientTemplate().queryForList(stmtId, params) );
-		} catch (DataAccessException e) {
-			throw new SqlAccessException(e.getRootCause().toString());
-		}
-		
-		return queryResult;
-	}
-	
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> queryOne(Map<String, Object> params, String stmtId) throws Exception {
 		try {
 			Object result = getSqlMapClientTemplate().queryForObject(stmtId, params);
-			return (Map)result;
-		} catch (DataAccessException e) {
-			throw new SqlAccessException(e.getRootCause().toString());
-		}
-	}
-	
-	public Map<String, Object> queryOneById(Object parameterObject) throws Exception {
-		try {
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("id", parameterObject);
-			List<Map<String, Object>> result = this.query(param, this.statementIdForQuery());
-			if (result.size() == 0) {
-				return null;
-			}
-			return result.get(0);
+			return (Map<String, Object>)result;
 		} catch (DataAccessException e) {
 			throw new SqlAccessException(e.getRootCause().toString());
 		}
@@ -173,39 +148,31 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 		}
 	}
 	
-	public Object insert(Map<String, Object> map) throws Exception {
-		return insert(map, statementIdForInsert());
+	public Object insert(Object params) throws Exception {
+		return insert(params, statementIdForInsert());
 	}
 	
-	public Object insert(Map<String, Object> map, String stmtId) throws Exception {
+	public Object insert(Object params, String stmtId) throws Exception {
 		try {
-			return getSqlMapClientTemplate().insert(stmtId, map);
+			return getSqlMapClientTemplate().insert(stmtId, params);
 		} catch (DataAccessException e) {
 			throw new SqlAccessException(e.getRootCause().toString());
 		}
 	}
 	
-	public void upsert(Map<String, Object> map) throws Exception {
-		upsert(map, statementIdForUpsert());
+	public void upsert(Object params) throws Exception {
+		upsert(params, statementIdForUpsert());
 	}
 	
-	public void upsert(Map<String, Object> map, String stmtId) throws Exception {
+	public void upsert(Object params, String stmtId) throws Exception {
 		try {
-			getSqlMapClientTemplate().insert(stmtId, map);
+			getSqlMapClientTemplate().insert(stmtId, params);
 		} catch (DataAccessException e) {
 			throw new SqlAccessException(e.getRootCause().toString());
 		}
 	}
 	
-//	public int update(Map<String, Object> params) throws Exception {
-//		try {
-//			return getSqlMapClientTemplate().update(statementIdForUpdate(), params);
-//		} catch (DataAccessException e) {
-//			throw new SqlAccessException(e.getRootCause().toString());
-//		}
-//	}
-	
-	public int update(Map<String, Object> params, String stmtId) throws Exception {
+	public int update(Object params, String stmtId) throws Exception {
 		try {
 			return getSqlMapClientTemplate().update(stmtId, params);
 		} catch (DataAccessException e) {
@@ -213,11 +180,11 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 		}
 	}
 	
-	public void delete(Map<String, Object> params) throws Exception {
+	public void delete(Object params) throws Exception {
 		getSqlMapClientTemplate().delete(this.statementIdForDelete(), params);
 	}
 	
-	public Object delete(Map<String, Object> params, String stmtId) throws Exception {
+	public Object delete(Object params, String stmtId) throws Exception {
 		try {
 			return getSqlMapClientTemplate().delete(stmtId, params);
 		} catch (DataAccessException e) {
