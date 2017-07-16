@@ -4,10 +4,8 @@ app.config(function ($routeProvider) {
 
 	.when('/',{
 
-//		templateUrl: 'pages/calendar.html',
-//		controller: 'calendarCtrl'
-		templateUrl: 'pages/index.html',
-		controller: 'CalendarDemoCtrl'
+		templateUrl: 'pages/calendar.html',
+		controller: 'calendarCtrl'
 
 	})
 	

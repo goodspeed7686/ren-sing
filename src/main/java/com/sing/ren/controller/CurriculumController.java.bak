@@ -8,14 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sing.ren.pojo.ClassDetail;
+import com.sing.ren.pojo.ClassMaster;
 import com.sing.ren.service.CurriculumService;
 
 @Controller
@@ -57,9 +56,8 @@ public class CurriculumController {
 		dd.setTime("15:55");
 		curriculumService.update(dd);
 	}
-	@RequestMapping(value = {"/curriculum/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
-	public void insert(HttpSession session,
-			@RequestBody String json) {
+	@RequestMapping(value = {"/curriculum/insert"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public void insert(HttpSession session) {
 		ClassDetail dd=new ClassDetail();
 		dd.setClassDetailId(3);
 		dd.setClassMasterId(1112);
@@ -72,7 +70,7 @@ public class CurriculumController {
 		dd.setStudentNote("");
 		dd.setHw("大便庫子上");
 		dd.setTime("15:55");
-//		curriculumService.insert(dd);
+		curriculumService.insert(dd);
 	}
 	
 }
