@@ -31,7 +31,7 @@ public class CurriculumController {
 	//	dd.setClassMasterId(1112);
 	//	dd.setDate("2009/09/09");
 	//	dd.setUpdater("小法師");
-		dd.setClassDetailId(1);
+	//	dd.setClassDetailId(1);
 		return new ResponseEntity<List<ClassDetail>>(curriculumService.query(dd), HttpStatus.OK);
 	}
 	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -61,7 +61,7 @@ public class CurriculumController {
 		ClassDetail dd=new ClassDetail();
 		dd.setClassDetailId(3);
 		dd.setClassMasterId(1112);
-		dd.setSong("鬥陣取");
+		dd.setSong("insert");
 		dd.setTeacherId("1235645456");
 		dd.setStudentId("123564545");
 		dd.setDate("2009/09/09");
@@ -72,5 +72,20 @@ public class CurriculumController {
 		dd.setTime("15:55");
 		curriculumService.insert(dd);
 	}
-	
+	@RequestMapping(value = {"/curriculum/upsert"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public void upsert(HttpSession session) {
+		ClassDetail dd=new ClassDetail();
+		dd.setClassDetailId(3);
+		dd.setClassMasterId(1112);
+		dd.setSong("小水滴5225");
+		dd.setTeacherId("1235645456");
+		dd.setStudentId("123564545");
+		dd.setDate("2009/09/09");
+		dd.setUpdateTime("0");
+		dd.setUpdater("0");
+		dd.setStudentNote("");
+		dd.setHw("大便庫子上");
+		dd.setTime("15:55");
+		curriculumService.upsert(dd);
+	}
 }

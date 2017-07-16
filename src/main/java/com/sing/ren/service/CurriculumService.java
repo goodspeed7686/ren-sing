@@ -10,5 +10,5 @@ public interface CurriculumService {
 	public List<ClassDetail> query(ClassDetail dto);
 	public void update(ClassDetail dto);
 	public void delete(ClassDetail dto);
-	
+	public void upsert(ClassDetail dto);
 }

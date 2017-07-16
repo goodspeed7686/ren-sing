@@ -28,7 +28,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<ClassDetail> query(ClassDetail dto) {
 		try {
-			return classDetailDAO.getDetail(dto);
+			return classDetailDAO.queryDB(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,7 +38,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public void update(ClassDetail dto) {
 		try {
-			classDetailDAO.updateDetail(dto);
+			classDetailDAO.updateDB(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,6 +48,15 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	public void delete(ClassDetail dto) {
 		try {
 			 classDetailDAO.deleteDB(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void upsert(ClassDetail dto) {
+		try {
+			 classDetailDAO.upsertDB(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

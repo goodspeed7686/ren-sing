@@ -5,8 +5,8 @@ public class BasePOJO implements DAOEntity {
 	private String updater;
 	private String updateTime;
 	private String order;
-	private String rowLimit;
-	private String fromIndex;
+	private Integer rowLimit;
+	private Integer fromIndex;
 	
 	public BasePOJO() {
 		super();
@@ -36,19 +36,19 @@ public class BasePOJO implements DAOEntity {
 		this.order = order;
 	}
 
-	public String getRowLimit() {
+	public Integer getRowLimit() {
 		return rowLimit;
 	}
 
-	public void setRowLimit(String rowLimit) {
+	public void setRowLimit(Integer rowLimit) {
 		this.rowLimit = rowLimit;
 	}
 
-	public String getFromIndex() {
+	public Integer getFromIndex() {
 		return fromIndex;
 	}
 
-	public void setFromIndex(String fromIndex) {
+	public void setFromIndex(Integer fromIndex) {
 		this.fromIndex = fromIndex;
 	}
 	
