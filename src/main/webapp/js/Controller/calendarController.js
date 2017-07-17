@@ -104,7 +104,7 @@ app.controller('calendarCtrl',
     
     $scope.eventDB = function(){
     	var events = [];
-    	apiService.getAPI("master")
+    	apiService.getAPI("curriculum/query")
         .then(function(result) {
         	$scope.porsen = result;
         },

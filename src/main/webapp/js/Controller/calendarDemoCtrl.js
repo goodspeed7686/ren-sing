@@ -33,8 +33,9 @@ app.controller('CalendarDemoCtrl', ['$scope' , 'apiService' , function ($scope ,
     };
 
     $scope.onEventSelected = function (event) {
-//        $scope.event = event;
-    	console.log( event );
+
+    	$scope.currentEvent = event;
+    	
     };
     
 //    $scope.eventSelected = function (event) {
@@ -93,10 +94,16 @@ app.controller('CalendarDemoCtrl', ['$scope' , 'apiService' , function ($scope ,
     	}
     	
     	return {
-    		title: 'Event - ' +  title,
+    		title: title,
     		startTime: new Date(Y , M , D , sh , sm),
     		endTime: new Date(Y , M , D , eh , em),
-        	allDay: false
+        	allDay: false,
+        	teacher: result.teacher_id,
+        	student: result.student_id,
+        	song: result.song,
+        	hw: result.hw,
+        	teacher_note: result.teacher_note,
+        	student_note: result.student_note
     	};
     	
     }

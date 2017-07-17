@@ -236,8 +236,12 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
             calculatePosition(orderedEvents);
         };
         
+        self.passCurentScope = function(scope){
+        	 $scope.currentEventParent = scope;
+        }
+        
         $scope.eventSelected = function (event) {
-        	console.log( event );
+        	 $scope.currentEventParent.onEventSelected(event);
         };
     }])
     .directive('calendar', function () {
@@ -301,8 +305,8 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 }
 
                 scope.select = function (viewDate) {
-                	
-                	 scope.$parent.$parent.onEventSelected("test");
+                	 
+                	ctrl.passCurentScope(scope.$parent.$parent);
                 	
                     var rows = scope.rows;
                     var selectedDate = viewDate.date;
@@ -580,18 +584,20 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                 function updateScrollGutter() {
                     var children = element.children();
-                    var allDayEventBody = children[1].children[1];
-                    var allDayEventGutterWidth = allDayEventBody.offsetWidth - allDayEventBody.clientWidth;
-                    var normalEventBody = children[2];
+//                    var allDayEventBody = children[1].children[1];
+//                    var allDayEventGutterWidth = allDayEventBody.offsetWidth - allDayEventBody.clientWidth;
+//                    var normalEventBody = children[2];
+                    var normalEventBody = children[1];
                     var normalEventGutterWidth = normalEventBody.offsetWidth - normalEventBody.clientWidth;
-                    var gutterWidth = allDayEventGutterWidth || normalEventGutterWidth || 0;
+//                    var gutterWidth = allDayEventGutterWidth || normalEventGutterWidth || 0;
+                    var gutterWidth = normalEventGutterWidth || 0;
                     if (gutterWidth > 0) {
                         scope.gutterWidth = gutterWidth;
-                        if (allDayEventGutterWidth <= 0) {
-                            scope.allDayEventGutterWidth = gutterWidth;
-                        } else {
-                            scope.allDayEventGutterWidth = 0;
-                        }
+//                        if (allDayEventGutterWidth <= 0) {
+//                            scope.allDayEventGutterWidth = gutterWidth;
+//                        } else {
+//                            scope.allDayEventGutterWidth = 0;
+//                        }
                         if (normalEventGutterWidth <= 0) {
                             scope.normalGutterWidth = gutterWidth;
                         } else {
@@ -637,6 +643,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 }
 
                 scope.select = function (selectedTime, events) {
+                	
+                	ctrl.passCurentScope(scope.$parent.$parent);
+                	
                     if (scope.timeSelected) {
                         scope.timeSelected({
                             selectedTime: selectedTime,
@@ -881,17 +890,19 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                 function updateScrollGutter() {
                     var children = element.children();
-                    var allDayEventBody = children[0].children[1];
-                    var allDayEventGutterWidth = allDayEventBody.offsetWidth - allDayEventBody.clientWidth;
-                    var normalEventBody = children[1];
+//                    var allDayEventBody = children[0].children[1];
+//                    var allDayEventGutterWidth = allDayEventBody.offsetWidth - allDayEventBody.clientWidth;
+//                    var normalEventBody = children[1];
+                    var normalEventBody = children[0];
                     var normalEventGutterWidth = normalEventBody.offsetWidth - normalEventBody.clientWidth;
-                    var gutterWidth = allDayEventGutterWidth || normalEventGutterWidth || 0;
+//                    var gutterWidth = allDayEventGutterWidth || normalEventGutterWidth || 0;
+                    var gutterWidth = normalEventGutterWidth || 0;
                     if (gutterWidth > 0) {
-                        if (allDayEventGutterWidth <= 0) {
-                            scope.allDayEventGutterWidth = gutterWidth;
-                        } else {
-                            scope.allDayEventGutterWidth = 0;
-                        }
+//                        if (allDayEventGutterWidth <= 0) {
+//                            scope.allDayEventGutterWidth = gutterWidth;
+//                        } else {
+//                            scope.allDayEventGutterWidth = 0;
+//                        }
                         if (normalEventGutterWidth <= 0) {
                             scope.normalGutterWidth = gutterWidth;
                         } else {
@@ -919,6 +930,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
                 }
 
                 scope.select = function (selectedTime, events) {
+                	
+                	ctrl.passCurentScope(scope.$parent.$parent);
+                	
                     if (scope.timeSelected) {
                         scope.timeSelected({
                             selectedTime: selectedTime,
@@ -1079,29 +1093,29 @@ angular.module("template/rcalendar/calendar.html", []).run(["$templateCache", fu
 angular.module("template/rcalendar/day.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/rcalendar/day.html",
     "<div>\n" +
-    "    <div class=\"dayview-allday-table\">\n" +
-    "        <div class=\"dayview-allday-label\">\n" +
-    "            {{allDayLabel}}\n" +
-    "        </div>\n" +
-    "        <div class=\"dayview-allday-content-wrapper\">\n" +
-    "            <table class=\"table table-bordered dayview-allday-content-table\">\n" +
-    "                <tbody>\n" +
-    "                <tr>\n" +
-    "                    <td class=\"calendar-cell\" ng-class=\"{'calendar-event-wrap':allDayEvents}\"\n" +
-    "                        ng-style=\"{height: 25*allDayEvents.length+'px'}\">\n" +
-    "                        <div ng-repeat=\"displayEvent in allDayEvents\" class=\"calendar-event\"\n" +
-    "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
-    "                             ng-style=\"{top: 25*$index+'px',width: '100%',height:'25px'}\">\n" +
-    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
-    "                        </div>\n" +
-    "                    </td>\n" +
-    "                    <td ng-if=\"allDayEventGutterWidth>0\" class=\"gutter-column\"\n" +
-    "                        ng-style=\"{width:allDayEventGutterWidth+'px'}\"></td>\n" +
-    "                </tr>\n" +
-    "                </tbody>\n" +
-    "            </table>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+//    "    <div class=\"dayview-allday-table\">\n" +
+//    "        <div class=\"dayview-allday-label\">\n" +
+//    "            {{allDayLabel}}\n" +
+//    "        </div>\n" +
+//    "        <div class=\"dayview-allday-content-wrapper\">\n" +
+//    "            <table class=\"table table-bordered dayview-allday-content-table\">\n" +
+//    "                <tbody>\n" +
+//    "                <tr>\n" +
+//    "                    <td class=\"calendar-cell\" ng-class=\"{'calendar-event-wrap':allDayEvents}\"\n" +
+//    "                        ng-style=\"{height: 25*allDayEvents.length+'px'}\">\n" +
+//    "                        <div ng-repeat=\"displayEvent in allDayEvents\" class=\"calendar-event\"\n" +
+//    "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
+//    "                             ng-style=\"{top: 25*$index+'px',width: '100%',height:'25px'}\">\n" +
+//    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
+//    "                        </div>\n" +
+//    "                    </td>\n" +
+//    "                    <td ng-if=\"allDayEventGutterWidth>0\" class=\"gutter-column\"\n" +
+//    "                        ng-style=\"{width:allDayEventGutterWidth+'px'}\"></td>\n" +
+//    "                </tr>\n" +
+//    "                </tbody>\n" +
+//    "            </table>\n" +
+//    "        </div>\n" +
+//    "    </div>\n" +
     "    <div class=\"scrollable\" style=\"height: 400px\">\n" +
     "        <table class=\"table table-bordered table-fixed\">\n" +
     "            <tbody>\n" +
@@ -1183,31 +1197,31 @@ angular.module("template/rcalendar/week.html", []).run(["$templateCache", functi
     "        </tr>\n" +
     "        </thead>\n" +
     "    </table>\n" +
-    "    <div class=\"weekview-allday-table\">\n" +
-    "        <div class=\"weekview-allday-label\">\n" +
-    "            {{allDayLabel}}\n" +
-    "        </div>\n" +
-    "        <div class=\"weekview-allday-content-wrapper\">\n" +
-    "            <table class=\"table table-bordered table-fixed weekview-allday-content-table\">\n" +
-    "                <tbody>\n" +
-    "                <tr>\n" +
-    "                    <td ng-repeat=\"day in dates track by day.date\" class=\"calendar-cell\">\n" +
-    "                        <div ng-class=\"{'calendar-event-wrap': day.events}\" ng-if=\"day.events\"\n" +
-    "                             ng-style=\"{height: 25*day.events.length+'px'}\">\n" +
-    "                            <div ng-repeat=\"displayEvent in day.events\" class=\"calendar-event\"\n" +
-    "                                 ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
-    "                                 ng-style=\"{top: 25*displayEvent.position+'px', width: 100*(displayEvent.endIndex-displayEvent.startIndex)+'%', height: '25px'}\">\n" +
-    "                                <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
-    "                            </div>\n" +
-    "                        </div>\n" +
-    "                    </td>\n" +
-    "                    <td ng-if=\"allDayEventGutterWidth>0\" class=\"gutter-column\"\n" +
-    "                        ng-style=\"{width: allDayEventGutterWidth+'px'}\"></td>\n" +
-    "                </tr>\n" +
-    "                </tbody>\n" +
-    "            </table>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+//    "    <div class=\"weekview-allday-table\">\n" +
+//    "        <div class=\"weekview-allday-label\">\n" +
+//    "            {{allDayLabel}}\n" +
+//    "        </div>\n" +
+//    "        <div class=\"weekview-allday-content-wrapper\">\n" +
+//    "            <table class=\"table table-bordered table-fixed weekview-allday-content-table\">\n" +
+//    "                <tbody>\n" +
+//    "                <tr>\n" +
+//    "                    <td ng-repeat=\"day in dates track by day.date\" class=\"calendar-cell\">\n" +
+//    "                        <div ng-class=\"{'calendar-event-wrap': day.events}\" ng-if=\"day.events\"\n" +
+//    "                             ng-style=\"{height: 25*day.events.length+'px'}\">\n" +
+//    "                            <div ng-repeat=\"displayEvent in day.events\" class=\"calendar-event\"\n" +
+//    "                                 ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
+//    "                                 ng-style=\"{top: 25*displayEvent.position+'px', width: 100*(displayEvent.endIndex-displayEvent.startIndex)+'%', height: '25px'}\">\n" +
+//    "                                <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
+//    "                            </div>\n" +
+//    "                        </div>\n" +
+//    "                    </td>\n" +
+//    "                    <td ng-if=\"allDayEventGutterWidth>0\" class=\"gutter-column\"\n" +
+//    "                        ng-style=\"{width: allDayEventGutterWidth+'px'}\"></td>\n" +
+//    "                </tr>\n" +
+//    "                </tbody>\n" +
+//    "            </table>\n" +
+//    "        </div>\n" +
+//    "    </div>\n" +
     "    <div class=\"scrollable\" style=\"height: 400px\">\n" +
     "        <table class=\"table table-bordered table-fixed\">\n" +
     "            <tbody>\n" +
