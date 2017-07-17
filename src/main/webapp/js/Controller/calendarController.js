@@ -1,5 +1,5 @@
 app.controller('calendarCtrl',
-   function($scope, $compile, $timeout, uiCalendarConfig,apiService) {
+   function($scope, $compile, $timeout, uiCalendarConfig , apiService , $rootScope) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -75,7 +75,7 @@ app.controller('calendarCtrl',
     	var h = "00";
     	var m = "00";
     	
-    	//表示有時間
+    	//��ܦ��ɶ�
     	if (googleDate.split("-")[2].length > 3){
     		
     		D = googleDate.split("-")[2].split("T")[0];
@@ -102,16 +102,49 @@ app.controller('calendarCtrl',
     
     $scope.eventSource = [];
     
-    $scope.eventDB = function(){
+    $scope.eventDB = function(start, end, timezone, callback){
     	var events = [];
     	apiService.getAPI("curriculum/query")
+//    	apiService.getAPI("master")
         .then(function(result) {
-        	$scope.porsen = result;
+        	for(var i=0;i<result.length;i++){
+        		events.push( dbDateFormat(result[i] ));
+        	}
+        	callback(events);
         },
         function(errResponse){
             console.error('Error while fetching Users');
         }
-    );
+    )};
+    
+    
+    function dbDateFormat(result){
+    	
+    	var title = result.class_master_id;
+    	var date = result.date;
+    	var Y = date.split("/")[0];
+    	var M = date.split("/")[1];
+    	var D = date.split("/")[2];
+    	var time = result.time;
+    	var sh = time.split(":")[0];
+    	var sm = time.split(":")[1];
+    	var eh = 0;
+    	var em = 0;
+    	if (parseInt(sm) > 30){
+    		eh = parseInt(sh) + 1;
+    		em = parseInt(sm) - 30;
+    	}else{
+    		eh = sh;
+    		em = parseInt(sm) + 30;
+    	}
+    	
+    	return {
+    		title: title,
+        	start: new Date(Y , M , D , sh , sm),
+        	end: new Date(Y , M , D , eh , em),
+        	allDay: false
+    	};
+    	
     }
     
     
@@ -125,14 +158,15 @@ app.controller('calendarCtrl',
 //            currentTimezone: 'America/Chicago' // an option!
 //    };
     /* event source that contains custom events on the scope */
-    $scope.events = [
-      {title: 'All Day Event',start: new Date(y, m, 1)},
-      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    ];
+//    $scope.events = [
+//      {title: 'All Day Event',start: new Date(y, m, 1)},
+//      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
+//      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
+//      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
+//      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
+//      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'},
+//      {title: 'Birthday 123',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
+//    ];
     /* event source that calls a function on every view switch */
     $scope.eventsF = function (start, end, timezone, callback) {
       var s = new Date(start).getTime() / 1000;
@@ -226,8 +260,8 @@ app.controller('calendarCtrl',
 
     $scope.changeLang = function() {
       if($scope.changeTo === 'Hungarian'){
-        $scope.uiConfig.calendar.dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Hét", "Kedd", "Sze", "Csüt", "Pén", "Szo"];
+        $scope.uiConfig.calendar.dayNames = ["Vasarnap", "Hetf?", "Kedd", "Szerda", "Csutortok", "Pentek", "Szombat"];
+        $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Het", "Kedd", "Sze", "Csut", "Pen", "Szo"];
         $scope.changeTo= 'English';
       } else {
         $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -236,7 +270,7 @@ app.controller('calendarCtrl',
       }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.eventSource,$scope.eventDB];
+    $scope.eventSources = [$scope.events];
 //    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
 //    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 });
