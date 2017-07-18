@@ -9,8 +9,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
+
+import org.json.simple.parser.JSONParser;
 
 public class CommonTools {
 	
@@ -526,5 +530,25 @@ public class CommonTools {
 			return value;
 		}
 	}
-
+	/**
+	 * JSONParser ;
+	 * json to map;
+	 */
+	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException{
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
+		HashMap map = (HashMap)obj;
+		return map;
+	}
+	
+	/**
+	 * JSONParser ;
+	 * json to List<map>;
+	 */
+	public List<Map<String,Object>> jsonToList(String json) throws org.json.simple.parser.ParseException{
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(json);  
+		List<Map<String,Object>> list = (List<Map<String, Object>>)obj;
+		return list;
+	}
 }

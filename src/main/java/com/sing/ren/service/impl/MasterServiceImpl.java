@@ -2,6 +2,7 @@ package com.sing.ren.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	@Override
 	public List<ClassMaster> getMaster() {
 		try {
-			return classMasterDAO.queryDB(new ClassMaster());
+			return classMasterDAO.queryDB(new HashMap<String, Object>());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

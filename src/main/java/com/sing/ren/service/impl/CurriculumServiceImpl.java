@@ -1,6 +1,7 @@
 package com.sing.ren.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,18 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	ClassDetailDAO classDetailDAO;
 
 	@Override
-	public void insert(ClassDetail dto) {
+	public void insert(Map<String,Object> map) {
 		try {
-		  classDetailDAO.insertDB(dto);
+		  classDetailDAO.insertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public List<ClassDetail> query(ClassDetail dto) {
+	public List<ClassDetail> query(Map<String,Object> map) {
 		try {
-			return classDetailDAO.queryDB(dto);
+			return classDetailDAO.queryDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,27 +37,27 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	}
 	
 	@Override
-	public void update(ClassDetail dto) {
+	public void update(Map<String,Object> map) {
 		try {
-			classDetailDAO.updateDB(dto);
+			classDetailDAO.updateDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
-	public void delete(ClassDetail dto) {
+	public void delete(Map<String,Object> map) {
 		try {
-			 classDetailDAO.deleteDB(dto);
+			 classDetailDAO.deleteDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void upsert(ClassDetail dto) {
+	public void upsert(Map<String,Object> map) {
 		try {
-			 classDetailDAO.upsertDB(dto);
+			 classDetailDAO.upsertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
