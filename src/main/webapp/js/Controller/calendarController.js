@@ -1,5 +1,8 @@
 app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , apiService) {
     'use strict';
+   
+//    $scope.currentEventShow = false;
+    
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
     };
@@ -33,14 +36,12 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , api
     };
 
     $scope.onEventSelected = function (event) {
-
     	$scope.currentEvent = event;
-    	
     };
     
-//    $scope.eventSelected = function (event) {
-//    	console.log( event );
-//    };
+    $scope.cleanEvent = function () {
+    	$scope.currentEvent = [];
+    };
     
     $scope.click = function () {
     	var data = [];
@@ -68,6 +69,28 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , api
             console.error('Error while fetching Users');
         })
     };
+    
+    $scope.updateCourse = function(currentEvent){
+    	
+    	var date = new Date(currentEvent.startTime);
+    	var y = date.getFullYear();
+    	var M = date.getMonth();
+    	var d = date.getDate();
+    	var h = date.getHours();
+    	var m = date.getMinutes();
+    	
+    	currentEvent.date = y + "/" + M + "/" + d;
+    	currentEvent.time = h + ":" + m;
+    	
+    	apiService.getAPIwithObject("curriculum/insert" , currentEvent)
+        .then(function(result) {
+        	
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        })
+    	
+    }
 
     $scope.onTimeSelected = function (selectedTime, events) {
 //        console.log('Selected time: ' + selectedTime + ' hasEvents: ' + (events !== undefined && events.length !== 0));
@@ -100,6 +123,10 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , api
         	allDay: false,
         	teacher: result.teacher_id,
         	student: result.student_id,
+//        	teacher_id: result.teacher_id,
+//        	teacher: result.teacher_name,
+//        	student_id: result.student_id,
+//        	sudent: result.sudent_name,
         	song: result.song,
         	hw: result.hw,
         	teacher_note: result.teacher_note,

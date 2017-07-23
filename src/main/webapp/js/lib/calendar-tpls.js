@@ -238,6 +238,7 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
         
         self.passCurentScope = function(scope){
         	 $scope.currentEventParent = scope;
+        	 $scope.eventSelected([]);
         }
         
         $scope.eventSelected = function (event) {
