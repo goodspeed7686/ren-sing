@@ -64,7 +64,7 @@ public class CurriculumController {
 		List<Map<String,Object>> mm = null;
 		Map<String,Object> m2=null;
 		try {
-			mm=new CommonTools().jsonToList(json);
+	//		mm=new CommonTools().jsonToList(json);
 			m2=new CommonTools().jsonToMap(json);
 		} catch (ParseException e) {
 			e.printStackTrace();
