@@ -42,8 +42,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
 			for(Map<String,Object> map2 :list){
 				if(map2.get("type").equals("0")){
-					String ss=Integer.parseInt(map2.get("time").toString().replace(":", ""))+10+"";
-					map2.put("time",ss.substring(0, 2)+":"+ss.substring(2, 4));
+					String s=Integer.parseInt(map2.get("time").toString().split(":")[1])+10+"";
+					map2.put("time",map2.get("time").toString().substring(0, 2)+":"+s);
 				}
 			}
 			return list;
@@ -75,8 +75,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	public void upsert(Map<String,Object> map) {
 		try {
 			if(map.get("type").equals("0")){
-				String ss=Integer.parseInt(map.get("time").toString().replace(":", ""))-10+"";
-				map.put("time",ss.substring(0, 2)+":"+ss.substring(2, 4));
+				String s=Integer.parseInt(map.get("time").toString().split(":")[1])-10+"";
+				map.put("time",map.get("time").toString().substring(0, 2)+":"+s);
 			}
 			 classDetailDAO.upsertDB(map);
 		} catch (Exception e) {
