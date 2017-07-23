@@ -1,16 +1,10 @@
 <!-- <meta charset="UTF-8" /> -->
 
 <div class="row" ng-controller="calendarCtrl" ng-init="loadEvents()">
-	<div class="col-sm-8" style="margin-top: 70px;">
-		<!-- 		<section class="content" style="margin-top: 70px;"> -->
-		<!-- 			<section class="container"> -->
-		<!-- 				<section ng-controller="CalendarDemoCtrl" ng-init="loadEvents()"> -->
-		<!-- 					<div class="alert alert-success" ng-show="event">Event -->
-		<!-- 						selected:{{event.startTime|date: 'MMM/dd,yyyy,HH:mm'}} - -->
-		<!-- 						{{event.endTime|date:'MMM/dd,yyyy,HH:mm'}}, {{event.title}}</div> -->
 
-		<button ng-click="click()">中文</button>
 
+
+	<div class="col-sm-8" style="margin-top: 45px;">
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<button type="button" class="btn btn-default"
@@ -34,34 +28,81 @@
 				event-selected="onEventSelected(event)"
 				time-selected="onTimeSelected(selectedTime, events)"></calendar>
 		</div>
-		<!-- 				</section> -->
-		<!-- 			</section> -->
-		<!-- 		</section> -->
 	</div>
-	<div class="col-sm-4">
-		<div ng-show="currentEvent">
-			<div class="page-header">
-				<h1>
-					{{ currentEvent.student }} 的課程
-				</h1>
+	
+	
+	
+	
+	
+	
+	<div class="col-sm-4" ng-show="currentEvent">
+		<div class="page-header">
+			<h1>{{ currentEvent.student }} 的課程</h1>
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="text-align:center;">
+				<label>
+					老師 
+				</label>
 			</div>
-			<div class="h2">
-				老師 <small class="label label-info">{{ currentEvent.teacher }}</small>
+			<div class="col-sm-6">
+				<label>
+					{{ currentEvent.teacher }}
+				</label>
 			</div>
-			<p>老師筆記 : {{ currentEvent.teacher_note }}</p>
-			<p>學生筆記 : {{ currentEvent.student_note }}</p>
-			<p>song : {{ currentEvent.song }}</p>
-			<p>回家作業 : {{ currentEvent.hw }}</p>
-<!-- 			<p> -->
-<!-- 				關鍵字： <span class="label label-default">CSS3</span>、 <span -->
-<!-- 					class="label label-primary">繪圖</span>、 <span -->
-<!-- 					class="label label-success">手機網頁</span>、 <span -->
-<!-- 					class="label label-info">RWD</span>、 <span -->
-<!-- 					class="label label-warning">行動網頁</span>、 <span -->
-<!-- 					class="label label-danger">CSS</span> -->
-<!-- 			</p> -->
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="text-align:center;">
+				<label>
+					老師筆記
+				</label>
+			</div>
+			<div class="col-sm-6">
+				<label>
+					{{ currentEvent.teacher_note }}
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="text-align:center;">
+				<label>
+					學生筆記
+				</label>
+			</div>
+			<div class="col-sm-6">
+				<label>
+					{{ currentEvent.student_note }}
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="text-align:center;">
+				<label>
+					song 
+				</label>
+			</div>
+			<div class="col-sm-6">
+				<label>
+					{{ currentEvent.song }}
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6" style="text-align:center;">
+				<label>
+					回家作業 
+				</label>
+			</div>
+			<div class="col-sm-6">
+				<label>
+					{{ currentEvent.hw }}
+				</label>
+			</div>
 		</div>
 	</div>
+	
+	
+	
 </div>
 
 

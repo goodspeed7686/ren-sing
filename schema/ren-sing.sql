@@ -115,10 +115,14 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `updater` varchar(50) NOT NULL DEFAULT '0',
   `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_detail 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.class_detail 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `hw`, `teacher_note`, `student_note`, `updater`, `update_time`) VALUES
+	(1, 1, '1', '1', 'song', '2017/07/09', '08:40', '0', '0', '0', '0', '0'),
+	(2, 2, '2', '2', '好習慣', '2017/07/09', '20:10', '0', '0', '0', '0', '0'),
+	(3, 1112, '123564545', '1235645456', '鬥陣取', '2017/07/09', '15:55', '大便庫子上', NULL, '', '0', '0');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_master 結構
@@ -147,6 +151,38 @@ REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status
 	(1111, '音樂課', '0', '0', 'Y', '25000', '10', '0', '10', '2017/7/2', '2017/9/2', '菜寮', '123564545', '0', '0'),
 	(1112, '喇叭樂課', '0', '0', 'Y', '25000', '5', '0', '5', '2017/9/2', '2017/10/2', '菜寮', '123564545', '0', '0');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
+
+-- 導出  表 ren-sing.courses_time 結構
+CREATE TABLE IF NOT EXISTS `courses_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `interval` varchar(50) DEFAULT '0',
+  `start_time` varchar(50) DEFAULT '0',
+  `end_ime` varchar(50) DEFAULT '0',
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+-- 正在導出表  ren-sing.courses_time 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;
+REPLACE INTO `courses_time` (`id`, `interval`, `start_time`, `end_ime`) VALUES
+	(1, '1300_1330', '13:00', '13:30'),
+	(2, '1330_1400', '13:30', '14:00'),
+	(3, '1400_1430', '14:00', '14:30'),
+	(4, '1430_1500', '14:30', '15:00'),
+	(5, '1500_1530', '15:00', '15:30'),
+	(6, '1530_1600', '15:30', '16:00'),
+	(7, '1600_1630', '16:00', '16:30'),
+	(8, '1630_1700', '16:30', '17:00'),
+	(9, '1700_1730', '17:00', '17:30'),
+	(10, '1730_1800', '17:30', '18:00'),
+	(11, '1800_1830', '18:00', '18:30'),
+	(12, '1830_1900', '18:30', '19:00'),
+	(13, '1900_1930', '19:00', '19:30'),
+	(14, '1930_2000', '19:30', '20:00'),
+	(15, '2000_2030', '20:00', '20:30'),
+	(16, '2030_2100', '20:30', '21:00'),
+	(17, '2100_2130', '21:00', '21:30'),
+	(18, '2130_2200', '21:30', '22:00');
+/*!40000 ALTER TABLE `courses_time` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.person 結構
 CREATE TABLE IF NOT EXISTS `person` (
