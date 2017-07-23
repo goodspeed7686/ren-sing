@@ -1,6 +1,7 @@
 package com.sing.ren.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,8 +22,8 @@ public class MasterController {
 	MasterService masterService;
 
 	@RequestMapping(value = {"/master"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<List<ClassMaster>> nav(HttpSession session) {
-		return new ResponseEntity<List<ClassMaster>>(masterService.getMaster(), HttpStatus.OK);
+	public ResponseEntity<List<Map<String,Object>>> nav(HttpSession session) {
+		return new ResponseEntity<List<Map<String,Object>>>(masterService.getMaster(), HttpStatus.OK);
 	}
 	
 }

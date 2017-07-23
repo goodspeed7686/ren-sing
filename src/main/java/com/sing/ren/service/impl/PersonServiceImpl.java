@@ -2,6 +2,7 @@ package com.sing.ren.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class PersonServiceImpl extends RSService implements PersonService{
 	PersonDAO personDAO;
 
 	@Override
-	public List<Person> getPerson() {
+	public List<Map<String,Object>> getPerson() {
 		try {
 			return personDAO.queryDB(new HashMap<String,Object>());
 		} catch (Exception e) {

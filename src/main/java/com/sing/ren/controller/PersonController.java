@@ -1,6 +1,7 @@
 package com.sing.ren.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,8 +22,8 @@ public class PersonController {
 	PersonService personService;
 
 	@RequestMapping(value = {"/person"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<List<Person>> nav(HttpSession session) {
-		return new ResponseEntity<List<Person>>(personService.getPerson(), HttpStatus.OK);
+	public ResponseEntity<List<Map<String,Object>>> nav(HttpSession session) {
+		return new ResponseEntity<List<Map<String,Object>>>(personService.getPerson(), HttpStatus.OK);
 	}
 	
 }

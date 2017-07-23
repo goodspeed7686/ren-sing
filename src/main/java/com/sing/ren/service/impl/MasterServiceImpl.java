@@ -19,7 +19,7 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	ClassMasterDAO classMasterDAO;
 
 	@Override
-	public List<ClassMaster> getMaster() {
+	public List<Map<String,Object>> getMaster() {
 		try {
 			return classMasterDAO.queryDB(new HashMap<String, Object>());
 		} catch (Exception e) {
