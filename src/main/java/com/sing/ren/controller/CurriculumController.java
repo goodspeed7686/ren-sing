@@ -31,6 +31,9 @@ public class CurriculumController {
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session){
 		HashMap mm=new HashMap<String,Object>();
 	//	mm.put("classMasterId",1112);
+		Map<String,Object> test=new HashMap<String,Object>();
+		test.put("class_master_id",1111);
+		curriculumService.insert(test);
 		return new ResponseEntity<List<Map<String,Object>>>(curriculumService.query(mm), HttpStatus.OK);
 	}
 	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -81,6 +84,8 @@ public class CurriculumController {
 //		dd.setStudentNote("");
 //		dd.setHw("大便庫子上");
 //		dd.setTime("15:55");
+		Map<String,Object> test=new HashMap<String,Object>();
+		test.put("classMastertId",1111);
 		curriculumService.insert(m2);
 	}
 	@RequestMapping(value = {"/curriculum/upsert"}, method = {RequestMethod.GET, RequestMethod.POST})

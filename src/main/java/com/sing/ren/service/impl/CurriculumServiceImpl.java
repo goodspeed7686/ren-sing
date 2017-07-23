@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
-import com.sing.ren.pojo.ClassDetail;
 import com.sing.ren.service.CurriculumService;
 import com.sing.ren.service.RSService;
 
@@ -25,11 +24,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	public void insert(Map<String,Object> map) {
 		try {
 		  Map<String,Object> masterId=new HashMap<String,Object>();
-		  masterId.put("classMasterId",map.get("classMasterId"));
+		  masterId.put("class_master_id",map.get("class_master_id"));
 		  List<Map<String, Object>> classMaster=classMasterDAO.queryDB(masterId);
-		  
-		  classMasterDAO.updateDB(map);
-		  classDetailDAO.insertDB(map);
+		  classMaster.get(0).put("count",Integer.parseInt(classMaster.get(0).get("count")+"")+1);
+		  classMasterDAO.updateDB(classMaster.get(0));
+	//	  classDetailDAO.insertDB(map);
 		  
 		} catch (Exception e) {
 			e.printStackTrace();
