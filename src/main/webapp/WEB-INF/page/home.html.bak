@@ -1,12 +1,17 @@
 <html lang="" ng-app="basicApp">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Title Page</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/fullcalendar.min.css">
-		<link rel="stylesheet" href="css/calendarDemo.css">
+<!-- 		<link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		
+		<link rel="stylesheet" href="css/calendar.min.css">
+		<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+		
+<!-- 		<link rel="stylesheet" href="css/fullcalendar.min.css"> -->
+<!-- 		<link rel="stylesheet" href="css/calendarDemo.css"> -->
 <!-- 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 		
 		<script src="js/lib/jquery/jquery.min.js"></script>
@@ -14,6 +19,9 @@
 		<script src="js/lib/angular/angular.js"></script>
 		<script src="js/lib/angular/angular-route.min.js"></script>
 		<script src="js/lib/angular/angular-resource.min.js"></script>
+		
+		<script src="js/lib/calendar-tpls.js"></script>
+		
 		<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
 		<script src="js/lib/moment/moment.js"></script>
 		<script src="js/lib/fullcalendar/fullcalendar.js"></script>
@@ -27,6 +35,7 @@
 		<!-- controller -->
 		<script src="js/Controller/petsController.js"></script>
 		<script src="js/Controller/calendarController.js"></script>
+		<script src="js/Controller/calendarDemoCtrl.js"></script>
 		
 		<!-- service -->
 		<script src="js/Service/coomService.js"></script>
