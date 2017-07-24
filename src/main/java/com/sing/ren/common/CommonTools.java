@@ -551,4 +551,20 @@ public class CommonTools {
 		List<Map<String,Object>> list = (List<Map<String, Object>>)obj;
 		return list;
 	}
+
+	//  時間加減轉格式    symbol "+":加10  "-":減10
+	public Object timeManage(Object time,String symbol){
+		String [] array=time.toString().split(":");
+		if(symbol.equals("+")){
+			array[1]=String.valueOf(Integer.parseInt(array[1])+10);
+		}else if(symbol.equals("-")){
+			array[1]=String.valueOf(Integer.parseInt(array[1])-10);
+		}
+		if(array[0].length()<2)
+			array[0]="0"+array[0];
+		if(array[1].length()<2)
+			array[1]="0"+array[1];
+		time=array[0]+":"+array[1];		
+		return time;
+	} 
 }

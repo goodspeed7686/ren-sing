@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
 import com.sing.ren.service.CurriculumService;
@@ -19,7 +20,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	ClassDetailDAO classDetailDAO;
 	@Autowired
 	ClassMasterDAO classMasterDAO;
-
+	
+	CommonTools comm=new CommonTools();
 	@Override
 	public void insert(Map<String,Object> map) {
 		try {
@@ -39,12 +41,15 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> query(Map<String,Object> map) {
 		try {
+		//	map.put("type", "0");
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
 			for(Map<String,Object> map2 :list){
 				if(map2.get("type").equals("0")){
-					String s=Integer.parseInt(map2.get("time").toString().split(":")[1])+10+"";
-					map2.put("time",map2.get("time").toString().substring(0, 2)+":"+s);
+					map2.put("time",comm.timeManage(map2.get("time"),"+"));
+				}else{
+					map2.put("time", comm.timeManage(map2.get("time"),""));
 				}
+				
 			}
 			return list;
 		} catch (Exception e) {
@@ -76,7 +81,9 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		try {
 			if(map.get("type").equals("0")){
 				String s=Integer.parseInt(map.get("time").toString().split(":")[1])-10+"";
-				map.put("time",map.get("time").toString().substring(0, 2)+":"+s);
+				map.put("time",comm.timeManage(map.get("time"),"-"));
+			}else{
+				map.put("time",comm.timeManage(map.get("time"),""));
 			}
 			 classDetailDAO.upsertDB(map);
 		} catch (Exception e) {
