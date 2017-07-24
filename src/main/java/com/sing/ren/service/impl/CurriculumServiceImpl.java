@@ -80,7 +80,6 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	public void upsert(Map<String,Object> map) {
 		try {
 			if(map.get("type").equals("0")){
-				String s=Integer.parseInt(map.get("time").toString().split(":")[1])-10+"";
 				map.put("time",comm.timeManage(map.get("time"),"-"));
 			}else{
 				map.put("time",comm.timeManage(map.get("time"),""));
