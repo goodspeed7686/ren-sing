@@ -31,7 +31,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		  classMaster.get(0).put("count",Integer.parseInt(classMaster.get(0).get("count")+"")+1);
 		  classMaster.get(0).put("rest",Integer.parseInt(classMaster.get(0).get("rest")+"")-1);
 		  classMasterDAO.updateDB(classMaster.get(0));
-	//	  classDetailDAO.insertDB(map);
+		  classDetailDAO.insertDB(map);
 		  
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
 			for(Map<String,Object> map2 :list){
 				if(map2.get("type").equals("0")){
-					map2.put("time",comm.timeManage(map2.get("time"),"-",10));
+					map2.put("time",comm.timeManage(map2.get("time"),"+",10));
 				}else{
 					map2.put("time", comm.timeManage(map2.get("time"),"",0));
 				}

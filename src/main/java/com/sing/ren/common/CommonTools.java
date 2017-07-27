@@ -562,9 +562,8 @@ public class CommonTools {
 				array[0]=(Integer.parseInt(array[0])+1)+"";
 			}
 			if(Integer.parseInt(array[0])>23){
-				array[0]="24";
 				if(Integer.parseInt(array[1])>0){
-					array[0]="01";
+					array[0]="00";
 				}
 			}
 		}else if(symbol.equals("-")){
