@@ -1,4 +1,4 @@
-app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , apiService) {
+app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function ($scope , apiService , $uibModal) {
     'use strict';
    
 //    $scope.currentEventShow = false;
@@ -134,4 +134,51 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , function ($scope , api
     	};
     	
     }
+    
+    $scope.open = function() {    
+
+        var modalInstance = $uibModal.open({
+          animation:true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          template: `<div modal="showModal" close="cancel()">
+          <div class="modal-header">
+              <h4>Modal Dialog</h4>
+          </div>
+          <div class="modal-body">
+              <p>Example paragraph with some text.</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-success" ng-click="ok()">Okay</button>
+            <button class="btn" ng-click="cancel()">Cancel</button>
+          </div>
+        </div>`,
+        size: 'sm', 
+        controller:'modalCtrl',
+          resolve: {
+            items: function () {
+             // return $ctrl.items;
+            }
+          }
+        });
+        modalInstance.result
+        .then(function (result) {
+                	console.log('okay');			
+                	console.log(result);
+    			},
+    			function (result) {
+    				console.log('cancel');
+    				console.log(result);
+    			});
+
+      }; 
 }]);
+
+app.controller('modalCtrl', function($scope,$uibModalInstance){
+	 $scope.ok = function() {
+		 $uibModalInstance.close(123);
+	 };
+	 $scope.cancel = function() {
+		 $uibModalInstance.dismiss(456);
+	 };
+});
