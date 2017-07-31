@@ -141,23 +141,12 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
           animation:true,
           ariaLabelledBy: 'modal-title',
           ariaDescribedBy: 'modal-body',
-          template: `<div modal="showModal" close="cancel()">
-          <div class="modal-header">
-              <h4>Modal Dialog</h4>
-          </div>
-          <div class="modal-body">
-              <p>Example paragraph with some text.</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-success" ng-click="ok()">Okay</button>
-            <button class="btn" ng-click="cancel()">Cancel</button>
-          </div>
-        </div>`,
-        size: 'sm', 
-        controller:'modalCtrl',
+          templateUrl: '/ren-sing/pages/calenderNote.html',
+          size: 'sm', 
+          controller:'modalCtrl',
           resolve: {
-            items: function () {
-             // return $ctrl.items;
+            data: function () {
+//              return $ctrl.items;
             }
           }
         });
