@@ -36,26 +36,21 @@
 	
 	<div class="col-sm-4" ng-if="currentEvent.student == null">
 		<div class="row" style="margin: 200px 0 20px;text-align:center;">
-			<div class="col-sm-6">
-				<button type="button" class="btn btn-default">
-					·s¼W
-				</button>
-			</div>
-			<div class="col-sm-6">
-				<button type="button" class="btn btn-default">
-					§R°£
+			<div class="col-sm-10" style="text-align:center;" style="margin-top:: 10px">
+				<button type="button" class="btn btn-default" ng-click="updateCourse(currentEvent)">
+					æ–°å¢
 				</button>
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-4" ng-if="currentEvent.student != null">
 		<div class="page-header">
-			<h1>{{ currentEvent.student }} ªº½Òµ{</h1>
+			<h1>{{ currentEvent.student }} çš„èª²ç¨‹</h1>
 		</div>
 		<div class="row">
 			<div class="col-sm-6" style="text-align:center;">
 				<label>
-					¦Ñ®v 
+					è€å¸«
 				</label>
 			</div>
 			<div class="col-sm-6">
@@ -67,7 +62,7 @@
 		<div class="row">
 			<div class="col-sm-6" style="text-align:center;">
 				<label>
-					¦Ñ®vµ§°O
+					è€å¸«ç­†è¨˜
 				</label>
 			</div>
 			<div class="col-sm-6">
@@ -76,10 +71,10 @@
 				</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" ng-click="studentNoteEdit()">
 			<div class="col-sm-6" style="text-align:center;">
 				<label>
-					¾Ç¥Íµ§°O
+					å­¸ç”Ÿç­†è¨˜
 				</label>
 			</div>
 			<div class="col-sm-6">
@@ -103,7 +98,7 @@
 		<div class="row">
 			<div class="col-sm-6" style="text-align:center;">
 				<label>
-					¦^®a§@·~ 
+					å›å®¶ä½œæ¥­
 				</label>
 			</div>
 			<div class="col-sm-6">
@@ -113,9 +108,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-10" style="text-align:center;" style="margin-top:: 10px">
-				<button type="button" class="btn btn-default" ng-click="updateCourse(currentEvent)">
-					­×§ï
+			<div class="col-sm-6">
+				<button type="button" class="btn btn-default">
+					ä¿®æ”¹ 
+				</button>
+			</div>
+			<div class="col-sm-6">
+				<button type="button" class="btn btn-default">
+					åˆªé™¤
 				</button>
 			</div>
 		</div>
