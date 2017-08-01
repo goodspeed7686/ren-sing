@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sing.ren.common.CommonTools;
-import com.sing.ren.pojo.ClassDetail;
 import com.sing.ren.service.CurriculumService;
 
 @Controller
