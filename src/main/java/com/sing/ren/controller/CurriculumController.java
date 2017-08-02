@@ -32,9 +32,13 @@ public class CurriculumController {
 		Map<String,Object> test=new HashMap<String,Object>();
 		return new ResponseEntity<List<Map<String,Object>>>(curriculumService.query(test), HttpStatus.OK);
 	}
-	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public void detele(HttpSession session) {
-		curriculumService.delete(new HashMap<String,Object>());
+	@RequestMapping(value = {"/curriculum/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public void detele(HttpSession session,@RequestBody String json) {
+		try {
+			curriculumService.delete(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	@RequestMapping(value = {"/curriculum/update"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public void update(HttpSession session) {
