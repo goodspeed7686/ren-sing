@@ -135,7 +135,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     	
     }
     
-    $scope.open = function() {    
+    $scope.studentNoteOpen = function() {    
 
         var modalInstance = $uibModal.open({
           animation:true,
@@ -146,26 +146,39 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
           controller:'modalCtrl',
           resolve: {
             data: function () {
-//              return $ctrl.items;
+              return {identity : 'student',
+            	  	  note : $scope.currentEvent.student_note};
             }
           }
         });
         modalInstance.result
         .then(function (result) {
-                	console.log('okay');			
-                	console.log(result);
-    			},
-    			function (result) {
-    				console.log('cancel');
-    				console.log(result);
-    			});
+        	
+        	$scope.currentEvent.student_note = result;
+        	
+        	apiService.getAPIwithObject("curriculum/update" , $scope.currentEvent)
+            .then(function(result) {
+            	
+            },
+            function(errResponse){
+                console.error('Error while fetching Users');
+            })
+		},
+		function (result) {
+			console.log('cancel');
+			console.log(result);
+		});
 
       }; 
 }]);
 
-app.controller('modalCtrl', function($scope,$uibModalInstance){
-	 $scope.ok = function() {
-		 $uibModalInstance.close(123);
+app.controller('modalCtrl', function($scope,$uibModalInstance,data){
+	
+	$scope.identity = data.identity;
+	$scope.note = data.note;
+	
+	 $scope.enter = function() {
+		 $uibModalInstance.close($scope.note);
 	 };
 	 $scope.cancel = function() {
 		 $uibModalInstance.dismiss(456);
