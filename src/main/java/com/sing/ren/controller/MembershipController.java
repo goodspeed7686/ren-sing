@@ -35,8 +35,7 @@ public class MembershipController {
 	@RequestMapping(value = {"/membership/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public void detele(HttpSession session,@RequestBody String json) {
 		try {
-			Map<String,Object> map=comm.jsonToMap(json);
-			membershipService.delete(map);
+			membershipService.delete(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -49,8 +48,7 @@ public class MembershipController {
 	public void insert(HttpSession session,@RequestBody String json) {
 		System.out.println(json);
 		try {
-			Map<String,Object> map=comm.jsonToMap(json);
-			membershipService.insert(map);
+			membershipService.insert(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -58,8 +56,7 @@ public class MembershipController {
 	@RequestMapping(value = {"/membership/upsert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public void upsert(HttpSession session,@RequestBody String json) {
 		try {
-			Map<String,Object> map=comm.jsonToMap(json);
-			membershipService.upsert(map);
+			membershipService.upsert(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

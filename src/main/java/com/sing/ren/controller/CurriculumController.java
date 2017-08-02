@@ -24,15 +24,21 @@ public class CurriculumController {
 	
 	@Autowired
 	CurriculumService curriculumService;
+	
+	CommonTools comm=new CommonTools();
 
 	@RequestMapping(value = {"/curriculum/query"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session){
 		Map<String,Object> test=new HashMap<String,Object>();
 		return new ResponseEntity<List<Map<String,Object>>>(curriculumService.query(test), HttpStatus.OK);
 	}
-	@RequestMapping(value = {"/curriculum/delete"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public void detele(HttpSession session) {
-		curriculumService.delete(new HashMap<String,Object>());
+	@RequestMapping(value = {"/curriculum/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public void detele(HttpSession session,@RequestBody String json) {
+		try {
+			curriculumService.delete(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	@RequestMapping(value = {"/curriculum/update"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public void update(HttpSession session) {
@@ -41,23 +47,19 @@ public class CurriculumController {
 	@RequestMapping(value = {"/curriculum/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public void insert(HttpSession session,@RequestBody String json) {
 		System.out.println(json);
-		List<Map<String,Object>> mm = null;
-		Map<String,Object> m2=null;
 		try {
-	//		mm=new CommonTools().jsonToList(json);
-			m2=new CommonTools().jsonToMap(json);
+			curriculumService.insert(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-//		for (Object key : m2.keySet()) {
-//			System.out.println(key + " = " + m2.get(key));
-//		}
-		Map<String,Object> test=new HashMap<String,Object>();
-		test.put("classMastertId",1111);
-		curriculumService.insert(m2);
 	}
-	@RequestMapping(value = {"/curriculum/upsert"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public void upsert(HttpSession session) {
-		curriculumService.upsert(new HashMap<String,Object>());
+	@RequestMapping(value = {"/curriculum/upsert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public void upsert(HttpSession session,@RequestBody String json) {
+		try {
+			curriculumService.upsert(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
