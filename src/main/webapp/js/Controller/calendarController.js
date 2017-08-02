@@ -70,6 +70,28 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         })
     };
     
+    $scope.insertCourse = function(currentEvent){
+    	
+    	var date = new Date(currentEvent.startTime);
+    	var y = date.getFullYear();
+    	var M = date.getMonth();
+    	var d = date.getDate();
+    	var h = date.getHours();
+    	var m = date.getMinutes();
+    	
+    	currentEvent.date = y + "/" + M + "/" + d;
+    	currentEvent.time = h + ":" + m;
+    	
+    	apiService.getAPIwithObject("curriculum/insert" , currentEvent)
+        .then(function(result) {
+        	
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        })
+    	
+    }
+    
     $scope.updateCourse = function(currentEvent){
     	
     	var date = new Date(currentEvent.startTime);
@@ -91,6 +113,28 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         })
     	
     }
+
+	$scope.deleteCourse = function(currentEvent){
+		
+		var date = new Date(currentEvent.startTime);
+		var y = date.getFullYear();
+		var M = date.getMonth();
+		var d = date.getDate();
+		var h = date.getHours();
+		var m = date.getMinutes();
+		
+		currentEvent.date = y + "/" + M + "/" + d;
+		currentEvent.time = h + ":" + m;
+		
+		apiService.getAPIwithObject("curriculum/insert" , currentEvent)
+	    .then(function(result) {
+	    	
+	    },
+	    function(errResponse){
+	        console.error('Error while fetching Users');
+	    })
+		
+	}
 
     $scope.onTimeSelected = function (selectedTime, events) {
 //        console.log('Selected time: ' + selectedTime + ' hasEvents: ' + (events !== undefined && events.length !== 0));
@@ -136,40 +180,31 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     }
     
     $scope.studentNoteOpen = function() {    
-
+    	
         var modalInstance = $uibModal.open({
-          animation:true,
-          ariaLabelledBy: 'modal-title',
-          ariaDescribedBy: 'modal-body',
-          templateUrl: '/ren-sing/pages/calenderNote.html',
-          size: 'sm', 
-          controller:'modalCtrl',
-          resolve: {
-            data: function () {
-              return {identity : 'student',
-            	  	  note : $scope.currentEvent.student_note};
-            }
-          }
+        	animation:true,
+        	ariaLabelledBy: 'modal-title',
+        	ariaDescribedBy: 'modal-body',
+        	templateUrl: '/ren-sing/pages/calenderNote.html',
+        	size: 'sm', 
+        	controller:'modalCtrl',
+        	resolve: {
+        		data: function () {
+        			return {identity : 'student',
+        					note : $scope.currentEvent.student_note};
+        		}
+        	}
         });
         modalInstance.result
         .then(function (result) {
-        	
         	$scope.currentEvent.student_note = result;
-        	
-        	apiService.getAPIwithObject("curriculum/update" , $scope.currentEvent)
-            .then(function(result) {
-            	
-            },
-            function(errResponse){
-                console.error('Error while fetching Users');
-            })
 		},
 		function (result) {
 			console.log('cancel');
 			console.log(result);
 		});
 
-      }; 
+    }; 
 }]);
 
 app.controller('modalCtrl', function($scope,$uibModalInstance,data){
