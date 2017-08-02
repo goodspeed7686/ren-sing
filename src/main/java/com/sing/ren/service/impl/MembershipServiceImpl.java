@@ -59,7 +59,9 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	@Override
 	public void delete(Map<String,Object> map) {
 		try {
-			
+	//		map.put("account","p1");
+			accountDAO.delete(map);
+			personDAO.delete(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
