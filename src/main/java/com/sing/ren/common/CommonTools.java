@@ -583,4 +583,27 @@ public class CommonTools {
 			array[1]="0"+array[1];
 		return array[0]+":"+array[1];		
 	} 
+	//學號加上最末位  驗證碼
+	public String verificationNumber (String s){
+		int [] arr={9,8,7,6,5,4,3,2,1};
+		int a []=new int[s.length()];
+		int sum = 0;
+		for(int i=0;i<arr.length;i++){
+			a[i]=Integer.parseInt(s.substring(i,i+1));
+			sum=sum+arr[i]*a[i];
+		}
+		for(int i=1;i>0;){
+			if(sum>=10){
+				String sumS=Integer.toString(sum);
+				sum=0;
+				int len=sumS.length();
+				for(int j=0;j<len;j++){
+					sum=sum+Integer.parseInt(sumS.substring(j, j+1));
+				}
+			}else{
+				break;
+			}
+		}
+		return s+sum;
+	}
 }

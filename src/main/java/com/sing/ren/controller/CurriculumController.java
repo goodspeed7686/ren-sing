@@ -27,11 +27,29 @@ public class CurriculumController {
 	
 	CommonTools comm=new CommonTools();
 
-	@RequestMapping(value = {"/curriculum/query"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session){
-		Map<String,Object> test=new HashMap<String,Object>();
-		return new ResponseEntity<List<Map<String,Object>>>(curriculumService.query(test), HttpStatus.OK);
+	@RequestMapping(value = {"/curriculum/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json){
+		try {
+			return new ResponseEntity<List<Map<String,Object>>>(curriculumService.query(comm.jsonToMap(json)), HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
+	
+	
+	//回傳老師空堂
+	@RequestMapping(value = {"/curriculum/queryBreak"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> queryBreak(HttpSession session,@RequestBody String json){
+		System.out.println(json);
+		try {
+			return new ResponseEntity<List<Map<String,Object>>>(curriculumService.queryBreak(comm.jsonToMap(json)), HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@RequestMapping(value = {"/curriculum/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public void detele(HttpSession session,@RequestBody String json) {
 		try {
