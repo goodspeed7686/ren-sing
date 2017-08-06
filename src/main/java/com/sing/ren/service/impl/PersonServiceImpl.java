@@ -29,4 +29,14 @@ public class PersonServiceImpl extends RSService implements PersonService{
 		return null;
 	}
 
+	@Override
+	public List<Map<String, Object>> query(Map<String, Object> map) {
+		try {
+			return personDAO.queryDB(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

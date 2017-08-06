@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
+import com.sing.ren.dao.table.CoursesTimeDAO;
 import com.sing.ren.service.CurriculumService;
 import com.sing.ren.service.RSService;
 
@@ -20,6 +21,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	ClassDetailDAO classDetailDAO;
 	@Autowired
 	ClassMasterDAO classMasterDAO;
+	@Autowired
+	CoursesTimeDAO coursesTimeDAO;
 	
 	CommonTools comm=new CommonTools();
 	@Override
@@ -49,9 +52,33 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 				}else{
 					map2.put("time", comm.timeManage(map2.get("time"),"",0));
 				}
-				
 			}
 			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Map<String,Object>> queryBreak(Map<String,Object> map) {
+		try {
+		//	map.put("type", "0");
+			List<Map<String,Object>> coursesTime=coursesTimeDAO.queryDB(new HashMap<String,Object>());
+			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
+			for(int i = 0,len = coursesTime.size(); i <len; i++){  
+				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
+					if(coursesTime.get(i).get("start_time").equals(classDetail.get(j).get("time"))){
+						coursesTime.remove(i);
+						classDetail.remove(j);
+						len2--;
+						j--;
+						len--;
+						i--;
+						break;
+					}
+				}
+			}
+			return  coursesTime;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
