@@ -22,10 +22,10 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
 
     $scope.loadEvents = function () {
         var events = [];
-        apiService.getAPI("curriculum/query")
+        apiService.getAPIwithObject("curriculum/query","")
         .then(function(result) {
-        	for(var i=0;i<result.length;i++){
-        		events.push( dbDateFormat( result[i] ));
+        	for(var i=0;i<result.data.length;i++){
+        		events.push( dbDateFormat( result.data[i] ));
         	}
         	
         	$scope.eventSource = events;
@@ -118,15 +118,11 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
 
 	$scope.deleteCourse = function(currentEvent){
 		
-		var date = new Date(currentEvent.startTime);
-		var y = date.getFullYear();
-		var M = date.getMonth();
-		var d = date.getDate();
-		var h = date.getHours();
-		var m = date.getMinutes();
+		var data = [];
 		
-		currentEvent.date = y + "/" + M + "/" + d;
-		currentEvent.time = h + ":" + m;
+		data.push({
+			class_detail_id: currentEvent.class_detail_id
+		});
 		
 		apiService.getAPIwithObject("curriculum/delete" , currentEvent)
 	    .then(function(result) {
@@ -193,7 +189,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	ariaDescribedBy: 'modal-body',
         	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
         	size: 'sm', 
-        	controller:'modalCtrl',
+        	controller:'noteCtrl',
         	resolve: {
         		data: function () {
         			return {identity : 'teacher',
@@ -228,7 +224,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	ariaDescribedBy: 'modal-body',
         	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
         	size: 'sm', 
-        	controller:'modalCtrl',
+        	controller:'noteCtrl',
         	resolve: {
         		data: function () {
         			return {identity : 'student',
@@ -253,10 +249,37 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
 			console.log(result);
 		});
 
+    };
+    
+    $scope.insertOpen = function() {    
+    	
+        var modalInstance = $uibModal.open({
+        	animation:true,
+        	ariaLabelledBy: 'modal-title',
+        	ariaDescribedBy: 'modal-body',
+        	templateUrl: '/ren-sing/pages/curriculum/curriculumInsert.html',
+        	size: 'sm', 
+        	controller:'curriculumCtrl',
+        	resolve: {
+        		data: function () {
+        			return {date : 'student'};
+        		}
+        	}
+        });
+        modalInstance.result
+        .then(function (result) {
+        	var currentEvent = [];
+        	$scope.insertCourse(currentEvent);
+		},
+		function (result) {
+			console.log('cancel');
+			console.log(result);
+		});
+
     }; 
 }]);
 
-app.controller('modalCtrl', function($scope,$uibModalInstance,data){
+app.controller('noteCtrl', function($scope,$uibModalInstance,data){
 	
 	$scope.identity = data.identity;
 	$scope.note = data.note;
@@ -267,4 +290,33 @@ app.controller('modalCtrl', function($scope,$uibModalInstance,data){
 	 $scope.cancel = function() {
 		 $uibModalInstance.dismiss(456);
 	 };
+});
+
+app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,data){
+	
+	$scope.date = data.date;
+	
+	$scope.selectTime = function(){
+		var data = [];
+		data.push({
+			date: '2017/07/09'
+		});
+		apiService.getAPIwithObject("curriculum/queryBreak" , data)
+	    .then(function(result) {
+	    	$scope.timeList = result.data;
+	    },
+	    function(errResponse){
+	        console.error('Error while fetching Users');
+	    })
+	}
+	
+	$scope.selectTime();
+	
+	
+	$scope.enter = function() {
+		$uibModalInstance.close($scope);
+	};
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss(456);
+	};
 });

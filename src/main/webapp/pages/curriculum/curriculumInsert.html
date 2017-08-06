@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="BIG5">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<div class='modal-header'>
+  <h5>{{identity}} 筆記</h5>
+</div>
+<div class='modal-body'>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<td>日期</td>
+						<td><select></select></td>
+					</tr>
+					<tr>
+						<td>上課時間</td>
+						<td>
+							<select ng-model="selectTime">
+								<option ng-repeat="option in timeList" value="{{option.id}}">{{option.start_time}}</option>
+							</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+<div class='modal-footer'>
+  <button class='btn btn-default' data-ng-click='enter()'>確認</button>
+  <button class='btn btn-default' data-ng-click='$dismiss()'>退出</button>
+</div>

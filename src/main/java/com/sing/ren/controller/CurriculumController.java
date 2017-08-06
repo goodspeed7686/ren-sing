@@ -1,6 +1,5 @@
 package com.sing.ren.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,8 +50,8 @@ public class CurriculumController {
 		return null;
 	}
 	
-	@RequestMapping(value = {"/curriculum/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value=HttpStatus.OK)
+	@RequestMapping(value = {"/curriculum/delete"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
 	public void detele(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.delete(comm.jsonToMap(json));
@@ -61,8 +60,8 @@ public class CurriculumController {
 		}
 	}
 	
-	@RequestMapping(value = {"/curriculum/update"}, method = {RequestMethod.GET, RequestMethod.POST})
-	@ResponseStatus(value=HttpStatus.OK)
+	@RequestMapping(value = {"/curriculum/update"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
 	public void update(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.update(comm.jsonToMap(json));
@@ -72,7 +71,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = {"/curriculum/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value=HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.OK)
 	public void insert(HttpSession session,@RequestBody String json) {
 		System.out.println(json);
 		try {
@@ -83,7 +82,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = {"/curriculum/upsert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value=HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.OK)
 	public void upsert(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.upsert(comm.jsonToMap(json));
