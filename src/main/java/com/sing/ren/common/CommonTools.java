@@ -536,9 +536,12 @@ public class CommonTools {
 	 */
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException{
-		JSONParser parser = new JSONParser();
-		Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
-		Map<String,Object> map = (HashMap<String, Object>)obj;
+		Map<String,Object> map = null;
+		if(!json.equals("")){
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
+			map = (HashMap<String, Object>)obj;
+		}
 		return map;
 	}
 	
@@ -547,9 +550,12 @@ public class CommonTools {
 	 * json to List<map>;
 	 */
 	public List<Map<String,Object>> jsonToList(String json) throws org.json.simple.parser.ParseException{
-		JSONParser parser = new JSONParser();
-		Object obj = parser.parse(json);  
-		List<Map<String,Object>> list = (List<Map<String, Object>>)obj;
+		List<Map<String,Object>> list=null;
+		if(!json.equals("")){
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(json);  
+			list = (List<Map<String, Object>>)obj;
+		}
 		return list;
 	}
 
@@ -591,6 +597,9 @@ public class CommonTools {
 		int sum = 0;
 		for(int i=0;i<arr.length;i++){
 			a[i]=Integer.parseInt(s.substring(i,i+1));
+			if(arr[i]*a[i]>10){
+				
+			}
 			sum=sum+arr[i]*a[i];
 		}
 		for(int i=1;i>0;){
