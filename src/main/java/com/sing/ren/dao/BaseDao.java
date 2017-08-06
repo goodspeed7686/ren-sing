@@ -172,6 +172,10 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 		}
 	}
 	
+	public void update(Object params) throws Exception {
+		update(params, statementIdForUpdate());
+	}
+	
 	public int update(Object params, String stmtId) throws Exception {
 		try {
 			return getSqlMapClientTemplate().update(stmtId, params);

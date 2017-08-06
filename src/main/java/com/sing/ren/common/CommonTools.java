@@ -534,10 +534,11 @@ public class CommonTools {
 	 * JSONParser ;
 	 * json to map;
 	 */
+	@SuppressWarnings("unchecked")
 	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException{
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
-		HashMap map = (HashMap)obj;
+		Map<String,Object> map = (HashMap<String, Object>)obj;
 		return map;
 	}
 	

@@ -43,32 +43,32 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     	$scope.currentEvent = [];
     };
     
-    $scope.click = function () {
-    	var data = [];
-    	
-    	data.push({
-    		classDetailId : "1",
-    		classMasterId : "2",
-    		studentId : "2",
-    		teacherId : "2",
-    		song : "2",
-    		date : "2",
-    		time : "2",
-    		hw : "ob",
-    		teacherNote : "2",
-    		studentNote : "2"
-    	});
-    	
-    	var id = 1;
-    	
-    	apiService.getAPIwithObject("curriculum/insert" , data)
-        .then(function(result) {
-        	
-        },
-        function(errResponse){
-            console.error('Error while fetching Users');
-        })
-    };
+//    $scope.click = function () {
+//    	var data = [];
+//    	
+//    	data.push({
+//    		classDetailId : "1",
+//    		classMasterId : "2",
+//    		studentId : "2",
+//    		teacherId : "2",
+//    		song : "2",
+//    		date : "2",
+//    		time : "2",
+//    		hw : "ob",
+//    		teacherNote : "2",
+//    		studentNote : "2"
+//    	});
+//    	
+//    	var id = 1;
+//    	
+//    	apiService.getAPIwithObject("curriculum/insert" , data)
+//        .then(function(result) {
+//        	
+//        },
+//        function(errResponse){
+//            console.error('Error while fetching Users');
+//        })
+//    };
     
     $scope.insertCourse = function(currentEvent){
     	
@@ -94,17 +94,19 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     
     $scope.updateCourse = function(currentEvent){
     	
-    	var date = new Date(currentEvent.startTime);
-    	var y = date.getFullYear();
-    	var M = date.getMonth();
-    	var d = date.getDate();
-    	var h = date.getHours();
-    	var m = date.getMinutes();
+    	if (currentEvent.startTime){
+    		var date = new Date(currentEvent.startTime);
+        	var y = date.getFullYear();
+        	var M = date.getMonth() + 1;
+        	var d = date.getDate();
+        	var h = date.getHours();
+        	var m = date.getMinutes();
+        	
+        	currentEvent.date = y + "/" + M + "/" + d;
+        	currentEvent.time = h + ":" + m;
+    	}
     	
-    	currentEvent.date = y + "/" + M + "/" + d;
-    	currentEvent.time = h + ":" + m;
-    	
-    	apiService.getAPIwithObject("curriculum/insert" , currentEvent)
+    	apiService.getAPIwithObject("curriculum/update" , currentEvent)
         .then(function(result) {
         	
         },
@@ -126,7 +128,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
 		currentEvent.date = y + "/" + M + "/" + d;
 		currentEvent.time = h + ":" + m;
 		
-		apiService.getAPIwithObject("curriculum/insert" , currentEvent)
+		apiService.getAPIwithObject("curriculum/delete" , currentEvent)
 	    .then(function(result) {
 	    	
 	    },
@@ -162,22 +164,61 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     	
     	return {
     		title: title,
+    		class_master_id: result.class_master_id,
+    		class_detail_id: result.class_detail_id,
     		startTime: new Date(Y , M , D , sh , sm),
     		endTime: new Date(Y , M , D , eh , em),
         	allDay: false,
         	teacher: result.teacher_id,
         	student: result.student_id,
-//        	teacher_id: result.teacher_id,
+        	teacher_id: result.teacher_id,
 //        	teacher: result.teacher_name,
-//        	student_id: result.student_id,
+        	student_id: result.student_id,
 //        	sudent: result.sudent_name,
         	song: result.song,
         	hw: result.hw,
         	teacher_note: result.teacher_note,
-        	student_note: result.student_note
+        	student_note: result.student_note,
+        	type: result.type,
+        	finish: result.finish
     	};
     	
     }
+    
+    $scope.teacherNoteOpen = function() {    
+    	
+        var modalInstance = $uibModal.open({
+        	animation:true,
+        	ariaLabelledBy: 'modal-title',
+        	ariaDescribedBy: 'modal-body',
+        	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
+        	size: 'sm', 
+        	controller:'modalCtrl',
+        	resolve: {
+        		data: function () {
+        			return {identity : 'teacher',
+        					note : $scope.currentEvent.teacher_note};
+        		}
+        	}
+        });
+        modalInstance.result
+        .then(function (result) {
+        	$scope.currentEvent.teacher_note = result;
+        	
+        	var currentEvent = [];
+        	currentEvent.push({
+        		class_master_id: $scope.currentEvent.class_master_id,
+        		class_detail_id: $scope.currentEvent.class_detail_id,
+        		teacher_note: $scope.currentEvent.teacher_note
+        	});
+        	$scope.updateCourse(currentEvent);
+		},
+		function (result) {
+			console.log('cancel');
+			console.log(result);
+		});
+
+    }; 
     
     $scope.studentNoteOpen = function() {    
     	
@@ -185,7 +226,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	animation:true,
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
-        	templateUrl: '/ren-sing/pages/calenderNote.html',
+        	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
         	size: 'sm', 
         	controller:'modalCtrl',
         	resolve: {
@@ -198,6 +239,14 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         modalInstance.result
         .then(function (result) {
         	$scope.currentEvent.student_note = result;
+        	
+        	var currentEvent = [];
+        	currentEvent.push({
+        		class_master_id: $scope.currentEvent.class_master_id,
+        		class_detail_id: $scope.currentEvent.class_detail_id,
+        		student_note: $scope.currentEvent.student_note
+        	});
+        	$scope.updateCourse(currentEvent);
 		},
 		function (result) {
 			console.log('cancel');

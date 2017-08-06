@@ -62,7 +62,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-6" style="text-align:center;" ng-click="open()">
+			<div class="col-sm-6" style="text-align:center;" ng-click="teacherNoteOpen()">
 				<label>
 					老師筆記
 				</label>
@@ -109,7 +109,7 @@
 				</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" ng-if="currentEvent.finish == 0">
 			<div class="col-sm-6">
 				<button type="button" class="btn btn-default" ng-click="updateCourse(currentEvent)">
 					修改 
