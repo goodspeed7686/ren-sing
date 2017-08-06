@@ -59,8 +59,12 @@ public class CurriculumController {
 		}
 	}
 	@RequestMapping(value = {"/curriculum/update"}, method = {RequestMethod.GET, RequestMethod.POST})
-	public void update(HttpSession session) {
-		curriculumService.update(new HashMap<String,Object>());
+	public void update(HttpSession session,@RequestBody String json) {
+		try {
+			curriculumService.update(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	@RequestMapping(value = {"/curriculum/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public void insert(HttpSession session,@RequestBody String json) {

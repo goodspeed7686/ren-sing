@@ -106,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_master_id` int(11) NOT NULL DEFAULT '0',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
+  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '課程類型 (0:一對一個別課,1:阿卡團體班)',
   `song` varchar(50) NOT NULL DEFAULT '0' COMMENT '歌曲',
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課日期 yyyy/MM/dd',
   `time` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課時間 hh:mm',
