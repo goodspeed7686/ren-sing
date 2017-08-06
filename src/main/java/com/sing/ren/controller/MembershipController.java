@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.service.MembershipService;
@@ -32,7 +33,9 @@ public class MembershipController {
 		Map<String,Object> test=new HashMap<String,Object>();
 		return new ResponseEntity<List<Map<String,Object>>>(membershipService.query(test), HttpStatus.OK);
 	}
+	
 	@RequestMapping(value = {"/membership/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void detele(HttpSession session,@RequestBody String json) {
 		try {
 			membershipService.delete(comm.jsonToMap(json));
@@ -40,11 +43,15 @@ public class MembershipController {
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = {"/membership/update"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseStatus(value=HttpStatus.OK)
 	public void update(HttpSession session) {
 		membershipService.update(new HashMap<String,Object>());
 	}
+	
 	@RequestMapping(value = {"/membership/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void insert(HttpSession session,@RequestBody String json) {
 		System.out.println(json);
 		try {
@@ -53,7 +60,9 @@ public class MembershipController {
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = {"/membership/upsert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void upsert(HttpSession session,@RequestBody String json) {
 		try {
 			membershipService.upsert(comm.jsonToMap(json));

@@ -1,5 +1,6 @@
 package com.sing.ren.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +29,15 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 //			map.put("password", "5566");
 //			map.put("role", "0");
 //			map.put("set", "9");
-			accountDAO.insert(map);
-			personDAO.insert(map);
+			Map<String,Object> param=new HashMap<>();
+			param.put("max_student_id","");
+			param.put("rowLimit", "1");
+			param.put("order", "person_id DESC");
+			List<Map<String,Object>> personId=personDAO.queryDB(param);
+			int number=Integer.parseInt(personId.get(0).get("person_id").toString().substring(0, 9))+1;
+			map.put("person_id", comm.verificationNumber(number+""));
+			accountDAO.insertDB(map);
+			personDAO.insertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,8 +68,8 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	public void delete(Map<String,Object> map) {
 		try {
 	//		map.put("account","p1");
-			accountDAO.delete(map);
-			personDAO.delete(map);
+			accountDAO.deleteDB(map);
+			personDAO.deleteDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,8 +82,8 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 //			map.put("password", "77989");
 //			map.put("role", "1");
 //			map.put("set", "9");
-			accountDAO.upsert(map);
-			personDAO.upsert(map);
+			accountDAO.upsertDB(map);
+			personDAO.upsertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
