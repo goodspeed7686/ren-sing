@@ -106,24 +106,25 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_master_id` int(11) NOT NULL DEFAULT '0',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
-  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '課程類型 (0:一對一個別課,1:阿卡團體班)',
   `song` varchar(50) NOT NULL DEFAULT '0' COMMENT '歌曲',
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課日期 yyyy/MM/dd',
   `time` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課時間 hh:mm',
   `hw` varchar(1000) DEFAULT '0' COMMENT '回家作業',
   `teacher_note` varchar(1000) DEFAULT '0' COMMENT '老師筆記',
   `student_note` varchar(1000) DEFAULT '0' COMMENT '學生筆記',
-  `updater` varchar(50) NOT NULL DEFAULT '0',
-  `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=阿卡課',
+  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=結束，1=未結束',
+  `updater` varchar(50) DEFAULT '0',
+  `update_time` varchar(50) DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_detail 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.class_detail 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
-REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `hw`, `teacher_note`, `student_note`, `updater`, `update_time`) VALUES
-	(1, 1, '1', '1', 'song', '2017/07/09', '08:40', '0', '0', '0', '0', '0'),
-	(2, 2, '2', '2', '好習慣', '2017/07/09', '20:10', '0', '0', '0', '0', '0'),
-	(3, 1112, '123564545', '1235645456', '鬥陣取', '2017/07/09', '15:55', '大便庫子上', NULL, '', '0', '0');
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `updater`, `update_time`) VALUES
+	(1, 1, '1', '1', 'song', '2017/07/09', '18:30', '0', '0', '3333', '0', '0', '0', '0'),
+	(5, 1112, '123564545', '1235645456', '鬥陣取', '2017/7/9', '15:40', '大便庫子上', NULL, '', '0', '0', '0', '0'),
+	(7, 2, '2', '2', '好習慣', '2017/07/09', '20:00', '0', '0', '3333', '0', '0', NULL, NULL);
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_master 結構
@@ -149,22 +150,22 @@ CREATE TABLE IF NOT EXISTS `class_master` (
 -- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `updater`, `update_time`) VALUES
-	(1111, '音樂課', '0', '0', 'Y', '25000', '10', '0', '10', '2017/7/2', '2017/9/2', '菜寮', '123564545', '0', '0'),
+	(1111, '音樂課', '0', '0', 'Y', '25000', '10', '58', '-4', '2017/7/2', '2017/9/2', '菜寮', '123564545', '0', '0'),
 	(1112, '喇叭樂課', '0', '0', 'Y', '25000', '5', '0', '5', '2017/9/2', '2017/10/2', '菜寮', '123564545', '0', '0');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.courses_time 結構
 CREATE TABLE IF NOT EXISTS `courses_time` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `interval` varchar(50) DEFAULT '0',
+  `interval_time` varchar(50) DEFAULT '0',
   `start_time` varchar(50) DEFAULT '0',
-  `end_ime` varchar(50) DEFAULT '0',
+  `end_time` varchar(50) DEFAULT '0',
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.courses_time 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.courses_time 的資料：~18 rows (大約)
 /*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;
-REPLACE INTO `courses_time` (`id`, `interval`, `start_time`, `end_ime`) VALUES
+REPLACE INTO `courses_time` (`id`, `interval_time`, `start_time`, `end_time`) VALUES
 	(1, '1300_1330', '13:00', '13:30'),
 	(2, '1330_1400', '13:30', '14:00'),
 	(3, '1400_1430', '14:00', '14:30'),
