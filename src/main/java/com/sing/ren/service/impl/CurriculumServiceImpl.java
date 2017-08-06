@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +30,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	public void insert(Map<String,Object> map) {
 		try {
 		  Map<String,Object> masterId=new HashMap<String,Object>();
-		  masterId.put("class_master_id",map.get("class_master_id"));
+		  masterId.put("class_master_id",MapUtils.getString(map, "class_master_id",""));
 		  List<Map<String, Object>> classMaster=classMasterDAO.queryDB(masterId);
-		  classMaster.get(0).put("count",Integer.parseInt(classMaster.get(0).get("count")+"")+1);
-		  classMaster.get(0).put("rest",Integer.parseInt(classMaster.get(0).get("rest")+"")-1);
+		  
+		  classMaster.get(0).put("count",Integer.parseInt(MapUtils.getString(classMaster.get(0), "count")+"")+1);
+		  classMaster.get(0).put("rest",Integer.parseInt(MapUtils.getString(classMaster.get(0), "rest")+"")-1);
 		  classMasterDAO.updateDB(classMaster.get(0));
 		  classDetailDAO.insertDB(map);
 		  
@@ -47,10 +49,10 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		//	map.put("type", "0");
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
 			for(Map<String,Object> map2 :list){
-				if(map2.get("type").equals("0")){
-					map2.put("time",comm.timeManage(map2.get("time"),"+",10));
+				if(MapUtils.getString(map2, "type","").equals("0")){
+					map2.put("time",comm.timeManage(MapUtils.getString(map2, "time",""),"+",10));
 				}else{
-					map2.put("time", comm.timeManage(map2.get("time"),"",0));
+					map2.put("time", comm.timeManage(MapUtils.getString(map2, "time",""),"",0));
 				}
 			}
 			return list;
@@ -67,7 +69,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
 			for(int i = 0,len = coursesTime.size(); i <len; i++){  
 				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
-					if(coursesTime.get(i).get("start_time").equals(classDetail.get(j).get("time"))){
+					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(MapUtils.getString(classDetail.get(j), "time"))){
 						coursesTime.remove(i);
 						classDetail.remove(j);
 						len2--;
@@ -106,10 +108,10 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public void upsert(Map<String,Object> map) {
 		try {
-			if(map.get("type").equals("0")){
-				map.put("time",comm.timeManage(map.get("time"),"-",10));
+			if(MapUtils.getString(map,"type").equals("0")){
+				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"-",10));
 			}else{
-				map.put("time",comm.timeManage(map.get("time"),"",0));
+				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"",0));
 			}
 			 classDetailDAO.upsertDB(map);
 		} catch (Exception e) {

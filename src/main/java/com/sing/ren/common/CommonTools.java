@@ -598,9 +598,10 @@ public class CommonTools {
 		for(int i=0;i<arr.length;i++){
 			a[i]=Integer.parseInt(s.substring(i,i+1));
 			if(arr[i]*a[i]>10){
-				
+				sum=sum+(arr[i]*a[i]%10);
+			}else{
+				sum=sum+arr[i]*a[i];
 			}
-			sum=sum+arr[i]*a[i];
 		}
 		for(int i=1;i>0;){
 			if(sum>=10){
