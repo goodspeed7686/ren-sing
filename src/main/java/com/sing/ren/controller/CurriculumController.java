@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.service.CurriculumService;
@@ -51,6 +52,7 @@ public class CurriculumController {
 	}
 	
 	@RequestMapping(value = {"/curriculum/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void detele(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.delete(comm.jsonToMap(json));
@@ -58,7 +60,9 @@ public class CurriculumController {
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = {"/curriculum/update"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseStatus(value=HttpStatus.OK)
 	public void update(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.update(comm.jsonToMap(json));
@@ -66,7 +70,9 @@ public class CurriculumController {
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = {"/curriculum/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void insert(HttpSession session,@RequestBody String json) {
 		System.out.println(json);
 		try {
@@ -75,7 +81,9 @@ public class CurriculumController {
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = {"/curriculum/upsert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value=HttpStatus.OK)
 	public void upsert(HttpSession session,@RequestBody String json) {
 		try {
 			curriculumService.upsert(comm.jsonToMap(json));

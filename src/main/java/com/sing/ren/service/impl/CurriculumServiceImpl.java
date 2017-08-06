@@ -67,9 +67,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		//	map.put("type", "0");
 			List<Map<String,Object>> coursesTime=coursesTimeDAO.queryDB(new HashMap<String,Object>());
 			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
-			for(int i = 0,len = coursesTime.size(); i <len; i++){  
+			for(int i = 0,len = coursesTime.size(); i <len; i++){
+				coursesTime.get(i).put("start_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"start_time"),"+",10));
+				coursesTime.get(i).put("end_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"end_time"),"+",10));
 				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
-					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(MapUtils.getString(classDetail.get(j), "time"))){
+					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(comm.timeManage(MapUtils.getString(classDetail.get(j), "time"),"+",10))){
 						coursesTime.remove(i);
 						classDetail.remove(j);
 						len2--;
