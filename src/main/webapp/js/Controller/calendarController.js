@@ -281,13 +281,14 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	var h = date.getHours();
 	var m = date.getMinutes();
 	
-	$scope.date = y + "/" + M + "/" + d;
 	$scope.selectYear = {val : y};
-//	$scope.selectYear = y;
 	$scope.selectMounth = {val : M};
 	$scope.selectDay = {val : d};
 	
-	$scope.selectTime = function(){
+	$scope.searchTime = function(){
+		
+		$scope.date = $scope.selectYear.val + "/" + $scope.selectMounth.val + "/" + $scope.selectDay.val;
+		
 		var data = [];
 		data.push({
 			date: $scope.date
@@ -295,17 +296,21 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 		apiService.getAPIwithObject("curriculum/queryBreak" , data)
 	    .then(function(result) {
 	    	$scope.timeList = result.data;
+	    	if (data.getTime)
+	    		$scope.selectTime = data.getTime;
+	    	else
+	    		$scope.selectTime = {val: $scope.timeList[0].start_time};
 	    },
 	    function(errResponse){
 	        console.error('Error while fetching Users');
 	    })
-	}
+	};
 	
-	$scope.selectTime();
+	$scope.searchTime();
 	
 	function getYearList (){
 		var yearList = [];
-		//兩年
+		//2年
 		for (var i=0;i<2;i++)
 			yearList.push({val: parseInt(y)+i});
 		
@@ -314,7 +319,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	
 	function getMounthList (){
 		var mounthList = [];
-		//12個
+		//12個月
 		for (var i=1;i<=12;i++)
 			mounthList.push({val:i});
 		
@@ -326,13 +331,13 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 		var daysOfMounth = [31,28,31,30,31,30,31,31,30,31,30,31];
 		
 		var days;
-		if (mounth == 2 && yaer % 4 == 0 && year % 100 != 0 && year % 400 == 0){
+		if (mounth == 2 && year%4 == 0 && year%100 != 0 && year%400 == 0){
 			days = 29;
 		}else
 			days = daysOfMounth[mounth -1];
 		
 		var dayList = [];
-		//每個月分的天數
+		//每個月的天數
 		for (var i=1;i<=days;i++)
 			dayList.push({val:i});
 		
@@ -343,9 +348,15 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	getMounthList();
 	getDayList(y,M);
 	
+	$scope.changeDate = function(year,mounth){
+		getDayList (year,mounth);
+		$scope.searchTime();
+	};
+	
 	$scope.enter = function() {
 		$uibModalInstance.close($scope);
 	};
+	
 	$scope.cancel = function() {
 		$uibModalInstance.dismiss(456);
 	};
