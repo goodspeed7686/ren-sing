@@ -236,13 +236,16 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
             calculatePosition(orderedEvents);
         };
         
-        self.passCurentScope = function(scope){
-        	 $scope.currentEventParent = scope;
-        	 $scope.eventSelected([]);
+        self.passCurentScope = function(data){
+        	 $scope.currentEventParent = data.scope;
+        	 if (data.events)
+        		 $scope.eventSelected({date:data.date});
+        	 else
+        		 $scope.eventSelected({event:[],date:data.date});
         }
         
-        $scope.eventSelected = function (event) {
-        	 $scope.currentEventParent.onEventSelected(event);
+        $scope.eventSelected = function (data) {
+        	 $scope.currentEventParent.onEventSelected(data);
         };
     }])
     .directive('calendar', function () {
@@ -307,7 +310,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                 scope.select = function (viewDate) {
                 	 
-                	ctrl.passCurentScope(scope.$parent.$parent);
+                	ctrl.passCurentScope({scope: scope.$parent.$parent,
+										  date: viewDate.date,
+										  events: viewDate.evemts});
                 	
                     var rows = scope.rows;
                     var selectedDate = viewDate.date;
@@ -645,7 +650,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                 scope.select = function (selectedTime, events) {
                 	
-                	ctrl.passCurentScope(scope.$parent.$parent);
+                	ctrl.passCurentScope({scope: scope.$parent.$parent,
+                						  date: selectedTime,
+                						  events: events});
                 	
                     if (scope.timeSelected) {
                         scope.timeSelected({
@@ -932,7 +939,9 @@ angular.module('ui.rCalendar', ['ui.rCalendar.tpls'])
 
                 scope.select = function (selectedTime, events) {
                 	
-                	ctrl.passCurentScope(scope.$parent.$parent);
+                	ctrl.passCurentScope({scope: scope.$parent.$parent,
+										  date: selectedTime,
+										  events: events});
                 	
                     if (scope.timeSelected) {
                         scope.timeSelected({
@@ -1127,7 +1136,7 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
     "                <td class=\"calendar-cell\" ng-click=\"select(tm.time, tm.events)\">\n" +
     "                    <div ng-class=\"{'calendar-event-wrap': tm.events}\" ng-if=\"tm.events\">\n" +
     "                        <div ng-repeat=\"displayEvent in tm.events\" class=\"calendar-event\"\n" +
-    "                             ng-click=\"eventSelected(displayEvent.event)\"\n" +
+    "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
     "                             ng-style=\"{left: 100/displayEvent.overlapNumber*displayEvent.position+'%', width: 100/displayEvent.overlapNumber+'%', height: 37*(displayEvent.endIndex-displayEvent.startIndex)+'px'}\">\n" +
     "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
     "                        </div>\n" +
@@ -1230,14 +1239,14 @@ angular.module("template/rcalendar/week.html", []).run(["$templateCache", functi
     "                <td class=\"calendar-hour-column text-center\">\n" +
     "                    {{row[0].time | date: formatHourColumn}}\n" +
     "                </td>\n" +
-//    "                <td ng-repeat=\"tm in row track by tm.time\" class=\"calendar-cell\" ng-click=\"select(tm.time, tm.events)\">\n" +
-    "                <td ng-repeat=\"tm in row track by tm.time\" class=\"calendar-cell\">\n" +
+    "                <td ng-repeat=\"tm in row track by tm.time\" class=\"calendar-cell\" ng-click=\"select(tm.time, tm.events)\">\n" +
+//    "                <td ng-repeat=\"tm in row track by tm.time\" class=\"calendar-cell\">\n" +
     "                    <div ng-class=\"{'calendar-event-wrap': tm.events}\" ng-if=\"tm.events\">\n" +
     "                        <div ng-repeat=\"displayEvent in tm.events\" class=\"calendar-event\"\n" +
 //    "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
     "                             ng-style=\"{left: 100/displayEvent.overlapNumber*displayEvent.position+'%', width: 100/displayEvent.overlapNumber+'%', height: 37*(displayEvent.endIndex-displayEvent.startIndex)+'px'}\">\n" +
 //    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
-    "                            <div class=\"calendar-event-inner\" ng-click=\"select(tm.time, tm.events);eventSelected(displayEvent.event)\">{{displayEvent.event.title}}</div>\n" + 
+    "                            <div class=\"calendar-event-inner\" ng-click=\"eventSelected({event:displayEvent.event})\">{{displayEvent.event.title}}</div>\n" + 
     "                        </div>\n" +
     "                    </div>\n" +
     "                </td>\n" +

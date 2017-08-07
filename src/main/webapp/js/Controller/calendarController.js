@@ -1,7 +1,5 @@
 app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function ($scope , apiService , $uibModal) {
     'use strict';
-   
-//    $scope.currentEventShow = false;
     
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
@@ -35,40 +33,21 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         })
     };
 
-    $scope.onEventSelected = function (event) {
-    	$scope.currentEvent = event;
+    $scope.onEventSelected = function (data) {
+    	if (data.date){
+    		
+    		if (data.event)
+    			$scope.currentEvent = data.event;
+    		
+    		$scope.selectedDate = data.date;
+    		
+    	}else if (data.event)
+    		$scope.currentEvent = data.event;
     };
     
     $scope.cleanEvent = function () {
     	$scope.currentEvent = [];
     };
-    
-//    $scope.click = function () {
-//    	var data = [];
-//    	
-//    	data.push({
-//    		classDetailId : "1",
-//    		classMasterId : "2",
-//    		studentId : "2",
-//    		teacherId : "2",
-//    		song : "2",
-//    		date : "2",
-//    		time : "2",
-//    		hw : "ob",
-//    		teacherNote : "2",
-//    		studentNote : "2"
-//    	});
-//    	
-//    	var id = 1;
-//    	
-//    	apiService.getAPIwithObject("curriculum/insert" , data)
-//        .then(function(result) {
-//        	
-//        },
-//        function(errResponse){
-//            console.error('Error while fetching Users');
-//        })
-//    };
     
     $scope.insertCourse = function(currentEvent){
     	
