@@ -274,6 +274,8 @@ app.controller('noteCtrl', function($scope,$uibModalInstance,data){
 
 app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,data){
 	
+//	$scope.teache = data.teacher;
+	
 	var date = new Date(data.date);
 	var y = date.getFullYear();
 	var M = date.getMonth() + 1;
@@ -281,9 +283,9 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	var h = date.getHours();
 	var m = date.getMinutes();
 	
-	$scope.selectYear = {val : y};
-	$scope.selectMounth = {val : M};
-	$scope.selectDay = {val : d};
+	$scope.selectYear = y;
+	$scope.selectMounth = M;
+	$scope.selectDay = d;
 	
 	$scope.searchTime = function(){
 		
@@ -299,7 +301,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	    	if (data.getTime)
 	    		$scope.selectTime = data.getTime;
 	    	else
-	    		$scope.selectTime = {val: $scope.timeList[0].start_time};
+	    		$scope.selectTime = $scope.timeList[0].start_time;
 	    },
 	    function(errResponse){
 	        console.error('Error while fetching Users');
@@ -350,7 +352,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	
 	$scope.changeDate = function(year,mounth){
 		getDayList (year,mounth);
-		$scope.searchTime();
+//		$scope.searchTime();
 	};
 	
 	$scope.enter = function() {
