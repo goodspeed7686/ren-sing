@@ -2,18 +2,19 @@ app.config(function ($routeProvider) {
 
 	$routeProvider
 
-	.when('/',{
+	.when('/curriculum',{
 
-		templateUrl: 'pages/curriculum/calendar.html',
+		templateUrl: 'curriculum',
 		controller: 'calendarCtrl'
 
 	})
 	
 	.when('/pets',{
 
-		templateUrl: 'pages/pets.html',
+		templateUrl: 'pets',
 		controller: 'petsCtrl'
 
 	})
 
+	.otherwise({redirectTo:'/curriculum'});	
 });
