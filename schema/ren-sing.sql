@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
 REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `updater`, `update_time`) VALUES
 	(1, 1, '1', '1', 'song', '2017/07/09', '18:30', '0', '0', '3333', '0', '0', '0', '0'),
-	(5, 1112, '123564545', '1235645456', '鬥陣取', '2017/7/9', '15:40', '大便庫子上', NULL, '', '0', '0', '0', '0'),
+	(5, 1112, '123564545', '1235645456', '鬥陣取', '2017/07/09', '15:30', '大便庫子上', '測試老師', '測試學生', '0', '0', 'updater', '2017/08/07 06:26:32'),
 	(7, 2, '2', '2', '好習慣', '2017/07/09', '20:00', '0', '0', '3333', '0', '0', NULL, NULL);
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
