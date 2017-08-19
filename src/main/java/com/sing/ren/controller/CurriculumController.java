@@ -26,6 +26,11 @@ public class CurriculumController {
 	CurriculumService curriculumService;
 	
 	CommonTools comm=new CommonTools();
+	
+	@RequestMapping(value = {"/curriculum"}, method = RequestMethod.GET)
+	public String initHome() {
+		return "curriculum/calendar";
+	}
 
 	@RequestMapping(value = {"/curriculum/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json){
@@ -36,7 +41,6 @@ public class CurriculumController {
 		}
 		return null;
 	}
-	
 	
 	//回傳老師空堂
 	@RequestMapping(value = {"/curriculum/queryBreak"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
