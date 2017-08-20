@@ -26,6 +26,11 @@ public class HomeController extends RSController {
 		return "home";
 	}
 	
+	@RequestMapping(value = {"/pets"}, method = RequestMethod.GET)
+	public String pets() {
+		return "pets";
+	}
+	
 	@RequestMapping(value = "/menu", method = {RequestMethod.GET, RequestMethod.POST})
 	public String nav(HttpSession session) {
 		

@@ -28,6 +28,11 @@ public class MembershipController {
 	
 	CommonTools comm=new CommonTools();
 	
+	@RequestMapping(value = {"/membership"}, method = RequestMethod.GET)
+	public String initHome() {
+		return "membership/add";
+	}
+	
 	@RequestMapping(value = {"/membership/query"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session){
 		Map<String,Object> test=new HashMap<String,Object>();
