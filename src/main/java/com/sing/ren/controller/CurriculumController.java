@@ -31,6 +31,11 @@ public class CurriculumController {
 	public String initHome() {
 		return "curriculum/calendar";
 	}
+	
+	@RequestMapping(value = {"/curriculum/history"}, method = RequestMethod.GET)
+	public String history() {
+		return "curriculum/curriculumHistory";
+	}
 
 	@RequestMapping(value = {"/curriculum/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json){

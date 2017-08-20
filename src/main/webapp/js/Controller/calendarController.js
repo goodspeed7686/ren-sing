@@ -145,12 +145,12 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     		startTime: new Date(Y , M , D , sh , sm),
     		endTime: new Date(Y , M , D , eh , em),
         	allDay: false,
-        	teacher: result.teacher_id,
-        	student: result.student_id,
+//        	teacher: result.teacher_id,
+//        	student: result.student_id,
         	teacher_id: result.teacher_id,
-//        	teacher: result.teacher_name,
+        	teacher: result.teacher_name,
         	student_id: result.student_id,
-//        	sudent: result.sudent_name,
+        	student: result.student_name,
         	song: result.song,
         	hw: result.hw,
         	teacher_note: result.teacher_note,
@@ -239,7 +239,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	ariaDescribedBy: 'modal-body',
         	templateUrl: '/ren-sing/pages/curriculum/curriculumInsert.html',
         	size: 'sm', 
-        	controller:'curriculumCtrl',
+        	controller:'insertCtrl',
         	resolve: {
         		data: function () {
         			return {date : $scope.selectedDate};
@@ -256,7 +256,35 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
 			console.log(result);
 		});
 
-    }; 
+    };
+    
+    $scope.history = function(){
+    	
+    	var modalInstance = $uibModal.open({
+        	animation:true,
+        	ariaLabelledBy: 'modal-title',
+        	ariaDescribedBy: 'modal-body',
+        	templateUrl: '/curriculum/history',
+//        	size: 'sm', 
+        	controller:'historyCtrl',
+        	resolve: {
+        		data: function () {
+//        			return {id : $scope.session.student_id};
+        			return {id: '123564545'};
+        		}
+        	}
+        });
+        modalInstance.result
+        .then(function (result) {
+        	var currentEvent = [];
+        	$scope.insertCourse(currentEvent);
+		},
+		function (result) {
+			console.log('cancel');
+			console.log(result);
+		});
+    	
+    };
 }]);
 
 app.controller('noteCtrl', function($scope,$uibModalInstance,data){
@@ -272,7 +300,7 @@ app.controller('noteCtrl', function($scope,$uibModalInstance,data){
 	 };
 });
 
-app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,data){
+app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 //	$scope.teache = data.teacher;
 	
@@ -312,7 +340,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	
 	function getYearList (){
 		var yearList = [];
-		//2年
+		//2�?
 		for (var i=0;i<2;i++)
 			yearList.push({val: parseInt(y)+i});
 		
@@ -321,7 +349,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 	
 	function getMounthList (){
 		var mounthList = [];
-		//12個月
+		//12?��?
 		for (var i=1;i<=12;i++)
 			mounthList.push({val:i});
 		
@@ -339,7 +367,7 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 			days = daysOfMounth[mounth -1];
 		
 		var dayList = [];
-		//每個月的天數
+		//每個�??�天??
 		for (var i=1;i<=days;i++)
 			dayList.push({val:i});
 		
@@ -359,6 +387,38 @@ app.controller('curriculumCtrl', function($scope,$uibModalInstance,apiService,da
 		$uibModalInstance.close($scope);
 	};
 	
+	$scope.cancel = function() {
+		$uibModalInstance.dismiss(456);
+	};
+});
+
+app.controller('noteCtrl', function($scope,$uibModalInstance,apiService,data){
+	
+	$scope.identity = data.identity;
+	$scope.note = data.note;
+	
+	$scope.historyQuery = function(){
+		
+		apiService.getAPIwithObject("curriculum/query" , data)
+	    .then(function(result) {
+	    	$scope.history = result;
+	    },
+	    function(errResponse){
+	        console.error('Error while fetching Users');
+	    })
+		
+	};
+	
+	$scope.historyQuery();
+	
+	$scope.historyClick = function(result){
+		$scope.studentNote = result.student_note;
+		$scope.teacherNote = result.teacher_note;
+	};
+	
+	$scope.enter = function() {
+		$uibModalInstance.close($scope.note);
+	};
 	$scope.cancel = function() {
 		$uibModalInstance.dismiss(456);
 	};

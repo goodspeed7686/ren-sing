@@ -1,0 +1,34 @@
+<table class="table table-striped">
+	<tr>
+		<td>
+			名字
+		</td>
+		<td>
+			<input type="text" ng-model="name" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			性別
+		</td>
+		<td>
+			<label data-ng-repeat="choice in question.choices">
+			  	<input type="radio" name="response" data-ng-model="choice.isUserAnswer" data-ng-value="true" />
+			  	{{choice.text}}
+			</label>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			身分證字號
+		</td>
+		<td>
+			<input type="text" ng-model="id_number" />
+		</td>
+	</tr>
+
+</table>
+
+<button type="button" class="btn btn-success" ng-click="updateCourse(currentEvent)">
+	新增
+</button>
