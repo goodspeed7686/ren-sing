@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.parser.JSONParser;
 
 public class CommonTools {
@@ -537,7 +538,7 @@ public class CommonTools {
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException{
 		Map<String,Object> map = null;
-		if(!json.equals("")){
+		if(StringUtils.isNotBlank(json)){
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
 			map = (HashMap<String, Object>)obj;
@@ -551,7 +552,7 @@ public class CommonTools {
 	 */
 	public List<Map<String,Object>> jsonToList(String json) throws org.json.simple.parser.ParseException{
 		List<Map<String,Object>> list=null;
-		if(!json.equals("")){
+		if(StringUtils.isNotBlank(json)){
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(json);  
 			list = (List<Map<String, Object>>)obj;

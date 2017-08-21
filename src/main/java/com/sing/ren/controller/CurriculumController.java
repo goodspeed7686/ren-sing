@@ -25,7 +25,7 @@ public class CurriculumController {
 	@Autowired
 	CurriculumService curriculumService;
 	
-	CommonTools comm;
+	CommonTools comm = new CommonTools();
 	
 	@RequestMapping(value = {"/curriculum"}, method = RequestMethod.GET)
 	public String initCurriculum() {

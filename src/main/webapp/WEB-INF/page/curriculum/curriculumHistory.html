@@ -1,9 +1,12 @@
+<div class='modal-header'>
+  <h5>歷史課程</h5>
+</div>
 <div class="row" >
 
 	<div class="col-sm-2">
 		<ul class="example-animate-container">
 			<li class="animate-repeat" ng-repeat="note in history" ng-click="historyClick(note)">
-		    	[{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+		    	{{ note.date }} {{ note.time }} 
 		    </li>
 			<li class="animate-repeat" ng-if="results.length === 0">
 		    	<strong>No results found...</strong>
@@ -11,10 +14,16 @@
 		</ul>
 	</div>
 	<div class="col-sm-5">
-		<textarea ng-model="studentNote"></textarea>
+		<div class="form-group">
+			<label >學生筆記 :</label>
+			<textarea class="form-control" rows="10" cols="20" ng-model="studentNote"></textarea>
+		</div>
 	</div>
 	<div class="col-sm-5">
-		<textarea ng-model="teacherNote"></textarea>
+		<div class="form-group">
+			<label >老師筆記 :</label>
+			<textarea class="form-control" rows="10" cols="20" ng-model="teacherNote"></textarea>
+		</div>
 	</div>
 
 </div>

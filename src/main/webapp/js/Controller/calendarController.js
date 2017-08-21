@@ -264,8 +264,8 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	animation:true,
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
-        	templateUrl: '/curriculum/history',
-//        	size: 'sm', 
+        	templateUrl: '/ren-sing/curriculum/history',
+        	size: 'sm', 
         	controller:'historyCtrl',
         	resolve: {
         		data: function () {
@@ -340,7 +340,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 	function getYearList (){
 		var yearList = [];
-		//2å¹?
+		//2ï¿½?
 		for (var i=0;i<2;i++)
 			yearList.push({val: parseInt(y)+i});
 		
@@ -349,7 +349,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 	function getMounthList (){
 		var mounthList = [];
-		//12?‹æ?
+		//12?ï¿½ï¿½?
 		for (var i=1;i<=12;i++)
 			mounthList.push({val:i});
 		
@@ -367,7 +367,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 			days = daysOfMounth[mounth -1];
 		
 		var dayList = [];
-		//æ¯å€‹æ??„å¤©??
+		//æ¯å€‹ï¿½??ï¿½å¤©??
 		for (var i=1;i<=days;i++)
 			dayList.push({val:i});
 		
@@ -392,7 +392,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	};
 });
 
-app.controller('noteCtrl', function($scope,$uibModalInstance,apiService,data){
+app.controller('historyCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 	$scope.identity = data.identity;
 	$scope.note = data.note;
@@ -401,7 +401,7 @@ app.controller('noteCtrl', function($scope,$uibModalInstance,apiService,data){
 		
 		apiService.getAPIwithObject("curriculum/query" , data)
 	    .then(function(result) {
-	    	$scope.history = result;
+	    	$scope.history = result.data;
 	    },
 	    function(errResponse){
 	        console.error('Error while fetching Users');
