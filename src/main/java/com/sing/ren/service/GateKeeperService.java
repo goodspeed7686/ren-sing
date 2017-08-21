@@ -1,11 +1,10 @@
 package com.sing.ren.service;
 
-import org.springframework.web.servlet.ModelAndView;
-
+import java.util.Map;
 
 public interface GateKeeperService {
 
 	public boolean isUserLogin();
-	public void processLogin(String userId, String pwd, ModelAndView mav) throws Exception;
+	public void processLogin(Map<String,Object> map) throws Exception;
 	public void processLogout() throws Exception;
 }

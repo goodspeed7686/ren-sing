@@ -1,11 +1,18 @@
 app.config(function ($routeProvider,$locationProvider) {
 
 	$routeProvider
-	
+
 	.when('/',{
 
 		templateUrl: 'curriculum',
 		controller: 'calendarCtrl'
+
+	})
+	
+	.when('/logIn',{
+
+		templateUrl: 'logIn',
+		controller: 'logInCtrl'
 
 	})
 
@@ -22,7 +29,6 @@ app.config(function ($routeProvider,$locationProvider) {
 		controller: 'membershipCtrl'
 
 	})
-	
 	.when('/pets',{
 
 		templateUrl: 'pets',
