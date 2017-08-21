@@ -5,12 +5,17 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sing.ren.common.CommonTools;
 import com.sing.ren.service.GateKeeperService;
 
 @Controller
@@ -18,11 +23,13 @@ public class HomeController extends RSController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	CommonTools comm;
+	
 	@Autowired
-//	GateKeeperService geteKeeper;
+	GateKeeperService geteKeeper;
 	
 	@RequestMapping(value = {"/", "home"}, method = RequestMethod.GET)
-	public String initHome() {
+	public String home() {
 		return "home";
 	}
 	
@@ -39,39 +46,34 @@ public class HomeController extends RSController {
 		return "menu";
 	}
 	
-	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView showLoginPage(ModelAndView ma) {
-		
-		ma.setViewName("login");
-		
-		return ma;
+	@RequestMapping(value = "/logIn", method = {RequestMethod.GET, RequestMethod.POST})
+	public String showLoginPage() {
+		return "logIn";
 	}
 	
-//	@RequestMapping(value = "/processLogin", method = RequestMethod.POST)
-//	public ModelAndView processLogin(
-//			@RequestParam(value = "userId", required=true, defaultValue="") String userId,
-//			@RequestParam(value = "pwd", required=true, defaultValue="") String pwd,
-//			ModelAndView mav) throws Exception {
-//		
-//		try {
-//			geteKeeper.processLogin(userId, pwd, mav);
-//		} catch (Exception e) {
-//			logger.error(e.getMessage());
-//			
+	@RequestMapping(value = "/processLogin", method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public String processLogin(@RequestBody String json) throws Exception {
+		
+		try {
+			geteKeeper.processLogin(comm.jsonToMap(json));
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			
 //			mav.addObject("showLoginPopup", true);
-//			
-//			return showLoginPage(mav);
-//		}
-//		
-//		return home(mav);
-//	}
-	
-	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView processLogout(ModelAndView ma) throws Exception {
+			
+			return "";
+		}
 		
-//		geteKeeper.processLogout();
-		
-		return showLoginPage(ma);
+		return "curriculum/calendar";
 	}
+	
+//	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+//	public ModelAndView processLogout(ModelAndView ma) throws Exception {
+//		
+//		geteKeeper.processLogout();
+//		
+//		return showLoginPage(ma);
+//	}
 
 }

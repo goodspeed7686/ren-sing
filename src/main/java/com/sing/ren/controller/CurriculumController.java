@@ -25,11 +25,21 @@ public class CurriculumController {
 	@Autowired
 	CurriculumService curriculumService;
 	
-	CommonTools comm=new CommonTools();
+	CommonTools comm;
 	
 	@RequestMapping(value = {"/curriculum"}, method = RequestMethod.GET)
-	public String initHome() {
+	public String initCurriculum() {
 		return "curriculum/calendar";
+	}
+	
+	@RequestMapping(value = {"/curriculum/popupInsert"}, method = RequestMethod.GET)
+	public String popupInsert() {
+		return "curriculum/popupInsert";
+	}
+	
+	@RequestMapping(value = {"/curriculum/popupNote"}, method = RequestMethod.GET)
+	public String popupNote() {
+		return "curriculum/popupNote";
 	}
 	
 	@RequestMapping(value = {"/curriculum/history"}, method = RequestMethod.GET)

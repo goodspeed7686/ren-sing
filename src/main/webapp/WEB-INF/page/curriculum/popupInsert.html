@@ -1,0 +1,45 @@
+<div class='modal-header'>
+  <h5>{{identity}} 筆記</h5>
+</div>
+<div class='modal-body'>
+	
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-hover">
+				<tbody>
+					<tr>
+						<td><label>日期</label></td>
+						<td>
+							<select ng-model="selectYear" ng-change="changeDate(selectYear,selectMounth)"
+									ng-options="opt.val as opt.val for opt in yearList"></select>
+							<label>年</label>
+							<select ng-model="selectMounth" ng-change="changeDate(selectYear,selectMounth)"
+									ng-options="opt.val as opt.val for opt in mounthList"></select>
+							<label>月</label>
+							<select ng-model="selectDay" ng-change="changeDate(selectYear,selectMounth)"
+									ng-options="opt.val as opt.val for opt in dayList"></select>
+							<label>日</label>
+						</td>
+					</tr>
+					<tr>
+						<td>上課時間</td>
+						<td>
+							<select ng-model="selectTime" ng-options="opt.start_time as opt.start_time for opt in timeList"></select>
+						</td>
+					</tr>
+					<tr>
+						<td><label>老師</label></td>
+						<td>
+							<label>{{teacher}}</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</div>
+<div class='modal-footer'>
+  <button class='btn btn-default' data-ng-click='enter()'>確認</button>
+  <button class='btn btn-default' data-ng-click='$dismiss()'>退出</button>
+</div>
