@@ -53,7 +53,7 @@ public class GateKeeperServiceImpl extends RSService implements GateKeeperServic
 		
 		this.setDataToSession(Context.RS_USER, user);
 		
-		AccountPermissionType accountPermissionType = AccountPermissionType.valueOf(Integer.valueOf(user.get("system_group").toString()));
+		AccountPermissionType accountPermissionType = AccountPermissionType.valueOf(Integer.valueOf(user.get("role").toString()));
 		logger.debug("accountPermissionType:"+accountPermissionType.getType());
 		
 //		List<String> menuItems = new ArrayList<String>();

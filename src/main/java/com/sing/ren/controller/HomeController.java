@@ -23,7 +23,7 @@ public class HomeController extends RSController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	CommonTools comm;
+	CommonTools comm = new CommonTools();
 	
 	@Autowired
 	GateKeeperService geteKeeper;
@@ -52,7 +52,6 @@ public class HomeController extends RSController {
 	}
 	
 	@RequestMapping(value = "/processLogin", method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
 	public String processLogin(@RequestBody String json) throws Exception {
 		
 		try {
@@ -60,12 +59,10 @@ public class HomeController extends RSController {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			
-//			mav.addObject("showLoginPopup", true);
-			
 			return "";
 		}
 		
-		return "curriculum/calendar";
+		return "home";
 	}
 	
 //	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
