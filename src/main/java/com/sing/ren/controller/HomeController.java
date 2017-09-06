@@ -38,6 +38,11 @@ public class HomeController extends RSController {
 		return "pets";
 	}
 	
+	@RequestMapping(value = {"/alert"}, method = RequestMethod.GET)
+	public String alert() {
+		return "alert";
+	}
+	
 	@RequestMapping(value = "/menu", method = {RequestMethod.GET, RequestMethod.POST})
 	public String nav(HttpSession session) {
 		
@@ -59,18 +64,18 @@ public class HomeController extends RSController {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			
-			return "";
+			return e.getMessage();
 		}
 		
 		return "home";
 	}
 	
-//	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
-//	public ModelAndView processLogout(ModelAndView ma) throws Exception {
-//		
-//		geteKeeper.processLogout();
-//		
-//		return showLoginPage(ma);
-//	}
+	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+	public String processLogout() throws Exception {
+		
+		geteKeeper.processLogout();
+		
+		return "home";
+	}
 
 }

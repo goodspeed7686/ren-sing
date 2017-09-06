@@ -1,11 +1,22 @@
-app.controller('logInCtrl', ['$scope' , 'apiService' , '$window' , function ($scope , apiService , $window) {
+app.controller('logInCtrl', ['$scope' , 'apiService' , '$window' , 'alertService'
+                              , function ($scope , apiService , $window , alertService) {
 	
 	$scope.logIn = function(){
+		
+		if (!$scope.user_id){
+			$('#user_id').focus();
+			return;
+		}
+			
+		if (!$scope.pwd){
+			$('#pwd').focus();
+			return;
+		}
 		
 		var data = [];
 		data.push({
 			user_id : $scope.user_id,
-			pwd : $scope.pwd
+			password : $scope.pwd
 		});
 		
 		apiService.getAPIwithObject("processLogin",data)
@@ -13,7 +24,11 @@ app.controller('logInCtrl', ['$scope' , 'apiService' , '$window' , function ($sc
         	$window.location.href = '/ren-sing/';
         },
         function(errResponse){
-            console.error('Error while fetching Users');
+        	var str = errResponse.data.lastIndexOf(".html");
+        	var sub = errResponse.data.substring(0,str+3);
+        	var msg = /[^/]*$/.exec(sub)[0];
+            
+            alertService.open(msg.split(".")[0]);
         })
 		
 	};

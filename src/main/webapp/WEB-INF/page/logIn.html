@@ -25,6 +25,7 @@
 	
 	<!-- service -->
 	<script src="js/Service/coomService.js"></script>
+	<script src="js/Service/alertService.js"></script>
 	
 	<script src="js/Controller/logInController.js"></script>
 	
@@ -56,7 +57,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input type="text" class="form-control" ng-model="user_id"  placeholder="請輸入帳號..."/>
+							<input type="text" class="form-control" id="user_id" ng-model="user_id"  placeholder="請輸入帳號..."/>
 						</div>
 					</div>
 				</div>
@@ -65,7 +66,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock" ></i></span>
-							<input type="password" class="form-control" ng-model="pwd"  placeholder="請輸入密碼..."/>
+							<input type="password" class="form-control" id="pwd" ng-model="pwd"  placeholder="請輸入密碼..."/>
 						</div>
 					</div>
 				</div>

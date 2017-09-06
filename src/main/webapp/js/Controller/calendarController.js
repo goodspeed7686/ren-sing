@@ -167,7 +167,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	animation:true,
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
-        	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
+        	templateUrl: '/ren-sing/curriculum/popupNote',
         	size: 'sm', 
         	controller:'noteCtrl',
         	resolve: {
@@ -202,7 +202,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	animation:true,
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
-        	templateUrl: '/ren-sing/pages/curriculum/calenderNote.html',
+        	templateUrl: '/ren-sing/curriculum/popupNote',
         	size: 'sm', 
         	controller:'noteCtrl',
         	resolve: {
@@ -237,8 +237,8 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	animation:true,
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
-        	templateUrl: '/ren-sing/pages/curriculum/curriculumInsert.html',
-        	size: 'sm', 
+        	templateUrl: '/ren-sing/curriculum/popupInsert',
+        	size: 'md', 
         	controller:'insertCtrl',
         	resolve: {
         		data: function () {
@@ -265,7 +265,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         	ariaLabelledBy: 'modal-title',
         	ariaDescribedBy: 'modal-body',
         	templateUrl: '/ren-sing/curriculum/history',
-        	size: 'sm', 
+        	size: 'lg', 
         	controller:'historyCtrl',
         	resolve: {
         		data: function () {

@@ -17,6 +17,8 @@ public class Context {
 	/** 使用者登入後, 使用者資料的Key */
 	public static final String RS_USER = "RS_USER";
 	
+	public static final String SYSTEM_ID_SET_INACTIVE = "0";
+	
 	
 	public static final String TREE_STATUS = "TREE_STATUS";
 

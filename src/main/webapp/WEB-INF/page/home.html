@@ -26,8 +26,10 @@
 		
 		<!-- service -->
 		<script src="js/Service/coomService.js"></script>
+		<script src="js/Service/alertService.js"></script>
 		
 		<!-- controller -->
+		<script src="js/Controller/homeController.js"></script>
 		<script src="js/Controller/petsController.js"></script>
 		<script src="js/Controller/calendarController.js"></script>
 		<script src="js/Controller/membershipController.js"></script>
@@ -38,27 +40,33 @@
     </style>
 	</head>
 	<body>
-		<div class="left">
+		<div class="left" ng-controller="homeCtrl">
 			<div class="item">
 				<span class="glyphicon glyphicon-th-large"></span>
 			</div>
-			<div class="item active">
-				<span class="glyphicon glyphicon-th-list"></span><a href="curriculum">課程資訊</a>
-			</div>
-			<div class="item">
-				<span class="glyphicon glyphicon-log-out"></span><a href="membership">基本資料</a>
-			</div>
-			<div class="item">
-				<span class="glyphicon glyphicon-log-in" ></span><a href="pets">小寵物</a>
-			</div> 
-			<div class="item">
+			<a href="curriculum">
+				<div class="item active">
+					<span class="glyphicon glyphicon-th-list"></span>課程資訊
+				</div>
+			</a>
+			<a href="membership">
+				<div class="item">
+					<span class="glyphicon glyphicon-log-out"></span>基本資料
+				</div>
+			</a>
+			<a href="pets">
+				<div class="item">
+					<span class="glyphicon glyphicon-log-in" ></span>小寵物
+				</div> 
+			</a>
+			<div class="item" ng-click="logOut()">
 				<span class="glyphicon glyphicon-remove"></span>登出
 			</div>    
 		</div>
-	<div class="right">	
-		<div class="container">
-			<div ng-view></div>
+		<div class="right">	
+			<div class="container">
+				<div ng-view></div>
+			</div>
 		</div>
-	</div>
 	</body>
 </html>
