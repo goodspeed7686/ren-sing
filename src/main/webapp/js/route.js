@@ -29,6 +29,14 @@ app.config(function ($routeProvider,$locationProvider) {
 		controller: 'membershipCtrl'
 
 	})
+	
+	.when('/addAcc',{
+
+		templateUrl: 'addAcc',
+		controller: 'addAccCtrl'
+
+	})
+	
 	.when('/pets',{
 
 		templateUrl: 'pets',

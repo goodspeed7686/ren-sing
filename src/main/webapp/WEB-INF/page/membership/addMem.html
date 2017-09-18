@@ -1,0 +1,130 @@
+<table class="table table-striped">
+	<tr>
+		<td>
+			帳號
+		</td>
+		<td>
+			<input type="text" ng-model="mem.account" />
+		</td>
+	</tr>
+	<tr>	
+		<td>
+			密碼
+		</td>
+		<td>
+			<input type="text" ng-model="mem.password" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			名字
+		</td>
+		<td>
+			<input type="text" ng-model="mem.name" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			性別
+		</td>
+		<td>
+			<label data-ng-repeat="choice in question.choices">
+			  	<input type="radio" name="response" data-ng-model="choice.isUserAnswer" data-ng-value="true" />
+			  	{{choice.text}}
+			</label>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			身分證字號
+		</td>
+		<td>
+			<input type="text" ng-model="mem.id_number" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			生日
+		</td>
+		<td>
+			<input type="text" ng-model="mem.birthday" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			市話
+		</td>
+		<td>
+			<input type="text" ng-model="mem.local_calls" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			電話
+		</td>
+		<td>
+			<input type="text" ng-model="mem.phone" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			email
+		</td>
+		<td>
+			<input type="text" ng-model="mem.email" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			skype
+		</td>
+		<td>
+			<input type="text" ng-model="mem.skype" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			職業
+		</td>
+		<td>
+			<input type="text" ng-model="mem.career" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			skype
+		</td>
+		<td>
+			<input type="text" ng-model="mem.skype" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			收信人
+		</td>
+		<td>
+			<input type="text" ng-model="mem.recipient" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			收信地址
+		</td>
+		<td>
+			<input type="text" ng-model="mem.rec_add" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			收信人電話
+		</td>
+		<td>
+			<input type="text" ng-model="mem.rec_num" />
+		</td>
+	</tr>
+
+</table>
+
+<button type="button" class="btn btn-success" ng-click="insertMem()">
+	新增
+</button>

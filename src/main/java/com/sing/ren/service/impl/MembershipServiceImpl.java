@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.AccountDAO;
@@ -23,6 +24,7 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	
 	CommonTools comm=new CommonTools();
 	@Override
+	@Transactional (rollbackFor = Exception.class)
 	public void insert(Map<String,Object> map) {
 		try {
 //			map.put("account", "p1");

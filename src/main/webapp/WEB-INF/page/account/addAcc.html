@@ -1,0 +1,54 @@
+<!-- <meta charset="UTF-8" /> -->
+<style type=text/css> 
+<!--
+/*全部設定字體*/
+ body { font-family: 微軟正黑體; }
+//-->
+</style>
+<div class="row" ng-controller="accCtrl">
+
+	<div class="page-header">
+		<h2 style="font-family:微軟正黑體;">新增帳號</h2>
+	</div>
+	<table class="table table-striped">
+		<tr>
+			<td>
+				帳號
+			</td>
+			<td>
+				<input type="text" ng-model="acc.account" />
+			</td>
+		</tr>
+		<tr>	
+			<td>
+				密碼
+			</td>
+			<td>
+				<input type="text" ng-model="acc.password" />
+			</td>
+		</tr>
+		<tr>	
+			<td>
+				角色
+			</td>
+			<td>
+				<input type="text" ng-model="acc.role" />
+			</td>
+		</tr>
+		<tr>	
+			<td>
+				帳號狀態
+			</td>
+			<td>
+				<input type="text" ng-model="acc.status" />
+			</td>
+		</tr>
+	</table>
+	
+</div>
+
+<button type="button" class="btn btn-success" ng-click="insertAcc()">
+	新增
+</button>
+
+

@@ -30,7 +30,7 @@ public class MembershipController {
 	
 	@RequestMapping(value = {"/membership"}, method = RequestMethod.GET)
 	public String initHome() {
-		return "membership/add";
+		return "membership/addMem";
 	}
 	
 	@RequestMapping(value = {"/membership/query"}, method = {RequestMethod.GET, RequestMethod.POST})

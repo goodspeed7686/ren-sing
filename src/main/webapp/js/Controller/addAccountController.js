@@ -1,12 +1,12 @@
-app.controller('membershipCtrl',['$scope','apiService','alertService',function ($scope,apiService,alertService) {
+app.controller('addAccCtrl',['$scope','apiService',function ($scope,apiService) {
 
-	$scope.mem = {};
+	$scope.acc = [];
 	
-	$scope.insertMem = function (){
+	$scope.insertAcc = function (){
 		
-		apiService.getAPIwithObject("membership/insert",$scope.mem)
+		apiService.getAPIwithObject("insert",$scope.acc)
         .then(function(result) {
-        	alertService.open("∑sºW¶®•\");
+        	alertService.open("Êñ∞Â¢ûÊàêÂäü");
         },
         function(errResponse){
         	var str = errResponse.data.lastIndexOf(".html");
@@ -16,6 +16,6 @@ app.controller('membershipCtrl',['$scope','apiService','alertService',function (
             alertService.open(msg.split(".")[0]);
         })
 		
-	};
+	}
 
 }]);
