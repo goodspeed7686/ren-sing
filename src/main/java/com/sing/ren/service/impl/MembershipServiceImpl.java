@@ -1,5 +1,6 @@
 package com.sing.ren.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +33,11 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 //			map.put("role", "0");
 //			map.put("set", "9");
 			Map<String,Object> param=new HashMap<>();
-			param.put("max_student_id","");
 			param.put("rowLimit", "1");
 			param.put("order", "person_id DESC");
+			SimpleDateFormat nowdate = new SimpleDateFormat("yyMMdd"); 
+			String sdate = nowdate.format(new java.util.Date());
+			param.put("max_student_id",sdate+"%");
 			List<Map<String,Object>> personId=personDAO.queryDB(param);
 			int number=Integer.parseInt(personId.get(0).get("person_id").toString().substring(0, 9))+1;
 			map.put("person_id", comm.verificationNumber(number+""));

@@ -6,7 +6,7 @@ app.controller('membershipCtrl',['$scope','apiService','alertService',function (
 		
 		apiService.getAPIwithObject("membership/insert",$scope.mem)
         .then(function(result) {
-        	alertService.open("·s¼W¦¨¥\");
+        	alertService.open("æ–°å¢æˆåŠŸ");
         },
         function(errResponse){
         	var str = errResponse.data.lastIndexOf(".html");
