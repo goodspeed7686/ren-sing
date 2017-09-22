@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysql.jdbc.StringUtils;
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.AccountDAO;
 import com.sing.ren.dao.table.PersonDAO;
@@ -35,12 +36,27 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 			Map<String,Object> param=new HashMap<>();
 			param.put("rowLimit", "1");
 			param.put("order", "person_id DESC");
-			SimpleDateFormat nowdate = new SimpleDateFormat("yyMMdd"); 
+			SimpleDateFormat nowdate = new SimpleDateFormat("yyyyMM"); 
 			String sdate = nowdate.format(new java.util.Date());
 			param.put("max_student_id",sdate+"%");
-			List<Map<String,Object>> personId=personDAO.queryDB(param);
-			int number=Integer.parseInt(personId.get(0).get("person_id").toString().substring(0, 9))+1;
-			map.put("person_id", comm.verificationNumber(number+""));
+			
+			List<Map<String,Object>> personIdList=personDAO.queryDB(param);
+			String number = "";
+			if (personIdList.size() > 0){
+				int count = Integer.parseInt(personIdList.get(0).get("person_id").toString().substring(6,9))+1;
+				
+				if (count < 10){
+					number = personIdList.get(0).get("person_id").toString().substring(0, 6).concat("00").concat(String.valueOf(count));
+				}else if (count < 100){
+					number = personIdList.get(0).get("person_id").toString().substring(0, 6).concat("0").concat(String.valueOf(count));
+				}else if (count < 1000){
+					number = personIdList.get(0).get("person_id").toString().substring(0, 6).concat(String.valueOf(count));
+				}
+			}else{
+				number = sdate.concat("001");
+			}
+			
+			map.put("person_id", comm.verificationNumber(number));
 			accountDAO.insertDB(map);
 			personDAO.insertDB(map);
 		} catch (Exception e) {
