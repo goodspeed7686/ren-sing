@@ -20,6 +20,20 @@ app.service('alertService',['$uibModal',function ($uibModal){
 		});
 	};
 	
+	this.success = function(){
+		swal(
+		  'Success !',
+		  'success'
+		)
+	};
+	
+	this.error = function(){
+		swal(
+		  'Error !',
+		  'error'
+		)
+	};
+	
 }]);
 
 app.controller('alertCtrl', function($scope,$uibModalInstance,data){

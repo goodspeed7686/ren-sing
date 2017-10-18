@@ -1138,7 +1138,7 @@ angular.module("template/rcalendar/day.html", []).run(["$templateCache", functio
     "                        <div ng-repeat=\"displayEvent in tm.events\" class=\"calendar-event\"\n" +
     "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
     "                             ng-style=\"{left: 100/displayEvent.overlapNumber*displayEvent.position+'%', width: 100/displayEvent.overlapNumber+'%', height: 37*(displayEvent.endIndex-displayEvent.startIndex)+'px'}\">\n" +
-    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
+    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.type}} - {{displayEvent.event.song}}</div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </td>\n" +
@@ -1184,7 +1184,7 @@ angular.module("template/rcalendar/month.html", []).run(["$templateCache", funct
     "                        {{event.endTime|date: 'HH:mm'}}\n" +
     "                    </td>\n" +
     "                    <td ng-if=\"event.allDay\" class=\"monthview-eventdetail-timecolumn\">{{allDayLabel}}</td>\n" +
-    "                    <td class=\"event-detail\" ng-click=\"eventSelected({event:event})\">{{event.title}}</td>\n" +
+    "                    <td class=\"event-detail\" ng-click=\"eventSelected({event:event})\">{{event.type}} - {{event.song}}</td>\n" +
     "                </tr>\n" +
     "                <tr ng-if=\"!selectedDate.events\"><td class=\"no-event-label\">{{noEventsLabel}}</td></tr>\n" +
     "            </table>\n" +
@@ -1246,7 +1246,7 @@ angular.module("template/rcalendar/week.html", []).run(["$templateCache", functi
 //    "                             ng-click=\"eventSelected({event:displayEvent.event})\"\n" +
     "                             ng-style=\"{left: 100/displayEvent.overlapNumber*displayEvent.position+'%', width: 100/displayEvent.overlapNumber+'%', height: 37*(displayEvent.endIndex-displayEvent.startIndex)+'px'}\">\n" +
 //    "                            <div class=\"calendar-event-inner\">{{displayEvent.event.title}}</div>\n" +
-    "                            <div class=\"calendar-event-inner\" ng-click=\"eventSelected({event:displayEvent.event})\">{{displayEvent.event.title}}</div>\n" + 
+    "                            <div class=\"calendar-event-inner\" ng-click=\"eventSelected({event:displayEvent.event})\">{{displayEvent.event.type}} - {{displayEvent.event.song}}</div>\n" + 
     "                        </div>\n" +
     "                    </div>\n" +
     "                </td>\n" +

@@ -1,4 +1,5 @@
-app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function ($scope , apiService , $uibModal) {
+app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertService' , 
+		function ($scope , apiService , $uibModal , alertService) {
     'use strict';
     
     $scope.changeMode = function (mode) {
@@ -52,15 +53,17 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
     
     $scope.insertCourse = function(currentEvent){
     	
-    	var date = new Date(currentEvent.startTime);
-    	var y = date.getFullYear();
-    	var M = date.getMonth();
-    	var d = date.getDate();
-    	var h = date.getHours();
-    	var m = date.getMinutes();
-    	
-    	currentEvent.date = y + "/" + M + "/" + d;
-    	currentEvent.time = h + ":" + m;
+    	if (!currentEvent.date && !currentEvent.time){
+    		var date = new Date(currentEvent.startTime);
+        	var y = date.getFullYear();
+        	var M = date.getMonth();
+        	var d = date.getDate();
+        	var h = date.getHours();
+        	var m = date.getMinutes();
+        	
+        	currentEvent.date = y + "/" + M + "/" + d;
+        	currentEvent.time = h + ":" + m;
+    	}
     	
     	apiService.getAPIwithObject("curriculum/insert" , currentEvent)
         .then(function(result) {
@@ -248,8 +251,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal', function 
         });
         modalInstance.result
         .then(function (result) {
-        	var currentEvent = [];
-        	$scope.insertCourse(currentEvent);
+        	$scope.insertCourse(result);
 		},
 		function (result) {
 			console.log('cancel');
@@ -340,7 +342,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 	function getYearList (){
 		var yearList = [];
-		//2ï¿½?
+		//2ï¿?
 		for (var i=0;i<2;i++)
 			yearList.push({val: parseInt(y)+i});
 		
@@ -384,7 +386,10 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	};
 	
 	$scope.enter = function() {
-		$uibModalInstance.close($scope);
+		$uibModalInstance.close({
+			date : $scope.selectYear + "/" + $scope.selectMounth + "/" + $scope.selectDay,
+			time : $scope.selectTime
+		});
 	};
 	
 	$scope.cancel = function() {
