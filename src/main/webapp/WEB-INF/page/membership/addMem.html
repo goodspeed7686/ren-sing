@@ -19,90 +19,86 @@
   background-color:#00ff00;
 }
 </style>
-<div class="content">
+
+<div class="row">
+<div class="page-title-box">
+	<ol class="breadcrumb pull-right">
+		<li>會員基本資料</li>
+		<li class="active">會員基本資料</li>
+	</ol>
+	<h4 class="page-title">會員基本資料</h4>
+</div>
+ <form class=" " >
+	<div class="col-md-6 mb-3">
+	    <div class="form-group">
+			<label  class=""> 帳號</label>
+			<input required class="form-control" type="text" ng-model="mem.account" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 密碼</label>
+			<input class="form-control" type="text" ng-model="mem.password" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 名字</label>
+			<input class="form-control" type="text" ng-model="mem.name" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group ">
+			<label  for="radiobutton" class=""> 性別</label>
+			<select class="form-control" >
+			  <option>男</option>
+			  <option>女</option>
+			</select>
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 身分證字號</label>
+			<input class="form-control" type="text" ng-model="mem.id_number" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 生日</label>
+			<input class="form-control" type="text" ng-model="mem.birthday" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 市話</label>
+			<input class="form-control" type="text" ng-model="mem.local_calls" />
+		</div><!-- /.form group by Job名稱 -->
+	</div>
+	<div class="col-md-6 mb-3">
+		<div class="form-group">
+			<label  class=""> 電話</label>
+			<input class="form-control" type="text" ng-model="mem.phone" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> email</label>
+			<input class="form-control" type="text" ng-model="mem.email" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> skype</label>
+			<input class="form-control" type="text" ng-model="mem.skype" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 職業</label>
+			<input class="form-control" type="text" ng-model="mem.career" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 收信人</label>
+			<input class="form-control" type="text" ng-model="mem.recipient" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 收信地址</label>
+			<input class="form-control" type="text" ng-model="mem.rec_add" />
+		</div><!-- /.form group by Job名稱 -->
+		<div class="form-group">
+			<label  class=""> 收信人電話</label>
+			<input class="form-control" type="text" ng-model="mem.rec_num" />
+		</div><!-- /.form group by Job名稱 -->
+	</div>
 	
-	<div class="container">
-		<div class="row">
-		<div class="page-title-box">
-			<ol class="breadcrumb pull-right">
-				<li>會員基本資料</li>
-				<li class="active">會員基本資料</li>
-			</ol>
-			<h4 class="page-title">會員基本資料</h4>
-		</div>
-		 <form class=" " >
-			<div class="col-md-6 mb-3">
-			    <div class="form-group">
-					<label  class=""> 帳號</label>
-					<input required class="form-control" type="text" ng-model="mem.account" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 密碼</label>
-					<input class="form-control" type="text" ng-model="mem.password" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 名字</label>
-					<input class="form-control" type="text" ng-model="mem.name" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group ">
-					<label  for="radiobutton" class=""> 性別</label>
-					<select class="form-control" >
-					  <option>男</option>
-					  <option>女</option>
-					</select>
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 身分證字號</label>
-					<input class="form-control" type="text" ng-model="mem.id_number" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 生日</label>
-					<input class="form-control" type="text" ng-model="mem.birthday" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 市話</label>
-					<input class="form-control" type="text" ng-model="mem.local_calls" />
-				</div><!-- /.form group by Job名稱 -->
-			</div>
-			<div class="col-md-6 mb-3">
-				<div class="form-group">
-					<label  class=""> 電話</label>
-					<input class="form-control" type="text" ng-model="mem.phone" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> email</label>
-					<input class="form-control" type="text" ng-model="mem.email" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> skype</label>
-					<input class="form-control" type="text" ng-model="mem.skype" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 職業</label>
-					<input class="form-control" type="text" ng-model="mem.career" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 收信人</label>
-					<input class="form-control" type="text" ng-model="mem.recipient" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 收信地址</label>
-					<input class="form-control" type="text" ng-model="mem.rec_add" />
-				</div><!-- /.form group by Job名稱 -->
-				<div class="form-group">
-					<label  class=""> 收信人電話</label>
-					<input class="form-control" type="text" ng-model="mem.rec_num" />
-				</div><!-- /.form group by Job名稱 -->
-			</div>
-			
-			<div class="col-md-12 ">
-				<div class="form-group text-center m-t-20">
-				<button type="submit" class=" btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" ng-click="insertMem()">
-					新增
-				</button>
-				</div>
-			</div>
-			</form>
+	<div class="col-md-12 ">
+		<div class="form-group text-center m-t-20">
+		<button type="submit" class=" btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" ng-click="insertMem()">
+			新增
+		</button>
 		</div>
 	</div>
+	</form>
 </div>
