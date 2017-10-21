@@ -1,11 +1,12 @@
 //app.service('apiService',['$resource',function ($resource){
-app.factory('apiService', ['$http', '$q', function($http, $q){
+app.factory('apiService', ['$http', '$q' , '$cookieStore', function($http, $q, $cookieStore){
 	
 	var REST_SERVICE_URI = 'http://localhost:8080/ren-sing/';
 	
 	var factory = {
 		getAPI : getAPI ,
-		getAPIwithObject : getAPIwithObject
+		getAPIwithObject : getAPIwithObject,
+		setCoockie : setCoockie
     };
 
     return factory;
@@ -49,5 +50,17 @@ app.factory('apiService', ['$http', '$q', function($http, $q){
     	    };
 	    return $http(config);
     };
+    
+    function setCoockie(){
+    	getAPIwithObject("session",null)
+    	.then(function(cookie) {
+    		$cookieStore.put("account",cookie.data.account);
+        	$cookieStore.put("role",cookie.data.role);
+        	$cookieStore.put("person_id",cookie.data.person_id);
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        })
+    }
 
 }])

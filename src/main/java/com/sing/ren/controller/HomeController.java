@@ -1,12 +1,17 @@
 package com.sing.ren.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,10 +77,13 @@ public class HomeController extends RSController {
 	
 	@RequestMapping(value = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
 	public String processLogout() throws Exception {
-		
 		geteKeeper.processLogout();
-		
 		return "home";
 	}
 
+	@RequestMapping(value = {"/session"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Map<String,Object>> session(HttpSession session,@RequestBody String json) {
+		return new ResponseEntity<Map<String,Object>>(geteKeeper.getSession(), HttpStatus.OK);
+	}
 }

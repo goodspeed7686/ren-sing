@@ -2,6 +2,8 @@ package com.sing.ren.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -125,5 +127,15 @@ public class GateKeeperServiceImpl extends RSService implements GateKeeperServic
 			logger.debug("clean session");
 			this.setDataToSession(Context.RS_USER, null);
 		}
+	}
+
+	@Override
+	public Map<String,Object> getSession() {
+		Map<String,Object> session = (Map<String, Object>) this.getSession(true).getAttribute(Context.RS_USER);
+		session.remove("password");
+		session.remove("login_time");
+		session.remove("status");
+		
+		return session;
 	}
 }

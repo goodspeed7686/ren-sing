@@ -49,9 +49,9 @@ app.config(function ($routeProvider,$locationProvider) {
 		templateUrl: 'pets',
 		controller: 'petsCtrl'
 
-	});
+	})
 
-//	.otherwise({redirectTo:'/curriculum'});	
+	.otherwise({redirectTo:'/curriculum'});	
 	
-	$locationProvider.html5Mode(true);
+//	$locationProvider.html5Mode(true);
 });

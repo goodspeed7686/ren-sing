@@ -1,7 +1,7 @@
-app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertService' , 
-		function ($scope , apiService , $uibModal , alertService) {
+app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertService' , '$cookieStore',
+		function ($scope , apiService , $uibModal , alertService, $cookieStore) {
     'use strict';
-    
+
     $scope.changeMode = function (mode) {
         $scope.mode = mode;
     };
@@ -12,6 +12,10 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     };
 
     $scope.isToday = function () {
+    	
+    	var favoriteCookie = $cookieStore.get('myFavorite');
+    	favoriteCookie = $cookieStore.get('role');
+    	
         var today = new Date(),
             currentCalendarDate = new Date($scope.currentDate);
 
@@ -21,6 +25,12 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     };
 
     $scope.loadEvents = function () {
+    	
+    	$cookieStore.put('myFavorite','oatmeal');
+    	
+    	apiService.setCoockie();
+        console.log($cookieStore);
+    	
         var events = [];
         apiService.getAPIwithObject("curriculum/query","")
         .then(function(result) {
