@@ -9,6 +9,13 @@ public class ClassController {
 
 	@RequestMapping(value = {"/class"}, method = RequestMethod.GET)
 	public String initHome() {
+	//	return "class/addClass";
+		return "class/classList";
+	}
+	
+	@RequestMapping(value = {"/addClass"}, method = RequestMethod.GET)
+	public String addClass() {
+	//	return "class/addClass";
 		return "class/addClass";
 	}
 }

@@ -30,6 +30,12 @@ public class MembershipController {
 	
 	@RequestMapping(value = {"/membership"}, method = RequestMethod.GET)
 	public String initHome() {
+		try {
+			validateAccount();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "membership/addMem";
 	}
 	
@@ -74,5 +80,18 @@ public class MembershipController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = {"/membership/validateAccount"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public Boolean validateAccount() throws ParseException{
+		Map<String,Object> test=new HashMap<String,Object>();
+		test.put("account", "admin");
+		List<Map<String,Object>> account=membershipService.validateAccount(test);
+		if(account==null) {
+			System.out.println("true");
+		}else {
+			System.out.println("false");
+		}
+		return true;
 	}
 }

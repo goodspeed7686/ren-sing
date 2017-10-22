@@ -110,4 +110,15 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 		}
 	}
 
+	@Override
+	public List<Map<String, Object>> validateAccount(Map<String, Object> map) {
+		
+		try {
+			return accountDAO.queryDB(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
