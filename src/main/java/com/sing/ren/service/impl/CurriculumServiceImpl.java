@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,14 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> query(Map<String,Object> map) {
 		try {
-		//	map.put("type", "0");
+			if (StringUtils.isNotBlank(MapUtils.getString(map, "date_pre", "")) &&
+				StringUtils.isNotBlank(MapUtils.getString(map, "date_now", "")) &&
+				StringUtils.isNotBlank(MapUtils.getString(map, "date_next", ""))){
+				map.put("date_pre", map.get("date_pre").toString().concat("%"));
+				map.put("date_now", map.get("date_now").toString().concat("%"));
+				map.put("date_next", map.get("date_next").toString().concat("%"));
+			}
+			
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
 			for(Map<String,Object> map2 :list){
 				if(MapUtils.getString(map2, "type","").equals("0")){

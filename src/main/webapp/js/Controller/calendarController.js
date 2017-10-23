@@ -8,14 +8,9 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
 
     $scope.today = function () {
         $scope.currentDate = new Date();
-        $scope.selectedDate = new Date();
     };
 
     $scope.isToday = function () {
-    	
-    	var favoriteCookie = $cookieStore.get('myFavorite');
-    	favoriteCookie = $cookieStore.get('role');
-    	
         var today = new Date(),
             currentCalendarDate = new Date($scope.currentDate);
 
@@ -25,14 +20,20 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     };
 
     $scope.loadEvents = function () {
-    	
-    	$cookieStore.put('myFavorite','oatmeal');
-    	
     	apiService.setCoockie();
-        console.log($cookieStore);
+    	$scope.selectedDate = new Date();
     	
+    	var date = new Date();
+    	var y = date.getFullYear();
+    	var M = date.getMonth();
+    	var data = [];
+    	data.push({
+    		'date_pre': y + '/' + M,
+    		'date_now': y + '/' + (parseInt( M ) + 1),
+    		'date_next': y + '/' + (parseInt( M ) + 2)
+    	});
         var events = [];
-        apiService.getAPIwithObject("curriculum/query","")
+        apiService.getAPIwithObject("curriculum/query",data)
         .then(function(result) {
         	for(var i=0;i<result.data.length;i++){
         		events.push( dbDateFormat( result.data[i] ));
