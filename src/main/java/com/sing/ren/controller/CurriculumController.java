@@ -47,6 +47,12 @@ public class CurriculumController {
 		return "curriculum/curriculumHistory";
 	}
 
+	/**
+	 * 查詢學生所有課程
+	 * @param session
+	 * @param json {'student_id' (必)}
+	 * @return
+	 */
 	@RequestMapping(value = {"/curriculum/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json){
 		try {
@@ -57,12 +63,31 @@ public class CurriculumController {
 		return null;
 	}
 	
-	//回傳老師空堂
+	//回傳老師空堂時間
 	@RequestMapping(value = {"/curriculum/queryBreak"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> queryBreak(HttpSession session,@RequestBody String json){
 		System.out.println(json);
 		try {
 			return new ResponseEntity<List<Map<String,Object>>>(curriculumService.queryBreak(comm.jsonToMap(json)), HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 回傳剩餘課堂數
+	 * @param session
+	 * @param json {'student_id' (必),
+	 * 				'teacher_id',
+	 * 				'type'}
+	 * @return
+	 */
+	@RequestMapping(value = {"/curriculum/queryRestClass"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> queryRestClass(HttpSession session,@RequestBody String json){
+		System.out.println(json);
+		try {
+			return new ResponseEntity<List<Map<String,Object>>>(curriculumService.queryRestClass(comm.jsonToMap(json)), HttpStatus.OK);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

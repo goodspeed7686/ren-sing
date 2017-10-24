@@ -28,6 +28,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	var M = date.getMonth();
     	var data = [];
     	data.push({
+    		'student_id': $cookieStore.get('person_id'),
     		'date_pre': y + '/' + M,
     		'date_now': y + '/' + (parseInt( M ) + 1),
     		'date_next': y + '/' + (parseInt( M ) + 2)
@@ -43,7 +44,19 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         },
         function(errResponse){
             console.error('Error while fetching Users');
-        })
+        });
+        
+        data = [];
+    	data.push({
+    		'student_id': $cookieStore.get('person_id')
+    	});
+        apiService.getAPIwithObject("curriculum/queryRestClass",data)
+        .then(function(result) {
+        	$scope.showClassList = result;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 
     $scope.onEventSelected = function (data) {
@@ -328,8 +341,21 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	$scope.selectMounth = M;
 	$scope.selectDay = d;
 	
+	$scope.searchRestClass = function(){
+		apiService.getAPIwithObject("curriculum/queryBreak" , data)
+	    .then(function(result) {
+	    	$scope.timeList = result.data;
+	    	if (data.getTime)
+	    		$scope.selectTime = data.getTime;
+	    	else
+	    		$scope.selectTime = $scope.timeList[0].start_time;
+	    },
+	    function(errResponse){
+	        console.error('Error while fetching Users');
+	    })
+	};
+	
 	$scope.searchTime = function(){
-		
 		$scope.date = $scope.selectYear.val + "/" + $scope.selectMounth.val + "/" + $scope.selectDay.val;
 		
 		var data = [];

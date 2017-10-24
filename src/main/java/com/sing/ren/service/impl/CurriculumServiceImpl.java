@@ -72,7 +72,6 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryBreak(Map<String,Object> map) {
 		try {
-		//	map.put("type", "0");
 			List<Map<String,Object>> coursesTime=coursesTimeDAO.queryDB(new HashMap<String,Object>());
 			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
 			for(int i = 0,len = coursesTime.size(); i <len; i++){
@@ -91,6 +90,20 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 				}
 			}
 			return  coursesTime;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Map<String,Object>> queryRestClass(Map<String,Object> map) {
+		try {
+			//½Òµ{¥¼µ²§ô
+			map.put("status", "0");
+			List<Map<String,Object>> result=classMasterDAO.queryDB(map);
+
+			return  result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
