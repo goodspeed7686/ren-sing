@@ -114,7 +114,8 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
   `song` varchar(50) NOT NULL DEFAULT '0' COMMENT '歌曲',
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課日期 yyyy/MM/dd',
-  `time` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課時間 hh:mm',
+  `time` varchar(2) NOT NULL DEFAULT '0' COMMENT '上課時間 (對照course_time)',
+  `ranges` varchar(2) NOT NULL DEFAULT '0' COMMENT '幾個時段',
   `hw` varchar(1000) DEFAULT '0' COMMENT '回家作業',
   `teacher_note` varchar(1000) DEFAULT '0' COMMENT '老師筆記',
   `student_note` varchar(1000) DEFAULT '0' COMMENT '學生筆記',
@@ -126,13 +127,13 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_detail 的資料：~5 rows (大約)
+-- 正在導出表  ren-sing.class_detail 的資料：~4 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
-REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `updater`, `update_time`) VALUES
-	(1, 1, '1', '1', 'song', '2017/10/09', '18:30', '0', '0', '3333', '0', '0', '1', '0', '0'),
-	(6, 1112, '123564545', '1235645456', '鬥陣取', '2017/9/16', '15:40', '大便庫子上', '測試老師2', '測試學生2', '0', '0', '0', 'updater', '2017/09/01 01:28:27'),
-	(7, 2, '2', '2', '好習慣', '2017/09/09', '20:00', '0', '0', '3333', '0', '0', '1', NULL, NULL),
-	(8, 1112, '123564545', '1235645456', '鬥陣取', '2017/11/23', '15:30', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', '0', '0');
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `updater`, `update_time`) VALUES
+	(1, 1, '1', '2017090016', 'song', '2017/10/25', '8', '4', '0', '0', '3333', '0', '0', '1', '0', '0'),
+	(6, 1112, '123564545', '2017090016', '鬥陣取', '2017/10/25', '7', '0', '大便庫子上', '測試老師2', '測試學生2', '0', '1', '0', 'updater', '2017/09/01 01:28:27'),
+	(7, 2, '2', '2017090016', '好習慣', '2017/10/25', '15', '0', '0', '0', '3333', '1', '0', '1', NULL, NULL),
+	(8, 1111, '123564545', '2017090016', '鬥陣取', '2017/10/25', '6', '0', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', '0', '0');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_master 結構

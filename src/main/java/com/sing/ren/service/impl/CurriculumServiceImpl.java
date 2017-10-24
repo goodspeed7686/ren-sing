@@ -56,13 +56,13 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			}
 			
 			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
-			for(Map<String,Object> map2 :list){
-				if(MapUtils.getString(map2, "type","").equals("0")){
-					map2.put("time",comm.timeManage(MapUtils.getString(map2, "time",""),"+",10));
-				}else{
-					map2.put("time", comm.timeManage(MapUtils.getString(map2, "time",""),"",0));
-				}
-			}
+//			for(Map<String,Object> map2 :list){
+//				if(MapUtils.getString(map2, "type","").equals("0")){
+//					map2.put("time",comm.timeManage(MapUtils.getString(map2, "time",""),"+",10));
+//				}else{
+//					map2.put("time", comm.timeManage(MapUtils.getString(map2, "time",""),"",0));
+//				}
+//			}
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,24 +72,39 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryBreak(Map<String,Object> map) {
 		try {
-			List<Map<String,Object>> coursesTime=coursesTimeDAO.queryDB(new HashMap<String,Object>());
+			List<Map<String,Object>> coursesTimListe=coursesTimeDAO.queryDB(new HashMap<String,Object>());
 			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
-			for(int i = 0,len = coursesTime.size(); i <len; i++){
-				coursesTime.get(i).put("start_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"start_time"),"+",10));
-				coursesTime.get(i).put("end_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"end_time"),"+",10));
-				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
-					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(comm.timeManage(MapUtils.getString(classDetail.get(j), "time"),"+",10))){
-						coursesTime.remove(i);
-						classDetail.remove(j);
-						len2--;
-						j--;
-						len--;
-						i--;
-						break;
+			
+			for (Map<String,Object> detailMap : classDetail){
+				String time = MapUtils.getString(detailMap, "time", "");
+				String range = MapUtils.getString(detailMap, "ranges", "");
+				if (StringUtils.isNotBlank(time) && StringUtils.isNotBlank(range)){
+					for (int i=Integer.parseInt(time) ; i<=Integer.parseInt(time)+Integer.parseInt(range) ; i++){
+						for (int j=0;j<coursesTimListe.size();j++){
+							if (coursesTimListe.get(j).get("id").equals(i)){
+								coursesTimListe.remove(j);
+							}
+						}
 					}
 				}
 			}
-			return  coursesTime;
+			
+//			for(int i = 0,len = coursesTime.size(); i <len; i++){
+//				coursesTime.get(i).put("start_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"start_time"),"+",10));
+//				coursesTime.get(i).put("end_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"end_time"),"+",10));
+//				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
+//					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(comm.timeManage(MapUtils.getString(classDetail.get(j), "time"),"+",10))){
+//						coursesTime.remove(i);
+//						classDetail.remove(j);
+//						len2--;
+//						j--;
+//						len--;
+//						i--;
+//						break;
+//					}
+//				}
+//			}
+			return  coursesTimListe;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,8 +114,10 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryRestClass(Map<String,Object> map) {
 		try {
-			//½Òµ{¥¼µ²§ô
+			//èª²ç??ªç???
 			map.put("status", "0");
+			//?ˆæ??ªé¡¯ç¤ºå€‹äººèª?
+//			map.put("type", "0");
 			List<Map<String,Object>> result=classMasterDAO.queryDB(map);
 
 			return  result;

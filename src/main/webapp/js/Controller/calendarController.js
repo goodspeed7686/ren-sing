@@ -48,11 +48,12 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         
         data = [];
     	data.push({
-    		'student_id': $cookieStore.get('person_id')
+    		'student_id': $cookieStore.get('person_id'),
+    		'type' : '0'
     	});
         apiService.getAPIwithObject("curriculum/queryRestClass",data)
         .then(function(result) {
-        	$scope.showClassList = result;
+        	$scope.showClassInfo = result.data[0];
         },
         function(errResponse){
             console.error('Error while fetching Users');
@@ -269,7 +270,10 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         	controller:'insertCtrl',
         	resolve: {
         		data: function () {
-        			return {date : $scope.selectedDate};
+        			return {date : $scope.selectedDate,
+        				    teacher_id : $scope.showClassInfo.teacher_id,
+        				    student_id : $scope.showClassInfo.student_id
+        			};
         		}
         	}
         });
@@ -341,28 +345,29 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	$scope.selectMounth = M;
 	$scope.selectDay = d;
 	
-	$scope.searchRestClass = function(){
-		apiService.getAPIwithObject("curriculum/queryBreak" , data)
-	    .then(function(result) {
-	    	$scope.timeList = result.data;
-	    	if (data.getTime)
-	    		$scope.selectTime = data.getTime;
-	    	else
-	    		$scope.selectTime = $scope.timeList[0].start_time;
-	    },
-	    function(errResponse){
-	        console.error('Error while fetching Users');
-	    })
-	};
+//	$scope.searchRestClass = function(){
+//		apiService.getAPIwithObject("curriculum/queryBreak" , data)
+//	    .then(function(result) {
+//	    	$scope.timeList = result.data;
+//	    	if (data.getTime)
+//	    		$scope.selectTime = data.getTime;
+//	    	else
+//	    		$scope.selectTime = $scope.timeList[0].start_time;
+//	    },
+//	    function(errResponse){
+//	        console.error('Error while fetching Users');
+//	    })
+//	};
 	
 	$scope.searchTime = function(){
-		$scope.date = $scope.selectYear.val + "/" + $scope.selectMounth.val + "/" + $scope.selectDay.val;
+		$scope.date = $scope.selectYear + "/" + $scope.selectMounth + "/" + $scope.selectDay;
 		
-		var data = [];
-		data.push({
-			date: $scope.date
+		var subdata = [];
+		subdata.push({
+			date: $scope.date,
+			teacher_id : data.teacher_id
 		});
-		apiService.getAPIwithObject("curriculum/queryBreak" , data)
+		apiService.getAPIwithObject("curriculum/queryBreak" , subdata)
 	    .then(function(result) {
 	    	$scope.timeList = result.data;
 	    	if (data.getTime)
