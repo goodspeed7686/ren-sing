@@ -30,6 +30,13 @@ app.config(function ($routeProvider,$locationProvider) {
 
 	})
 	
+	.when('/addClass',{
+
+		templateUrl: 'addClass',
+		controller: 'addClassCtrl'
+
+	})
+	
 	.when('/membership',{
 
 		templateUrl: 'membership',
