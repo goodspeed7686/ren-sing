@@ -1,7 +1,9 @@
 app.controller('membershipCtrl',['$scope','apiService','alertService',function ($scope,apiService,alertService) {
 
 	$scope.mem = {};
-	
+	$scope.tranToInsertMem = function (){
+    	$window.location.href = '/ren-sing/#!/addMem';
+	};
 	$scope.insertMem = function (){
 		
 		apiService.getAPIwithObject("membership/insert",$scope.mem)

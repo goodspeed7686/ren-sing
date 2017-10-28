@@ -44,6 +44,13 @@ app.config(function ($routeProvider,$locationProvider) {
 
 	})
 	
+	.when('/addMem',{
+
+		templateUrl: 'addMem',
+		controller: 'addMemCtrl'
+
+	})
+	
 	.when('/addAcc',{
 
 		templateUrl: 'addAcc',
