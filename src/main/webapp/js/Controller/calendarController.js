@@ -54,6 +54,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         apiService.getAPIwithObject("curriculum/queryRestClass",data)
         .then(function(result) {
         	$scope.showClassInfo = result.data[0];
+        	$scope.student_name = $cookieStore.get('name');
         },
         function(errResponse){
             console.error('Error while fetching Users');
@@ -380,7 +381,22 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	    })
 	};
 	
+	$scope.searchName = function(){
+		var subdata = [];
+		subdata.push({
+			person_id : data.teacher_id
+		});
+		apiService.getAPIwithObject("membership/queryPerson" , subdata)
+	    .then(function(result) {
+	    	$scope.teacher = result.data.name;
+	    },
+	    function(errResponse){
+	        console.error('Error while fetching Users');
+	    })
+	};
+	
 	$scope.searchTime();
+	$scope.searchName();
 	
 	function getYearList (){
 		var yearList = [];

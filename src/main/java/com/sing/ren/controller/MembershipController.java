@@ -30,18 +30,22 @@ public class MembershipController {
 	
 	@RequestMapping(value = {"/membership"}, method = RequestMethod.GET)
 	public String initHome() {
-		return "membership/MemList";
+		return "membership/memList";
 	}
 	
-	@RequestMapping(value = {"/addMembership"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/addMem"}, method = RequestMethod.GET)
 	public String addMembership() {
 		return "membership/addMem";
 	}
 	
 	@RequestMapping(value = {"/membership/query"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json) throws ParseException{
-//		Map<String,Object> test=new HashMap<String,Object>();
 		return new ResponseEntity<List<Map<String,Object>>>(membershipService.query(comm.jsonToMap(json)), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = {"/membership/queryPerson"}, method = {RequestMethod.GET, RequestMethod.POST})
+	public ResponseEntity<Map<String,Object>> queryPerson(HttpSession session,@RequestBody String json) throws ParseException{
+		return new ResponseEntity<Map<String,Object>>(membershipService.queryPerson(comm.jsonToMap(json)), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = {"/membership/delete"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)

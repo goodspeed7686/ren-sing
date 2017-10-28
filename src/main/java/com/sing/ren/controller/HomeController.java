@@ -84,6 +84,12 @@ public class HomeController extends RSController {
 	@RequestMapping(value = {"/session"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<Map<String,Object>> session(HttpSession session,@RequestBody String json) {
-		return new ResponseEntity<Map<String,Object>>(geteKeeper.getSession(), HttpStatus.OK);
+		try {
+			return new ResponseEntity<Map<String,Object>>(geteKeeper.getSession(), HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

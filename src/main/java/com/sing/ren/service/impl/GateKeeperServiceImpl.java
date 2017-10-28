@@ -2,8 +2,6 @@ package com.sing.ren.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.sing.ren.Context;
 import com.sing.ren.dao.table.AccountDAO;
+import com.sing.ren.dao.table.PersonDAO;
 import com.sing.ren.service.GateKeeperService;
 import com.sing.ren.service.RSService;
 import com.sing.ren.service.security.AccountPermissionType;
@@ -27,6 +26,9 @@ public class GateKeeperServiceImpl extends RSService implements GateKeeperServic
 	
 	@Autowired
 	AccountDAO accountDAO;
+	
+	@Autowired
+	PersonDAO personDAO;
 	
 	@Override
 	public boolean isUserLogin() {
@@ -130,11 +132,13 @@ public class GateKeeperServiceImpl extends RSService implements GateKeeperServic
 	}
 
 	@Override
-	public Map<String,Object> getSession() {
+	public Map<String,Object> getSession() throws Exception {
 		Map<String,Object> session = (Map<String, Object>) this.getSession(true).getAttribute(Context.RS_USER);
 		session.remove("password");
 		session.remove("login_time");
 		session.remove("status");
+		Map<String,Object> result = personDAO.queryOne(session);
+		session.put("name", result.get("name"));
 		
 		return session;
 	}

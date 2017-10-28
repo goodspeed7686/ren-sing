@@ -47,7 +47,7 @@ app.config(function ($routeProvider,$locationProvider) {
 	.when('/addMem',{
 
 		templateUrl: 'addMem',
-		controller: 'addMemCtrl'
+		controller: 'addMbershipCtrl'
 
 	})
 	

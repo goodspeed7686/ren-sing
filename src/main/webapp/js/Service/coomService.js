@@ -57,6 +57,7 @@ app.factory('apiService', ['$http', '$q' , '$cookieStore', function($http, $q, $
     		$cookieStore.put("account",cookie.data.account);
         	$cookieStore.put("role",cookie.data.role);
         	$cookieStore.put("person_id",cookie.data.person_id);
+        	$cookieStore.put("name",cookie.data.name);
         },
         function(errResponse){
             console.error('Error while fetching Users');

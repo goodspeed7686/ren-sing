@@ -77,6 +77,18 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	}
 	
 	@Override
+	public Map<String, Object> queryPerson(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		try {
+			return personDAO.queryOne(map);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
 	public void update(Map<String,Object> map) {
 		try {
 			
@@ -120,5 +132,4 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 		}
 		return null;
 	}
-
 }
