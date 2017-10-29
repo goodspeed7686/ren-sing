@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.service.MasterService;
@@ -43,5 +44,16 @@ public class ClassController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value = {"/class/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void insert(HttpSession session,@RequestBody String json) {
+	//	System.out.println(json);
+		try {
+			masterService.insert(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 }

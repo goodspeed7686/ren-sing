@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sing.ren.dao.table.ClassMasterDAO;
-import com.sing.ren.pojo.ClassMaster;
 import com.sing.ren.service.MasterService;
 import com.sing.ren.service.RSService;
 
@@ -36,6 +35,16 @@ public class MasterServiceImpl extends RSService implements MasterService{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void insert(Map<String, Object> map) {
+		try {
+			  classMasterDAO.insertDB(map);
+			  
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 
 }

@@ -68,8 +68,7 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	public List<Map<String,Object>> query(Map<String,Object> map) {
 		try {
 		//	map.put("type", "0");
-			List<Map<String,Object>> list=null;
-			return list;
+			return  personDAO.queryDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
