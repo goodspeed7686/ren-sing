@@ -4,11 +4,10 @@
 /*全部設定字體*/
  body { font-family: 微軟正黑體; }
 //-->
-
 </style>
 <div ng-controller="calendarCtrl" ng-init="loadEvents()">
-<div class="row" style="margin-top: 20px;">
-	<span>學員姓名:&nbsp;</span><span>{{student_name}} </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;課堂總數:&nbsp;</span><span>{{showClassInfo.summary}}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;剩餘課堂數:&nbsp;</span><span>{{showClassInfo.rest}}</span>
+<div class="row" style="margin-top: 20px;font-size:16px;">
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;學員姓名:&nbsp;</span><span style="font-weight:bold;color:#2200AA;">{{student_name}} </span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;課堂總數:&nbsp;</span><span style="font-weight:bold;color:#2200AA;">{{showClassInfo.summary}}</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;剩餘課堂數:&nbsp;</span><span style="font-weight:bold;color:#2200AA;">{{showClassInfo.rest}}</span>
 </div>
 
 
