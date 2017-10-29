@@ -1,4 +1,4 @@
-app.controller('addMembershipCtrl',['$scope','apiService','alertService','$window',function ($scope,apiService,alertService,$window) {
+app.controller('addMbershipCtrl',['$scope','apiService','alertService','$window',function ($scope,apiService,alertService,$window) {
 
 	$scope.mem = {};
 

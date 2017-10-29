@@ -48,32 +48,14 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr>
+		    <tr ng-repeat="class in classList>
 		      <th scope="row">1</th>
-		      <td>2017/08/06</td>
-		      <td>13:50</td>
-		      <td>個人</td>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>修改</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>2017/08/28</td>
-		      <td>13:50</td>
-		      <td>個人</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
-		      <td>修改</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td>2017/11/06</td>
-		      <td>13:50</td>
-		      <td>團體</td>
-		      <td>the Bird</td>
-		      <td>@twitter</td>
-		      <td>修改</td>
+		      <td>{{ class.date }}</td>
+		      <td>{{ class.time }}</td>
+		      <td>{{ class.type }}</td>
+		      <td>{{ class.teacher_name }}</td>
+		      <td>{{ class.student_name }}</td>
+		      <td><button type="button"  class="btn btn-info" ng-click="update(class)">修改</button></td>
 		    </tr>
 		  </tbody>
 		</table>
