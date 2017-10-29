@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 import com.sing.ren.common.CommonTools;
@@ -21,6 +23,8 @@ import com.sing.ren.ibatis.BatisRow;
 import com.sing.ren.pojo.DAOEntity;
 
 @SuppressWarnings("deprecation")
+@Repository
+@Transactional
 public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterface<Object> {
 
 	@Resource(name = "sqlMapClient")
@@ -122,6 +126,18 @@ public class BaseDao extends SqlMapClientDaoSupport implements BaseAccessInterfa
 		
 		try {
 			queryResult.addAll( getSqlMapClientTemplate().queryForList(statementIdForQuery(), params) );
+		} catch (DataAccessException e) {
+			throw new SqlAccessException(e.getRootCause().toString());
+		}
+		
+		return queryResult;
+	}
+	
+	public List<?> query(Object params,String statmentId) throws Exception {
+		List<?> queryResult = new ArrayList<>();
+		
+		try {
+			queryResult.addAll( getSqlMapClientTemplate().queryForList(nsForTableStatements(statmentId), params) );
 		} catch (DataAccessException e) {
 			throw new SqlAccessException(e.getRootCause().toString());
 		}
