@@ -28,4 +28,14 @@ public class MasterServiceImpl extends RSService implements MasterService{
 		return null;
 	}
 
+	@Override
+	public List<Map<String, Object>> query(Map<String, Object> map) {
+		try {
+			return classMasterDAO.queryDB(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
