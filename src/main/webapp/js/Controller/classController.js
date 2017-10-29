@@ -33,7 +33,7 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
     $scope.update = function(row){
     	data = [];
     	data.push({
-    		'title_name' : '½s¿è',
+    		'title_name' : 'ç·¨è¼¯',
     		'class' : row
     	})
     	sharedProperties.setProperty(data);

@@ -6,7 +6,7 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 		$scope.role = $cookieStore.get('role');
 		var data = sharedProperties.getProperty();
 		$scope.title_name = data[0].title_name;
-		if ($scope.title_name == '½s¿è'){
+		if ($scope.title_name == 'ç·¨è¼¯'){
 			$scope.title = 1;
 		}else{
 			$scope.title = 0;

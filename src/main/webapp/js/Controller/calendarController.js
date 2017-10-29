@@ -400,7 +400,7 @@ app.controller('insertCtrl', function($scope,$uibModalInstance,apiService,data){
 	
 	function getYearList (){
 		var yearList = [];
-		//2ï¿?
+		//2ï¿½?
 		for (var i=0;i<2;i++)
 			yearList.push({val: parseInt(y)+i});
 		

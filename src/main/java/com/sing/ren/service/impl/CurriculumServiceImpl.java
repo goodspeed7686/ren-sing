@@ -114,9 +114,9 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryRestClass(Map<String,Object> map) {
 		try {
-			//課�??��???
+			//課程未結束
 			map.put("status", "0");
-			//?��??�顯示個人�?
+			//月曆只顯示個人課
 //			map.put("type", "0");
 			List<Map<String,Object>> result=classMasterDAO.queryDB(map);
 
