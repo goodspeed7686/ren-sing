@@ -23,13 +23,14 @@
 }
 </style>
 
+<div ng-init="loadEvents()">
 <div class="row">
 <div class="page-title-box">
 	<ol class="breadcrumb pull-right">
 		<li>課的定義</li>
-		<li class="active">新增課程</li>
+		<li class="active">{{ title_name }}課程</li>
 	</ol>
-	<h4 class="page-title font">新增課程</h4>
+	<h4 class="page-title font">{{ title_name }}課程</h4>
 </div>
  <form class=" " >
 	<div class="col-md-6 mb-3">
@@ -43,45 +44,45 @@
 			  <option>個人</option>
 			  <option>團體</option>
 			</select>
-		</div><!-- /.form group by Job名稱 -->
+		</div>
+		<div class="form-group">
+			<label  class=""> 老師</label>
+			<input class="form-control" type="text" ng-model="addClass.teacher_name" />
+		</div>
+		<div class="form-group">
+			<label  class=""> 課堂總數</label>
+			<input class="form-control" type="text" ng-model="addClass.summary" />
+		</div>
+		<div class="form-group">
+			<label  class=""> 目前上課次數</label>
+			<input class="form-control" type="text" ng-model="addClass.count" />
+		</div>
+	</div>
+	
+	<div class="col-md-6 mb-3">
+		<div class="form-group">
+			<label  class=""> 上課地點</label>
+			<input class="form-control" type="text" ng-model="addClass.place" />
+		</div>
 		<div class="form-group">
 			<label  for="radiobutton" class=""> 課程等級</label>
 			<select class="form-control" >
 			  <option>男</option>
 			  <option>女</option>
 			</select>
-		</div><!-- /.form group by Job名稱 -->
-		<div class="form-group">
-			<label  class=""> 課程狀態</label>
-			<input class="form-control" type="text" ng-model="addClass.status" />
-		</div><!-- /.form group by Job名稱 -->
-		<div class="form-group">
-			<label  class=""> 課堂總數</label>
-			<input class="form-control" type="text" ng-model="addClass.summary" />
-		</div><!-- /.form group by Job名稱 -->
-		
-	</div>
-	<div class="col-md-6 mb-3">
-		<div class="form-group">
-			<label  class=""> 上課地點</label>
-			<input class="form-control" type="text" ng-model="addClass.place" />
-		</div><!-- /.form group by Job名稱 -->
-		<div class="form-group">
-			<label  class=""> 老師</label>
-			<input class="form-control" type="text" ng-model="addClass.teacher_name" />
-		</div><!-- /.form group by Job名稱 -->
+		</div>
 		<div class="form-group">
 			<label  class=""> 學生</label>
 			<input class="form-control" type="text" ng-model="addClass.student_name" />
-		</div><!-- /.form group by Job名稱 -->
-		<div class="form-group">
-			<label  class=""> 目前上課次數</label>
-			<input class="form-control" type="text" ng-model="addClass.count" />
-		</div><!-- /.form group by Job名稱 -->
+		</div>
 		<div class="form-group">
 			<label  class=""> 課程開啟時間</label>
 			<input class="form-control" type="text" ng-model="addClass.s_date" />
-		</div><!-- /.form group by Job名稱 -->
+		</div>
+		<div class="form-group">
+			<label  class=""> 課程狀態</label>
+			<input class="form-control" type="text" ng-model="addClass.status" />
+		</div>
 	</div>
 	
 	<div class="col-md-12 ">
@@ -95,4 +96,5 @@
 		</div>
 	</div>
 	</form>
+</div>
 </div>
