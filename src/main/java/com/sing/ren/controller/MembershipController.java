@@ -38,7 +38,7 @@ public class MembershipController {
 		return "membership/addMem";
 	}
 	
-	@RequestMapping(value = {"/membership/query"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {"/membership/query"}, method = {RequestMethod.GET, RequestMethod.POST,}, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json) throws ParseException{
 		return new ResponseEntity<List<Map<String,Object>>>(membershipService.query(comm.jsonToMap(json)), HttpStatus.OK);
 	}
