@@ -26,12 +26,13 @@ CREATE TABLE IF NOT EXISTS `account` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.account 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.account 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 REPLACE INTO `account` (`account`, `password`, `role`, `status`, `person_id`) VALUES
 	('000', '000', NULL, NULL, '2017090016'),
 	('111', '000', NULL, NULL, '2017090027'),
-	('admin', '123123', '0', '1', '9527');
+	('admin', '123123', '0', '1', '9527'),
+	('qwe', 'qwe', '2', '1', '2017100015');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.achievement 結構
@@ -106,6 +107,20 @@ CREATE TABLE IF NOT EXISTS `bill_log` (
 /*!40000 ALTER TABLE `bill_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bill_log` ENABLE KEYS */;
 
+-- 導出  表 ren-sing.ckass_place 結構
+CREATE TABLE IF NOT EXISTS `ckass_place` (
+  `class_place_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT '0',
+  PRIMARY KEY (`class_place_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在導出表  ren-sing.ckass_place 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `ckass_place` DISABLE KEYS */;
+REPLACE INTO `ckass_place` (`class_place_id`, `name`) VALUES
+	(1, '菜寮'),
+	(2, '新竹');
+/*!40000 ALTER TABLE `ckass_place` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.class_detail 結構
 CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_detail_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -136,6 +151,21 @@ REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`,
 	(8, 1111, '123564545', '2017090016', '鬥陣取', '2017/10/25', '6', '0', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', '0', '0');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
+-- 導出  表 ren-sing.class_level 結構
+CREATE TABLE IF NOT EXISTS `class_level` (
+  `class_level_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`class_level_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- 正在導出表  ren-sing.class_level 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `class_level` DISABLE KEYS */;
+REPLACE INTO `class_level` (`class_level_id`, `name`) VALUES
+	(1, '入門班'),
+	(2, '基礎班'),
+	(3, '進階班');
+/*!40000 ALTER TABLE `class_level` ENABLE KEYS */;
+
 -- 導出  表 ren-sing.class_master 結構
 CREATE TABLE IF NOT EXISTS `class_master` (
   `class_master_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -160,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `class_master` (
 -- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1111, '音樂課', '0', '0', '0', '25000', '24', '0', '24', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/10/19 21:26:20'),
+	(1111, '音樂課', '0', '0', '0', '25000', '24', '1', '23', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/10/26 23:18:51'),
 	(1112, '喇叭樂課', '1', '1', '0', '25000', '12', '0', '12', '2017/09/02', '2017/10/2', '菜寮', '2017090027', '9527', '0', '0');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
@@ -235,11 +265,12 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.person 的資料：~3 rows (大約)
+-- 正在導出表  ren-sing.person 的資料：~4 rows (大約)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
 REPLACE INTO `person` (`person_id`, `virtual_account`, `name`, `nickname`, `balance`, `id_number`, `sex`, `birthday`, `local_calls`, `phone`, `email`, `skype`, `career`, `recipient`, `rec_add`, `rec_num`, `company_tax_id`, `updater`, `update_time`) VALUES
 	('2017090016', '0', '韋小寶', '小寶', '0', '1', '0', '19870806', '22', '11', '1', '11', '11', '11', '11', '11', '11', '11', '11'),
 	('2017090027', '0', '滅絕師太', '妖尼姑', '0', '1', '1', '19870806', '33', '22', '22', '2', '2', '22', '2', '2', '22', '2', '2'),
+	('2017100015', NULL, 'qwe', NULL, NULL, 'C666666666', NULL, '1989/05/11', '24323772', '24323772', '24323772@aaa.aaa', '24323772@aaa.aaa', '5566', '5566', '5566', '5566', NULL, 'updater', '2017/10/29 17:52:52'),
 	('9527', '0', '上帝視角', '勝利組', '0', '9527', '0', '19890513', '02-5566', '09875566', '5566@gmail.com', '5566@gmail.com', '上帝', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 
