@@ -1,6 +1,5 @@
 app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore', 'sharedProperties',
 	function ($scope,apiService,$window,$cookieStore,sharedProperties){
-//	$scope.addClass = [];
 	
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
@@ -8,10 +7,12 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 		$scope.title_name = data[0].title_name;
 		if ($scope.title_name == '編輯'){
 			$scope.title = 1;
+			$scope.addClass = data[0].class;
 		}else{
 			$scope.title = 0;
+			$scope.addClass = [];
 		}
-		$scope.addClass = data[0].class;
+		
 		
 //		if ($cookieStore.get('role') != '0'){
 //	        data = [];
@@ -37,11 +38,7 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         	
         },
         function(errResponse){
-//        	var str = errResponse.data.lastIndexOf(".html");
-//        	var sub = errResponse.data.substring(0,str+3);
-//        	var msg = /[^/]*$/.exec(sub)[0];
-//            
-//            alertService.open(msg.split(".")[0]);
+        	
         })
 		
 	};

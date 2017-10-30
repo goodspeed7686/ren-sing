@@ -39,34 +39,37 @@
 	  <div class="col-xs-4">
 	    <div class="input-group">
 		    <span class="input-group-addon">日期</span>
-		    <input  type="text" class="form-control">
+		    <input  type="text" class="form-control" ng-model="calssQuery.date">
 		</div>
 		
 		<div class="input-group" style="margin-top:15px;">
 		    <span class="input-group-addon">老師</span>
-		    <input  type="text" class="form-control"  >
+		    <input  type="text" class="form-control" ng-model="calssQuery.teacher">
 		</div>
 	  </div>
 	  <div class="col-xs-4">
 	    <div class="input-group" >
 		    <span class="input-group-addon">類別</span>
-		    <select class="form-control" >
-			  <option value="0">一對一個別課</option>
-			  <option value="1">阿卡團體班</option>
+		    <select class="form-control" ng-model="calssQuery.type"
+					ng-options="opt.val as opt.val for opt in typeList"></select>
+<!-- 			  <option value="0">一對一個別課</option> -->
+<!-- 			  <option value="1">阿卡團體班</option> -->
 			</select>
 		</div>
 		<div class="input-group" style="margin-top:15px;">
 		    <span class="input-group-addon">學生</span>
-		    <input  type="text" class="form-control">
+		    <input  type="text" class="form-control" ng-model="calssQuery.student">
 		</div>
 	  </div>
 	  
 	  <div class="col-xs-2 ">
 	  	<div style="margin-top:45px;">
-	  	<button type="button" class="btn btn-warning" >查詢</button>
+	  	<button type="button" class="btn btn-warning" ng-click="query">查詢</button>
 	  	</div>
 	  </div>
 	</div>
+</div>
+<div class="row">
 	<div class="col-md-12 ">
 		<table class="table table-striped">
 		  <thead>

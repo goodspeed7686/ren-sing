@@ -2,8 +2,14 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
 	function ($scope,apiService,$window,$cookieStore,sharedProperties){
 
 	$scope.class = [];
+	$scope.classQuery = [];
 	
 	$scope.tranToInsertClass = function (){
+		data = [];
+    	data.push({
+    		'title_name' : '新增'
+    	})
+    	sharedProperties.setProperty(data);
         $window.location.href = '/ren-sing/#!/addClass';
 	}
 	
@@ -28,6 +34,14 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
         function(errResponse){
             console.error('Error while fetching Users');
         });
+		
+		apiService.getAPIwithObject("com/classType",data)
+        .then(function(result) {
+        	$scope.typeList = result.data;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 
     $scope.update = function(row){
@@ -38,5 +52,15 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
     	})
     	sharedProperties.setProperty(data);
     	$window.location.href = '/ren-sing/#!/addClass';
+    };
+    
+    $scope.query = function(){
+    	apiService.getAPIwithObject("class/query",$scope.classQuery)
+        .then(function(result) {
+        	$scope.classList = result.data;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 }]);
