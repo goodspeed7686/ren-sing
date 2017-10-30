@@ -35,53 +35,74 @@
  <form class=" " >
 	<div class="col-md-6 mb-3">
 	    <div class="form-group">
-			<label  class=""> 課程名稱</label>
-			<input required class="form-control" type="text" ng-model="addClass.name" />
+			<div class="input-group">
+			    <span class="input-group-addon">課程名稱</span>
+			    <input required type="text" class="form-control" ng-model="addClass.name">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  for="radiobutton" class=""> 課程類型</label>
-			<select class="form-control" >
+			<div class="input-group">
+			    <span class="input-group-addon">課程類型</span>
+			<select class="form-control" ng-model="addClass.type_name">
 			  <option value="0">一對一個別課</option>
 			  <option value="1">阿卡團體班</option>
 			</select>
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 老師</label>
-			<input class="form-control" type="text" ng-model="addClass.teacher_name" />
+			<div class="input-group">
+			    <span class="input-group-addon">老師</span>
+			    <input required type="text" class="form-control" ng-model="addClass.teacher_name">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 課堂總數</label>
-			<input class="form-control" type="text" ng-model="addClass.summary" />
+			<div class="input-group">
+			    <span class="input-group-addon">課堂總數</span>
+			    <input required type="text" class="form-control" ng-model="addClass.summary">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 目前上課次數</label>
-			<input class="form-control" type="text" ng-model="addClass.count" />
+			<div class="input-group">
+			    <span class="input-group-addon">目前上課次數</span>
+			    <input required type="text" class="form-control" ng-model="addClass.count">
+			</div>
 		</div>
 	</div>
 	
 	<div class="col-md-6 mb-3">
 		<div class="form-group">
-			<label  class=""> 上課地點</label>
-			<input class="form-control" type="text" ng-model="addClass.place" />
+			<div class="input-group">
+			    <span class="input-group-addon">上課地點</span>
+			    <input required type="text" class="form-control" ng-model="addClass.place">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  for="radiobutton" class=""> 課程等級</label>
-			<select class="form-control" >
-			  <option>男</option>
-			  <option>女</option>
-			</select>
+			<div class="input-group">
+			    <span class="input-group-addon">課程等級</span>
+			    <select class="form-control" >
+				  <option value="0">入門班</option>
+				  <option value="1">基礎班</option>
+				  <option value="2">進階班</option>
+				</select>
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 學生</label>
-			<input class="form-control" type="text" ng-model="addClass.student_name" />
+			<div class="input-group">
+			    <span class="input-group-addon">學生</span>
+			    <input required type="text" class="form-control" ng-model="addClass.student_name">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 課程開啟時間</label>
-			<input class="form-control" type="text" ng-model="addClass.s_date" />
+			<div class="input-group">
+			    <span class="input-group-addon">課程開啟時間</span>
+			    <input required type="text" class="form-control" ng-model="addClass.s_date">
+			</div>
 		</div>
 		<div class="form-group">
-			<label  class=""> 課程狀態</label>
-			<input class="form-control" type="text" ng-model="addClass.status" />
+			<div class="input-group">
+			    <span class="input-group-addon">課程狀態</span>
+			    <input required type="text" class="form-control" ng-model="addClass.status">
+			</div>
 		</div>
 	</div>
 	
