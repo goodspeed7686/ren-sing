@@ -35,7 +35,7 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
             console.error('Error while fetching Users');
         });
 		
-		apiService.getAPIwithObject("com/classType",data)
+		apiService.getAPIwithObject("comProperties/classType",data)
         .then(function(result) {
         	$scope.typeList = result.data;
         },

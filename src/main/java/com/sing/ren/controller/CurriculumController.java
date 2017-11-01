@@ -44,7 +44,7 @@ public class CurriculumController {
 	
 	@RequestMapping(value = {"/curriculum/history"}, method = RequestMethod.GET)
 	public String history() {
-		return "curriculum/curriculumHistory";
+		return "curriculum/popupHistory";
 	}
 
 	/**

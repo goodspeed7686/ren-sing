@@ -42,7 +42,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         	
         	$scope.eventSource = events;
         },
-        function(errResponse){
+        function(errResponse) {
             console.error('Error while fetching Users');
         });
         
@@ -56,7 +56,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         	$scope.showClassInfo = result.data[0];
         	$scope.student_name = $cookieStore.get('name');
         },
-        function(errResponse){
+        function(errResponse) {
             console.error('Error while fetching Users');
         });
     };
@@ -77,7 +77,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	$scope.currentEvent = [];
     };
     
-    $scope.insertCourse = function(currentEvent){
+    $scope.insertCourse = function(currentEvent) {
     	
     	if (!currentEvent.date && !currentEvent.time){
     		var date = new Date(currentEvent.startTime);
@@ -91,19 +91,25 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
         	currentEvent.time = h + ":" + m;
     	}
     	
+    	currentEvent.class_master_id = $scope.showClassInfo.class_master_id;
+    	currentEvent.student_id = $scope.showClassInfo.student_id;
+    	currentEvent.teacher_id = $scope.showClassInfo.teacher_id;
+    	//個人課
+    	currentEvent.range = 1;
+    	
     	apiService.getAPIwithObject("curriculum/insert" , currentEvent)
         .then(function(result) {
         	
         },
-        function(errResponse){
+        function(errResponse) {
             console.error('Error while fetching Users');
         })
     	
     }
     
-    $scope.updateCourse = function(currentEvent){
+    $scope.updateCourse = function(currentEvent) {
     	
-    	if (currentEvent.startTime){
+    	if (currentEvent.startTime) {
     		var date = new Date(currentEvent.startTime);
         	var y = date.getFullYear();
         	var M = date.getMonth() + 1;
@@ -125,7 +131,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	
     }
 
-	$scope.deleteCourse = function(currentEvent){
+	$scope.deleteCourse = function(currentEvent) {
 		
 		var data = [];
 		
@@ -147,7 +153,7 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
 //        console.log('Selected time: ' + selectedTime + ' hasEvents: ' + (events !== undefined && events.length !== 0));
     };
     
-    function dbDateFormat(result){
+    function dbDateFormat(result) {
     	
     	var title = result.class_master_id;
     	var date = result.date;
