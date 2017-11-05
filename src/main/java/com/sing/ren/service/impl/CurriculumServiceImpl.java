@@ -93,21 +93,6 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 				}
 			}
 			
-//			for(int i = 0,len = coursesTime.size(); i <len; i++){
-//				coursesTime.get(i).put("start_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"start_time"),"+",10));
-//				coursesTime.get(i).put("end_time",comm.timeManage(MapUtils.getString(coursesTime.get(i),"end_time"),"+",10));
-//				for(int j = 0,len2 = classDetail.size(); j <len2; j++){
-//					if(MapUtils.getString(coursesTime.get(i), "start_time").equals(comm.timeManage(MapUtils.getString(classDetail.get(j), "time"),"+",10))){
-//						coursesTime.remove(i);
-//						classDetail.remove(j);
-//						len2--;
-//						j--;
-//						len--;
-//						i--;
-//						break;
-//					}
-//				}
-//			}
 			return  coursesTimListe;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,9 +103,9 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryRestClass(Map<String,Object> map) {
 		try {
-			//課程未結束
+			//�ҵ{���A
 			map.put("status", "0");
-			//月曆只顯示個人課
+			//�ӤH�ҥN�X
 //			map.put("type", "0");
 			List<Map<String,Object>> result=classMasterDAO.queryDB(map);
 

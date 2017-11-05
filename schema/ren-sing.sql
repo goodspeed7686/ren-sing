@@ -110,15 +110,16 @@ CREATE TABLE IF NOT EXISTS `bill_log` (
 -- 導出  表 ren-sing.ckass_place 結構
 CREATE TABLE IF NOT EXISTS `ckass_place` (
   `class_place_id` int(11) NOT NULL AUTO_INCREMENT,
+  `place` varchar(2) NOT NULL DEFAULT '0',
   `name` varchar(50) DEFAULT '0',
   PRIMARY KEY (`class_place_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.ckass_place 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.ckass_place 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `ckass_place` DISABLE KEYS */;
-REPLACE INTO `ckass_place` (`class_place_id`, `name`) VALUES
-	(1, '菜寮'),
-	(2, '新竹');
+REPLACE INTO `ckass_place` (`class_place_id`, `place`, `name`) VALUES
+	(1, '0', '菜寮'),
+	(2, '0', '新竹');
 /*!40000 ALTER TABLE `ckass_place` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_detail 結構
@@ -127,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_master_id` int(11) NOT NULL DEFAULT '0',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
-  `song` varchar(50) NOT NULL DEFAULT '0' COMMENT '歌曲',
+  `song` varchar(50) DEFAULT '0' COMMENT '歌曲',
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課日期 yyyy/MM/dd',
   `time` varchar(2) NOT NULL DEFAULT '0' COMMENT '上課時間 (對照course_time)',
   `ranges` varchar(2) NOT NULL DEFAULT '0' COMMENT '幾個時段',
@@ -154,16 +155,17 @@ REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`,
 -- 導出  表 ren-sing.class_level 結構
 CREATE TABLE IF NOT EXISTS `class_level` (
   `class_level_id` int(11) NOT NULL AUTO_INCREMENT,
+  `level` varchar(2) NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`class_level_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_level 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.class_level 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `class_level` DISABLE KEYS */;
-REPLACE INTO `class_level` (`class_level_id`, `name`) VALUES
-	(1, '入門班'),
-	(2, '基礎班'),
-	(3, '進階班');
+REPLACE INTO `class_level` (`class_level_id`, `level`, `name`) VALUES
+	(1, '1', '入門班'),
+	(2, '2', '基礎班'),
+	(3, '3', '進階班');
 /*!40000 ALTER TABLE `class_level` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_master 結構
@@ -190,8 +192,8 @@ CREATE TABLE IF NOT EXISTS `class_master` (
 -- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1111, '音樂課', '0', '0', '0', '25000', '24', '1', '23', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/10/26 23:18:51'),
-	(1112, '喇叭樂課', '1', '1', '0', '25000', '12', '0', '12', '2017/09/02', '2017/10/2', '菜寮', '2017090027', '9527', '0', '0');
+	(1111, '音樂課', '0', '0', '0', '25000', '24', '4', '20', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/11/05 18:43:24'),
+	(1112, '喇叭樂課', '1', '1', '0', '25000', '12', '1', '11', '2017/09/02', '2017/10/2', '菜寮', '2017090027', '9527', 'updater', '2017/11/01 21:10:45');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_type 結構

@@ -37,23 +37,6 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
             console.error('Error while fetching Users');
         });
-		
-//		if ($cookieStore.get('role') != '0'){
-//	        data = [];
-//	    	data.push({
-//	    		'student_id': $cookieStore.get('person_id'),
-//	    		'restForMastQuery' : ' '
-//	    	});
-//	        apiService.getAPIwithObject("class/query",data)
-//	        .then(function(result) {
-//	        	$scope.addClass = result.data[0];
-//	        },
-//	        function(errResponse){
-//	            console.error('Error while fetching Users');
-//	        });
-//		}else{
-//			$scope.addClass.count = 0;
-//		}
     };
 
 	$scope.insertClass = function(){		

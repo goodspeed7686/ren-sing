@@ -23,6 +23,7 @@
 }
 </style>
 
+<div ng-init="loadEvents()">
 <div class="row">
 <div class="page-title-box">
 	<ol class="breadcrumb pull-right">
@@ -80,32 +81,16 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>0983-958-745</td>
-		      <td>rgrgrg848w@gmail.com</td>
-		      
-		      <td>修改</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>0921-658-945</td>
-		      <td>rgrgrg848w@gmail.com</td>
-		      <td>修改</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td>Larry</td>
-		      <td>the Bird</td>
-		      <td>0909-854-365</td>
-		      <td>rgrgrg848w@gmail.com</td>
-		      <td>修改</td>
+			<tr ng-repeat="row in memList">
+		      <td>{{ $index + 1 }}</td>
+		      <td>{{ row.person_id }}</td>
+		      <td>{{ row.name }}</td>
+		      <td>{{ row.phone }}</td>
+		      <td>{{ row.email }}</td>
+		      <td><button type="button"  class="btn btn-info" ng-click="update(row)">修改</button></td>
 		    </tr>
 		  </tbody>
 		</table>
 	</div>
+</div>
 </div>
