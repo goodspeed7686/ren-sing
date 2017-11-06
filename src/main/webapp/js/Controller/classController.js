@@ -2,17 +2,8 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
 	function ($scope,apiService,$window,$cookieStore,sharedProperties){
 
 	$scope.class = [];
-	$scope.classQuery = [];
-	
-	$scope.tranToInsertClass = function (){
-		data = [];
-    	data.push({
-    		'title_name' : '新增'
-    	})
-    	sharedProperties.setProperty(data);
-        $window.location.href = '/ren-sing/#!/addClass';
-	}
-	
+	$scope.classQuery = {};
+
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
 		
@@ -43,14 +34,16 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
             console.error('Error while fetching Users');
         });
     };
+    
+    $scope.tranToInsertClass = function (){
+    	$cookieStore.put("class_title_name", "新增");
+    	$cookieStore.remove("class_data");
+        $window.location.href = '/ren-sing/#!/addClass';
+	}
 
     $scope.update = function(row){
-    	data = [];
-    	data.push({
-    		'title_name' : '編輯',
-    		'class' : row
-    	})
-    	sharedProperties.setProperty(data);
+    	$cookieStore.put("class_title_name", "編輯");
+    	$cookieStore.put("class_data", row);
     	$window.location.href = '/ren-sing/#!/addClass';
     };
     

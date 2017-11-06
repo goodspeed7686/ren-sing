@@ -3,12 +3,10 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
-		var data = sharedProperties.getProperty();
-		if (data)
-			$scope.title_name = data[0].title_name;
+		$scope.title_name = $cookieStore.get("class_title_name");
 		if ($scope.title_name == '編輯'){
 			$scope.title = 1;
-			$scope.addClass = data[0].class;
+			$scope.addClass = $cookieStore.get("class_data");
 		}else{
 			$scope.title = 0;
 			$scope.addClass = [];
@@ -17,10 +15,6 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 		apiService.getAPIwithObject("comProperties/classType",null)
         .then(function(result) {
         	$scope.typeList = result.data;
-        	
-        	if ($scope.title == 1) {
-//        		$scope.addClass.class_type = $scope.addClass.type;
-        	}
         },
         function(errResponse){
             console.error('Error while fetching Users');
@@ -29,10 +23,6 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 		apiService.getAPIwithObject("comProperties/classLevel",null)
         .then(function(result) {
         	$scope.levelList = result.data;
-        	
-        	if ($scope.title == 1) {
-//        		$scope.addClass.level = $scope.addClass.level;
-        	}
         },
         function(errResponse){
             console.error('Error while fetching Users');
