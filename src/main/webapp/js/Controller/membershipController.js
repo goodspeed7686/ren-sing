@@ -6,7 +6,7 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
 	$scope.tranToInsertmem = function (){
 		data = [];
     	data.push({
-    		'title_name' : '·s¼W'
+    		'title_name' : 'æ–°å¢ž'
     	})
     	sharedProperties.setProperty(data);
         $window.location.href = '/ren-sing/#!/addmem';
@@ -38,7 +38,7 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
     $scope.update = function(row){
     	data = [];
     	data.push({
-    		'title_name' : '½s¿è',
+    		'title_name' : 'ç·¨è¼¯',
     		'mem' : row
     	})
     	sharedProperties.setProperty(data);
