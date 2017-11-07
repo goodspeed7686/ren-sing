@@ -22,7 +22,16 @@
 	font-family: Microsoft JhengHei;
 }
 </style>
-
+<script type="text/javascript">
+        $(function () {
+            $('#datetimepicker10').datetimepicker({
+            	autoclose : true,
+            	minView : "2",
+            	viewMode: 'years',
+                format: 'yyyy/mm/dd'
+            });
+        });
+</script>
 <div class="row">
 <div class="page-title-box">
 	<ol class="breadcrumb pull-right">
@@ -80,7 +89,13 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">生日</span>
+			    <div class='input-group date' id='datetimepicker10' >
 			    <input required type="text" class="form-control" ng-model="mem.birthday">
+			     <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+                    </span>
+                </span>
+                </div>
 			</div>
 		</div><!-- /.form group by Job名稱 -->
 		<div class="form-group">
