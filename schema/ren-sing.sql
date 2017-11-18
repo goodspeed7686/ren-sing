@@ -29,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- 正在導出表  ren-sing.account 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 REPLACE INTO `account` (`account`, `password`, `role`, `status`, `person_id`) VALUES
-	('000', '000', NULL, NULL, '2017090016'),
-	('111', '000', NULL, NULL, '2017090027'),
+	('000', '000', '1', NULL, '2017090016'),
+	('111', '000', '1', NULL, '2017090027'),
 	('admin', '123123', '0', '1', '9527'),
 	('qwe', 'qwe', '2', '1', '2017100015');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
@@ -129,27 +129,29 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
   `song` varchar(50) DEFAULT '0' COMMENT '歌曲',
-  `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課日期 yyyy/MM/dd',
-  `time` varchar(2) NOT NULL DEFAULT '0' COMMENT '上課時間 (對照course_time)',
-  `ranges` varchar(2) NOT NULL DEFAULT '0' COMMENT '幾個時段',
-  `hw` varchar(1000) DEFAULT '0' COMMENT '回家作業',
-  `teacher_note` varchar(1000) DEFAULT '0' COMMENT '老師筆記',
-  `student_note` varchar(1000) DEFAULT '0' COMMENT '學生筆記',
+  `date` varchar(50) NOT NULL COMMENT '上課日期 yyyy/MM/dd',
+  `time` varchar(2) NOT NULL COMMENT '上課時間 (對照course_time)',
+  `ranges` int(11) DEFAULT '0' COMMENT '幾個時段',
+  `s_time` varchar(10) DEFAULT '' COMMENT '特殊上課時間(開始)',
+  `e_time` varchar(10) DEFAULT '' COMMENT '特殊上課時間(結束)',
+  `hw` varchar(1000) DEFAULT '' COMMENT '回家作業',
+  `teacher_note` varchar(1000) DEFAULT '' COMMENT '老師筆記',
+  `student_note` varchar(1000) DEFAULT '' COMMENT '學生筆記',
   `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=阿卡課',
   `finish` varchar(1) NOT NULL DEFAULT '1' COMMENT '0=結束，1=未結束',
   `sign` varchar(1) NOT NULL DEFAULT '1' COMMENT '0=已簽到，1=未簽到',
   `updater` varchar(50) DEFAULT '0',
-  `update_time` varchar(50) DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- 正在導出表  ren-sing.class_detail 的資料：~4 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
-REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `updater`, `update_time`) VALUES
-	(1, 1, '1', '2017090016', 'song', '2017/10/25', '8', '4', '0', '0', '3333', '0', '0', '1', '0', '0'),
-	(6, 1112, '123564545', '2017090016', '鬥陣取', '2017/10/25', '7', '0', '大便庫子上', '測試老師2', '測試學生2', '0', '1', '0', 'updater', '2017/09/01 01:28:27'),
-	(7, 2, '2', '2017090016', '好習慣', '2017/10/25', '15', '0', '0', '0', '3333', '1', '0', '1', NULL, NULL),
-	(8, 1111, '123564545', '2017090016', '鬥陣取', '2017/10/25', '6', '0', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', '0', '0');
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `updater`, `update_time`) VALUES
+	(1, 1, '1', '2017090016', 'song', '2017/11/09', '8', 4, '0', '0', '0', '0', '3333', '0', '0', '1', 'updater', '2017-11-11 16:43:38'),
+	(6, 1112, '123564545', '2017090016', '鬥陣取', '2017/11/09', '7', 0, '0', '0', '大便庫子上', '測試老師2', '測試學生2', '0', '1', '0', 'updater', '2017-11-11 16:43:41'),
+	(7, 2, '2', '2017090016', '好習慣', '2017/11/09', '15', 0, '0', '0', '0', '0', '3333', '1', '0', '1', 'updater', '2017-11-11 16:43:40'),
+	(8, 1111, '123564545', '2017090016', '鬥陣取', '2017/11/09', '6', 0, '0', '0', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', 'updater', '2017-11-11 16:43:42');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_level 結構
@@ -192,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `class_master` (
 -- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1111, '音樂課', '0', '0', '0', '25000', '24', '4', '20', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/11/05 18:43:24'),
+	(1111, '音樂課', '0', '0', '0', '25000', '24', '6', '18', '2017/07/02', '2017/9/2', '菜寮', '2017090016', '9527', 'updater', '2017/11/07 06:04:11'),
 	(1112, '喇叭樂課', '1', '1', '0', '25000', '12', '1', '11', '2017/09/02', '2017/10/2', '菜寮', '2017090027', '9527', 'updater', '2017/11/01 21:10:45');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
@@ -220,27 +222,21 @@ CREATE TABLE IF NOT EXISTS `courses_time` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.courses_time 的資料：~18 rows (大約)
+-- 正在導出表  ren-sing.courses_time 的資料：~12 rows (大約)
 /*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;
 REPLACE INTO `courses_time` (`id`, `interval_time`, `start_time`, `end_time`) VALUES
-	(1, '1300_1330', '13:00', '13:30'),
-	(2, '1330_1400', '13:30', '14:00'),
-	(3, '1400_1430', '14:00', '14:30'),
-	(4, '1430_1500', '14:30', '15:00'),
-	(5, '1500_1530', '15:00', '15:30'),
-	(6, '1530_1600', '15:30', '16:00'),
-	(7, '1600_1630', '16:00', '16:30'),
-	(8, '1630_1700', '16:30', '17:00'),
-	(9, '1700_1730', '17:00', '17:30'),
-	(10, '1730_1800', '17:30', '18:00'),
-	(11, '1800_1830', '18:00', '18:30'),
-	(12, '1830_1900', '18:30', '19:00'),
-	(13, '1900_1930', '19:00', '19:30'),
-	(14, '1930_2000', '19:30', '20:00'),
-	(15, '2000_2030', '20:00', '20:30'),
-	(16, '2030_2100', '20:30', '21:00'),
-	(17, '2100_2130', '21:00', '21:30'),
-	(18, '2130_2200', '21:30', '22:00');
+	(1, '1300_1339', '13:00', '13:40'),
+	(2, '1340_1420', '13:40', '14:20'),
+	(3, '1420_1500', '14:20', '15:00'),
+	(4, '1500_1540', '15:00', '15:40'),
+	(5, '1620_1700', '16:20', '17:00'),
+	(6, '1540_1620', '15:40', '16:20'),
+	(7, '1800_1840', '18:00', '18:40'),
+	(8, '1840_1920', '18:40', '19:20'),
+	(9, '1920_2000', '19:20', '20:00'),
+	(10, '2000_2040', '20:00', '20:40'),
+	(11, '2040_2120', '20:40', '21:20'),
+	(12, '2120_2200', '21:20', '22:00');
 /*!40000 ALTER TABLE `courses_time` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.person 結構

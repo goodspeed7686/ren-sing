@@ -19,6 +19,14 @@ import org.json.simple.parser.JSONParser;
 
 public class CommonTools {
 	
+	public static String[] dateFormat = {
+			"yyyy/MM/dd",
+			"yyyyMMddHHmmss",
+			"yyyy/MM/dd HH:mm:ss",
+			"yyyy/MM/dd HH",
+			"0.00"
+	};
+	
 	private static DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 	private static DateFormat dms = new SimpleDateFormat("yyyyMMddHHmmss");
 	private static DateFormat dft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -117,6 +125,10 @@ public class CommonTools {
 	 */
 	public static Date getStrDateChangeDate(String srcDate, String dateFormat) throws ParseException {
 		return new Date(CommonTools.getMillisecondForString(srcDate, dateFormat));
+	}
+	
+	public static Date getStrDateChangeDate(String date,String time, String dateFormat) throws ParseException {
+		return new Date(CommonTools.getMillisecondForString(date.concat(" ").concat(time), dateFormat));
 	}
 
 	/**

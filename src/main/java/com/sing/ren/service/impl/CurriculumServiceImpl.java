@@ -1,5 +1,6 @@
 package com.sing.ren.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,24 +77,49 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryBreak(Map<String,Object> map) {
 		try {
-			List<Map<String,Object>> coursesTimListe=coursesTimeDAO.queryDB(new HashMap<String,Object>());
+			List<Map<String,Object>> coursesTimeList=coursesTimeDAO.queryDB(new HashMap<String,Object>());
 			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
 			
-			for (Map<String,Object> detailMap : classDetail){
+			for (Map<String,Object> detailMap : classDetail) {
+				String date = MapUtils.getString(detailMap, "date", "");
 				String time = MapUtils.getString(detailMap, "time", "");
 				String range = MapUtils.getString(detailMap, "ranges", "");
-				if (StringUtils.isNotBlank(time) && StringUtils.isNotBlank(range)){
+				String sTime = MapUtils.getString(detailMap, "s_time", "");
+				String eTime = MapUtils.getString(detailMap, "e_time", "");
+				if (StringUtils.isNotBlank(time) && StringUtils.isNotBlank(range)) {
 					for (int i=Integer.parseInt(time) ; i<=Integer.parseInt(time)+Integer.parseInt(range) ; i++){
-						for (int j=0;j<coursesTimListe.size();j++){
-							if (coursesTimListe.get(j).get("id").equals(i)){
-								coursesTimListe.remove(j);
+						for (int j=0;j<coursesTimeList.size();j++){
+							if (coursesTimeList.get(j).get("id").equals(i)){
+								coursesTimeList.remove(j);
 							}
+						}
+					}
+				} else if (StringUtils.isNotBlank(sTime) && StringUtils.isNotBlank(eTime)) {
+					String courseStartIndex = "";
+					Boolean startAtThis = true;
+					for (int j=0; j<coursesTimeList.size(); j++) {
+						Map<String,Object> courseMap = coursesTimeList.get(j);
+						String courseStartTime = MapUtils.getString(courseMap, "start_time", "");
+						Date courseTimeForDate = CommonTools.getStrDateChangeDate(date, courseStartTime, CommonTools.dateFormat[3]);
+						Date sTimeForDate = CommonTools.getStrDateChangeDate(date, sTime, CommonTools.dateFormat[3]);
+						Date eTimeForDate = CommonTools.getStrDateChangeDate(date, sTime, CommonTools.dateFormat[3]);
+						if (courseTimeForDate.after(sTimeForDate) && courseTimeForDate.before(eTimeForDate)) {
+							if (startAtThis) {
+								courseStartIndex = MapUtils.getString(courseMap, "id", "");
+								startAtThis = false;
+							}else {
+								coursesTimeList.remove(j);
+								break;
+							}
+						}
+						if (StringUtils.isNotBlank(courseStartIndex)) {
+							coursesTimeList.remove(j);
 						}
 					}
 				}
 			}
 			
-			return  coursesTimListe;
+			return  coursesTimeList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
