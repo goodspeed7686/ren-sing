@@ -626,4 +626,16 @@ public class CommonTools {
 		}
 		return s+sum;
 	}
+	
+	//字串轉DATE格式
+	public Date dateFormat(String day,String time){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		
+		try {
+			return sdf.parse(day+" "+time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
