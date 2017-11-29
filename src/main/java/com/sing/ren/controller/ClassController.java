@@ -49,9 +49,18 @@ public class ClassController {
 	@RequestMapping(value = {"/class/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void insert(HttpSession session,@RequestBody String json) {
-	//	System.out.println(json);
 		try {
 			masterService.insert(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = {"/class/update"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void update(HttpSession session,@RequestBody String json) {
+		try {
+			masterService.update(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

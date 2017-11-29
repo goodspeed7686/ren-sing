@@ -27,10 +27,29 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
             console.error('Error while fetching Users');
         });
+		
+		apiService.getAPIwithObject("comProperties/classPlace",null)
+        .then(function(result) {
+        	$scope.placeList = result.data;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 
 	$scope.insertClass = function(){		
-		apiService.getAPIwithObject("class/add",$scope.addClass)
+		apiService.getAPIwithObject("class/insert",$scope.addClass)
+        .then(function(result) {
+        	
+        },
+        function(errResponse){
+        	
+        })
+		
+	};
+	
+	$scope.updateClass = function(){		
+		apiService.getAPIwithObject("class/update",$scope.addClass)
         .then(function(result) {
         	
         },

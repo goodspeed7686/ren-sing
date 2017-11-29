@@ -51,11 +51,19 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	@Override
 	public void insert(Map<String, Object> map) {
 		try {
-			  classMasterDAO.insertDB(map);
-			  
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			classMasterDAO.insertDB(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void update(Map<String, Object> map) {
+		try {
+			classMasterDAO.update(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

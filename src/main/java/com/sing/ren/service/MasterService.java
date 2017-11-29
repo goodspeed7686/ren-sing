@@ -9,4 +9,5 @@ public interface MasterService {
 	public List<Map<String,Object>> getMaster();
 	public List<Map<String,Object>> query(Map<String,Object> map);
 	public void insert(Map<String,Object> map);
+	public void update(Map<String,Object> map);
 }
