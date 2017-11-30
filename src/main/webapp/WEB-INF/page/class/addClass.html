@@ -46,14 +46,14 @@
 	    <div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">課程名稱</span>
-			    <input required type="text" class="form-control" ng-model="addClass.name">
+			    <input required type="text" class="form-control" ng-model="addClass.name" ng-disabled="role != 0">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">課程類型</span>
 				<select class="form-control" ng-model="addClass.type"
-					ng-options="opt.type as opt.name for opt in typeList">
+					ng-options="opt.type as opt.name for opt in typeList" ng-disabled="role != 0">
 					<option value="">請選擇</option>
 				</select>
 			</div>
@@ -61,19 +61,23 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">老師</span>
-			    <input required type="text" class="form-control" ng-model="addClass.teacher_name">
+			    <select class="selectpicker" data-live-search="true"
+			    		ng-model="addClass.teacher_name" ng-disabled="role != 0"
+			    		ng-options="opt.teacher_name as opt.name for opt in teacherList">
+			    </select>
+<!-- 			    <input required type="text" class="form-control" ng-model="addClass.teacher_name" ng-disabled="role != 0"> -->
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">課堂總數</span>
-			    <input required type="text" class="form-control" ng-model="addClass.summary">
+			    <input required type="text" class="form-control" ng-model="addClass.summary" ng-disabled="role != 0">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">目前上課次數</span>
-			    <input required type="text" class="form-control" ng-model="addClass.count">
+			    <input required type="text" class="form-control" ng-model="addClass.count" ng-disabled="role != 0">
 			</div>
 		</div>
 	</div>
@@ -83,7 +87,7 @@
 			<div class="input-group">
 			    <span class="input-group-addon">上課地點</span>
 				<select class="form-control" ng-model="addClass.place"
-					ng-options="opt.place as opt.name for opt in placeList">
+					ng-options="opt.place as opt.name for opt in placeList" ng-disabled="role != 0">
 					<option value="">請選擇</option>
 				</select>
 			</div>
@@ -93,7 +97,7 @@
 			    <span class="input-group-addon">課程等級</span>
 				<select class="form-control" ng-model="addClass.level"
 					ng-options="opt.level as opt.name for opt in levelList"
-					ng-disabled="addClass.type == '0'">
+					ng-disabled="addClass.type == '0' || role != 0">
 					<option value="">請選擇</option>
 				</select>
 			</div>
@@ -101,19 +105,19 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">學生</span>
-			    <input required type="text" class="form-control" ng-model="addClass.student_name">
+			    <input required type="text" class="form-control" ng-model="addClass.student_name" ng-disabled="role != 0">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">課程開啟時間</span>
-			    <input required type="text" class="form-control" ng-model="addClass.s_date" id='datetimepicker10' >
+			    <input required type="text" class="form-control" ng-model="addClass.s_date" id='datetimepicker10' ng-disabled="role != 0">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">課程狀態</span>
-			    <input required type="text" class="form-control" ng-model="addClass.status">
+			    <input required type="text" class="form-control" ng-model="addClass.status" ng-disabled="role != 0">
 			</div>
 		</div>
 	</div>

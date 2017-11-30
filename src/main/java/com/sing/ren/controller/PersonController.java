@@ -40,5 +40,14 @@ public class PersonController {
 		}
 		return null;
 	}
+	@RequestMapping(value = {"/person/queryForRole"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> queryForRole(HttpSession session,@RequestBody String json){
+		try {
+			return new ResponseEntity<List<Map<String,Object>>>(personService.queryForRole(comm.jsonToMap(json)), HttpStatus.OK);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

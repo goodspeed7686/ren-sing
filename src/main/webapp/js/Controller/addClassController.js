@@ -35,6 +35,18 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
             console.error('Error while fetching Users');
         });
+		
+		var param = [];
+		param.push({
+			'role' : '1'
+		});
+		apiService.getAPIwithObject("person/queryForRole",param)
+        .then(function(result) {
+        	$scope.teacherList = result.data;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 
 	$scope.insertClass = function(){		
