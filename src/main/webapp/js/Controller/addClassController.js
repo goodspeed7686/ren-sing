@@ -1,5 +1,5 @@
-app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore', 'sharedProperties',
-	function ($scope,apiService,$window,$cookieStore,sharedProperties){
+app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore', 'sharedProperties', 'alertService',
+	function ($scope,apiService,$window,$cookieStore,sharedProperties,alertService){
 
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
@@ -9,8 +9,9 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 			$scope.addClass = $cookieStore.get("class_data");
 		}else{
 			$scope.title = 0;
-			$scope.addClass = [];
+			$scope.addClass = {};
 		}
+		$scope.selected = {};
 		
 		apiService.getAPIwithObject("comProperties/classType",null)
         .then(function(result) {
@@ -47,15 +48,28 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
             console.error('Error while fetching Users');
         });
+		
+		param = [];
+		param.push({
+			'role' : '2'
+		});
+		apiService.getAPIwithObject("person/queryForRole",param)
+        .then(function(result) {
+        	$scope.studentList = result.data;
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
 
 	$scope.insertClass = function(){		
 		apiService.getAPIwithObject("class/insert",$scope.addClass)
         .then(function(result) {
-        	
+        	alertService.success("新增成功");
+        	$scope.ibackToClass();
         },
         function(errResponse){
-        	
+        	alertService.error(errResponse);
         })
 		
 	};
@@ -63,10 +77,11 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 	$scope.updateClass = function(){		
 		apiService.getAPIwithObject("class/update",$scope.addClass)
         .then(function(result) {
-        	
+        	alertService.success("更新成功");
+        	$scope.ibackToClass();
         },
         function(errResponse){
-        	
+        	alertService.error(errResponse);
         })
 		
 	};

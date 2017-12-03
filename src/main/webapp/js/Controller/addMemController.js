@@ -6,14 +6,14 @@ app.controller('addMbershipCtrl',['$scope','apiService','alertService','$window'
 		
 		apiService.getAPIwithObject("membership/insert",$scope.mem)
         .then(function(result) {
-        	alertService.open("新增成功");
+        	alertService.success("新增成功");
         },
         function(errResponse){
         	var str = errResponse.data.lastIndexOf(".html");
         	var sub = errResponse.data.substring(0,str+3);
         	var msg = /[^/]*$/.exec(sub)[0];
             
-            alertService.open(msg.split(".")[0]);
+            alertService.error(msg.split(".")[0]);
         })
 		
 	};
