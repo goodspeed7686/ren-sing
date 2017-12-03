@@ -1,5 +1,48 @@
 <div class='modal-header'>
-  <h5>歷史課程</h5>
+  <h4 style="font-family:Microsoft JhengHei;">歷史課程</h4>
+</div>
+<div class="row" >
+	<div class="col-sm-2">
+		<div class="list-group">
+			<button style="color:#0044BB" type="button" class="list-group-item list-group-item-action " ng-repeat="note in history" ng-click="historyClick(note)">{{ note.date }} {{ note.time }} </button>
+		</div>
+	</div>
+	<div class="col-sm-5">
+		<table class="table" style="margin:0px 0px 0px 5px">
+			 <tr>
+		      <th></th>
+		      <th>學生筆記 :</th>
+		     </tr>
+		     <tbody>
+		     	<tr>
+		     		<td>•</td>
+		     		<td ng-model="studentNote"></td>
+		     	</tr>
+		     	<tr>
+		     		<td>•</td>
+        			<td>Dooley</td>
+        		</tr>
+		     </tbody>
+		</table>
+	</div>
+	<div class="col-sm-5">
+		<table class="table" style="margin:0px 5px 0px 0px">
+			 <tr>
+		      <th></th>
+		      <th>老師筆記 :</th>
+		     </tr>
+		     <tbody>
+		     	<tr>
+		     		<td>•</td>
+		     		<td ng-model="teacherNote"></td>
+		     	</tr>
+		     	<tr>
+		     		<td>•</td>
+        			<td>Dooley</td>
+        		</tr>
+		     </tbody>
+		</table>
+	</div>
 </div>
 <div class="row" >
 
@@ -27,7 +70,8 @@
 	</div>
 
 </div>
-<div class='modal-footer'>
+
+<div class='modal-footer' style="font-family:Microsoft JhengHei;">
   <button class='btn btn-default' data-ng-click='enter()'>確認</button>
   <button class='btn btn-default' data-ng-click='$dismiss()'>退出</button>
 </div>
