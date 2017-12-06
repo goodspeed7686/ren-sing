@@ -9,13 +9,13 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 		if ($scope.title_name == '編輯') {
 			$scope.mem = $cookieStore.get("mem_data");
 			data.push({
-				'person_id' : $cookieStore.get("person_id")
+				'person_id' : $scope.mem.person_id
 			});
 			apiService.getAPIwithObject("membership/queryMemAccount",data)
 	        .then(function(result) {
 	        	$scope.mem.account = result.data[0].account;
-	        	$scope.mem.password = "*********";
-	        	$scope.mem.pwdCheck = "*********";
+//	        	$scope.mem.password = "*********";
+	        	$scope.mem.role = result.data[0].role;
 	        },
 	        function(errResponse){
 	        	
@@ -25,6 +25,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 			apiService.getAPIwithObject("membership/getNewAcc",null)
 	        .then(function(result) {
 	        	$scope.mem.account = result.data.account;
+	        	$scope.men.person_id = result.data.account;
 	        },
 	        function(errResponse){
 	        	
@@ -51,7 +52,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 	};
 	
 	$scope.updateMem = function(){		
-		apiService.getAPIwithObject("membership/update",$scope.addClass)
+		apiService.getAPIwithObject("membership/update",$scope.mem)
         .then(function(result) {
         	alertService.success("更新成功");
         	$scope.ibackToMem();

@@ -52,13 +52,13 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">密碼</span>
-			    <input required type="text" class="form-control" ng-model="mem.password">
+			    <input required type="text" class="form-control" type="password" ng-model="mem.password">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">確認密碼</span>
-			    <input required type="text" class="form-control" ng-model="mem.pwdCheck">
+			    <input required type="text" class="form-control" type="password" ng-model="mem.pwdCheck">
 			</div>
 		</div>
 		<div class="form-group">
@@ -76,10 +76,11 @@
 		<div class="form-group ">
 			<div class="input-group">
 			    <span class="input-group-addon">角色</span>
-			    <select class="form-control" ng-disabled="role != 0">
-				  <option value="0">行政</option>
-				  <option value="1">老師</option>
-				  <option value="2">學生</option>
+			    <select class="form-control" ng-model="mem.role" ng-disabled="role != 0" >
+			    	<option value="">請選擇</option>
+					<option value="0">行政</option>
+				    <option value="1">老師</option>
+				    <option value="2">學生</option>
 				</select>
 			</div>
 		</div>
@@ -100,9 +101,10 @@
 		<div class="form-group ">
 			<div class="input-group">
 			    <span class="input-group-addon">性別</span>
-			    <select class="form-control" >
-				  <option value="0">男</option>
-				  <option value="1">女</option>
+			    <select class="form-control" ng-model="mem.sex">
+			    	<option value="">請選擇</option>
+				    <option value="0">男</option>
+				    <option value="1">女</option>
 				</select>
 			</div>
 		</div>

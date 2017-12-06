@@ -30,7 +30,11 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	@Transactional (rollbackFor = Exception.class)
 	public void insert(Map<String,Object> map) {
 		try {
-			map.put("person_id", getNewPersonId());
+			if (!map.containsKey("person_id") || StringUtils.isBlank(MapUtils.getString(map, "person_id"))) {
+				map.put("person_id", getNewPersonId());
+			}
+			//上個人課才能用()
+			map.put("status", 1);
 			accountDAO.insertDB(map);
 			personDAO.insertDB(map);
 		} catch (Exception e) {
@@ -80,7 +84,8 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	@Override
 	public void update(Map<String,Object> map) {
 		try {
-			
+			accountDAO.updateDB(map);
+			personDAO.updateDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
