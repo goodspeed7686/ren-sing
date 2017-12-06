@@ -1,12 +1,44 @@
-app.controller('addMbershipCtrl',['$scope','apiService','alertService','$window',function ($scope,apiService,alertService,$window) {
+app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$window', '$cookieStore',
+	function ($scope, apiService, alertService, $window, $cookieStore) {
 
-	$scope.mem = {};
+	$scope.loadEvents = function () {
+		$scope.role = $cookieStore.get('role');
+		$scope.title_name = $cookieStore.get("mem_title_name");
+		
+		var data = [];
+		if ($scope.title_name == '編輯') {
+			$scope.mem = $cookieStore.get("mem_data");
+			data.push({
+				'person_id' : $cookieStore.get("person_id")
+			});
+			apiService.getAPIwithObject("membership/queryMemAccount",data)
+	        .then(function(result) {
+	        	$scope.mem.account = result.data[0].account;
+	        	$scope.mem.password = "*********";
+	        	$scope.mem.pwdCheck = "*********";
+	        },
+	        function(errResponse){
+	        	
+	        })
+		}else {
+			$scope.mem = {};
+			apiService.getAPIwithObject("membership/getNewAcc",null)
+	        .then(function(result) {
+	        	$scope.mem.account = result.data.account;
+	        },
+	        function(errResponse){
+	        	
+	        })
+		}
+		
+	};
 
 	$scope.insertMem = function (){
 		
 		apiService.getAPIwithObject("membership/insert",$scope.mem)
         .then(function(result) {
         	alertService.success("新增成功");
+        	$scope.ibackToMem();
         },
         function(errResponse){
         	var str = errResponse.data.lastIndexOf(".html");
@@ -17,5 +49,21 @@ app.controller('addMbershipCtrl',['$scope','apiService','alertService','$window'
         })
 		
 	};
+	
+	$scope.updateMem = function(){		
+		apiService.getAPIwithObject("membership/update",$scope.addClass)
+        .then(function(result) {
+        	alertService.success("更新成功");
+        	$scope.ibackToMem();
+        },
+        function(errResponse){
+        	alertService.error(errResponse);
+        })
+		
+	};
+	
+	$scope.ibackToMem = function (){
+    	$window.location.href = '/ren-sing/#!/membership';
+	}
 
 }]);

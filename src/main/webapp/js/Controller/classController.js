@@ -9,7 +9,6 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
 		
 		var data = [];
 		if ($cookieStore.get('role') != '0') {
-//			$window.location.href = '/ren-sing/#!/addClass';
 			data.push({
 	    		'student_id': $cookieStore.get('person_id'),
 	    		'orderForMasterQuery': ' '

@@ -5,10 +5,8 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
 		$scope.role = $cookieStore.get('role');
 		$scope.title_name = $cookieStore.get("class_title_name");
 		if ($scope.title_name == '編輯'){
-			$scope.title = 1;
 			$scope.addClass = $cookieStore.get("class_data");
 		}else{
-			$scope.title = 0;
 			$scope.addClass = {};
 		}
 		$scope.selected = {};
@@ -71,7 +69,6 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
         	alertService.error(errResponse);
         })
-		
 	};
 	
 	$scope.updateClass = function(){		
@@ -83,7 +80,6 @@ app.controller('addClassCtrl',['$scope', 'apiService', '$window', '$cookieStore'
         function(errResponse){
         	alertService.error(errResponse);
         })
-		
 	};
 	
 	$scope.ibackToClass = function (){
