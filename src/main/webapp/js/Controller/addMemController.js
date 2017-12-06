@@ -4,6 +4,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
 		$scope.title_name = $cookieStore.get("mem_title_name");
+		$scope.pwdIsChanged = false;
 		
 		var data = [];
 		if ($scope.title_name == '編輯') {
@@ -14,28 +15,35 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 			apiService.getAPIwithObject("membership/queryMemAccount",data)
 	        .then(function(result) {
 	        	$scope.mem.account = result.data[0].account;
-//	        	$scope.mem.password = "*********";
 	        	$scope.mem.role = result.data[0].role;
 	        },
 	        function(errResponse){
 	        	
-	        })
+	        });
 		}else {
 			$scope.mem = {};
 			apiService.getAPIwithObject("membership/getNewAcc",null)
 	        .then(function(result) {
 	        	$scope.mem.account = result.data.account;
-	        	$scope.men.person_id = result.data.account;
+	        	$scope.mem.person_id = result.data.account;
 	        },
 	        function(errResponse){
 	        	
-	        })
+	        });
 		}
-		
 	};
 
 	$scope.insertMem = function (){
-		
+		if (!validate()) {
+			return;
+		}
+		if (isEmpty($scope.mem.password)) {
+			alertService.error("請填寫密碼");
+			return;
+		}
+		if (!pwdCheck()) {
+			return;
+		}
 		apiService.getAPIwithObject("membership/insert",$scope.mem)
         .then(function(result) {
         	alertService.success("新增成功");
@@ -47,11 +55,13 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
         	var msg = /[^/]*$/.exec(sub)[0];
             
             alertService.error(msg.split(".")[0]);
-        })
-		
+        });
 	};
 	
-	$scope.updateMem = function(){		
+	$scope.updateMem = function(){
+		if (!validate() || !pwdCheck()) {
+			return;
+		}
 		apiService.getAPIwithObject("membership/update",$scope.mem)
         .then(function(result) {
         	alertService.success("更新成功");
@@ -59,12 +69,127 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
         },
         function(errResponse){
         	alertService.error(errResponse);
-        })
-		
+        });
 	};
 	
 	$scope.ibackToMem = function (){
     	$window.location.href = '/ren-sing/#!/membership';
-	}
+	};
+	
+	$scope.pwdChange = function (){
+    	$scope.pwdIsChanged = true;
+	};
 
+	function validate() {
+		if (isEmpty($scope.mem.name)) {
+			alertService.error("請填寫名字");
+			return false;
+		}else if (isEmpty($scope.mem.id_number)) {
+			alertService.error("請填寫身份證字號");
+			return false;
+		}else if (!idNumberCheck($scope.mem.id_number)) {
+			alertService.error("身份證字號錯誤，請重新輸入");
+			return false;
+		}else if (isEmpty($scope.mem.role)) {
+			alertService.error("請選擇角色");
+			return false;
+		}else if (isEmpty($scope.mem.sex)) {
+			alertService.error("請選擇性別");
+			return false;
+		}else if (isEmpty($scope.mem.birthday)) {
+			alertService.error("請填寫生日");
+			return false;
+		}else if (isEmpty($scope.mem.phone)) {
+			alertService.error("請填寫手機號碼");
+			return false;
+		}else if (!phoneCheck($scope.mem.phone)) {
+			alertService.error("手機號碼錯誤，請重新輸入");
+			return false;
+		}else if (isEmpty($scope.mem.email)) {
+			alertService.error("請填寫Email");
+			return false;
+		}else if (!emailCheck($scope.mem.email)) {
+			alertService.error("Email格式錯誤，請重新輸入");
+			return false;
+		}else {
+			return true;
+		}
+	};
+	
+	function pwdCheck() {
+		if ($scope.pwdIsChanged) {
+			var pwd = $scope.mem.password;
+			if (pwd.length > 0) {
+				if ($scope.mem.password != $scope.mem.pwdCheck) {
+					alertService.error("密碼與確認密碼不相同");
+					return false;
+				}else {
+					return true;
+				}
+			}else {
+				return true;
+			}
+		}else {
+			return true;
+		}
+	}
+	
+	function isEmpty(value) {
+	  return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+	};
+	
+	function idNumberCheck(value) {
+		var a = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'W', 'Z', 'I', 'O');
+	    var b = new Array(1, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+	    var c = new Array(2);
+	    var d;
+	    var e;
+	    var f;
+	    var g = 0;
+	    var h = /^[a-z](1|2)\d{8}$/i;
+	    if (value.search(h) == -1) {
+	        return false;
+	    }
+	    else {
+	        d = value.charAt(0).toUpperCase();
+	        f = value.charAt(9);
+	    }
+	    for (var i = 0; i < 26; i++) {
+	        if (d == a[i]) {
+	            e = i + 10; //10
+	            c[0] = Math.floor(e / 10); //1
+	            c[1] = e - (c[0] * 10); //10-(1*10)
+	            break;
+	        }
+	    }
+	    for (var i = 0; i < b.length; i++) {
+	        if (i < 2) {
+	            g += c[i] * b[i];
+	        }
+	        else {
+	            g += parseInt(value.charAt(i - 1)) * b[i];
+	        }
+	    }
+	    if ((g % 10) == f) {
+	        return true;
+	    }
+	    if ((10 - (g % 10)) != f) {
+	        return false;
+	    }
+	    return true;
+	};
+	
+	function phoneCheck(value) {
+		if (value.match(/^\d+$/))
+			return true;
+		else
+			return false;
+	};
+	
+	function emailCheck(value) {
+		if (value.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/))
+			return true;
+		else
+			return false;
+	};
 }]);

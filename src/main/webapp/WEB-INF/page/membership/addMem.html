@@ -46,31 +46,31 @@
 	    <div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">帳號</span>
-			    <input required type="text" class="form-control" ng-model="mem.account" disabled>
+			    <input type="text" class="form-control" ng-model="mem.account" disabled>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">密碼</span>
-			    <input required type="text" class="form-control" type="password" ng-model="mem.password">
+			    <input type="password" class="form-control" ng-model="mem.password" ng-change="pwdChange()">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">確認密碼</span>
-			    <input required type="text" class="form-control" type="password" ng-model="mem.pwdCheck">
+			    <input type="password" class="form-control" ng-model="mem.pwdCheck">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">名字</span>
-			    <input required type="text" class="form-control" ng-model="mem.name">
+			    <input type="text" class="form-control" ng-model="mem.name">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
-			    <span class="input-group-addon">身分證字號</span>
-			    <input required type="text" class="form-control" ng-model="mem.id_number">
+			    <span class="input-group-addon">身份證字號</span>
+			    <input type="text" class="form-control" ng-model="mem.id_number">
 			</div>
 		</div>
 		<div class="form-group ">
@@ -87,13 +87,13 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">Email</span>
-			    <input required type="text" class="form-control" ng-model="mem.email">
+			    <input type="text" class="form-control" ng-model="mem.email">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">市話</span>
-			    <input required type="text" class="form-control" ng-model="mem.local_calls">
+			    <input type="text" class="form-control" ng-model="mem.local_calls">
 			</div>
 		</div>
 	</div>
@@ -111,43 +111,43 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">生日</span>
-			    <input required type="text" id='datetimepicker10' class="form-control" ng-model="mem.birthday">
+			    <input type="text" id='datetimepicker10' class="form-control" ng-model="mem.birthday">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
-			    <span class="input-group-addon">電話</span>
-			    <input required type="text" class="form-control" ng-model="mem.phone">
+			    <span class="input-group-addon">手機號碼</span>
+			    <input type="text" class="form-control" ng-model="mem.phone">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">職業</span>
-			    <input required type="text" class="form-control" ng-model="mem.career">
+			    <input type="text" class="form-control" ng-model="mem.career">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">Skype</span>
-			    <input required type="text" class="form-control" ng-model="mem.skype">
+			    <input type="text" class="form-control" ng-model="mem.skype">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">收信人</span>
-			    <input required type="text" class="form-control" ng-model="mem.recipient">
+			    <input type="text" class="form-control" ng-model="mem.recipient">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">收信地址</span>
-			    <input required type="text" class="form-control" ng-model="mem.rec_add">
+			    <input type="text" class="form-control" ng-model="mem.rec_add">
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">收信人電話</span>
-			    <input required type="text" class="form-control" ng-model="mem.rec_num">
+			    <input type="text" class="form-control" ng-model="mem.rec_num">
 			</div>
 		</div>
 	</div>

@@ -84,6 +84,9 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	@Override
 	public void update(Map<String,Object> map) {
 		try {
+			if (StringUtils.isBlank(MapUtils.getString(map, "password"))) {
+				map.remove("password");
+			}
 			accountDAO.updateDB(map);
 			personDAO.updateDB(map);
 		} catch (Exception e) {
