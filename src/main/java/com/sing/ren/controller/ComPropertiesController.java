@@ -26,6 +26,12 @@ public class ComPropertiesController {
 	
 	CommonTools comm=new CommonTools();
 	
+	@RequestMapping(value = {"/properties"}, method = RequestMethod.GET)
+	public String initHome() {
+		return "properties/propertiesList";
+	}
+	
+	
 	@RequestMapping(value = {"/comProperties/classType"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> queryClassType(HttpSession session,@RequestBody String json){
 		try {
