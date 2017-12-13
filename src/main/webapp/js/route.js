@@ -51,6 +51,14 @@ app.config(function ($routeProvider,$locationProvider) {
 
 	})
 	
+	
+	.when('/properties',{
+
+		templateUrl: 'properties',
+		controller: 'propertiesCtrl'
+
+	})
+	
 	.when('/addAcc',{
 
 		templateUrl: 'addAcc',

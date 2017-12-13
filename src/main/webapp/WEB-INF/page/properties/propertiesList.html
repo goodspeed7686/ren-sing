@@ -1,0 +1,140 @@
+<style>
+.page-title-box {
+  background: #ffffff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+  padding: 10px;
+  margin:0px 0px 5px 0px;
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.page-title-box .breadcrumb {
+  margin-top: 0px;
+  padding-top: 2px;
+}
+.card-box {
+  padding: 20px;
+  background-color:#00ff00;
+}
+.font{
+	font-family: Microsoft JhengHei;
+}
+a{
+	color: #337ab7;
+}
+</style>
+
+<div ng-init="loadEvents()">
+<div class="row">
+<div class="page-title-box">
+	<ol class="breadcrumb pull-right">
+		<li>參數設ㄉㄧㄥ</li>
+		<li class="active">基本資料清單</li>
+	</ol>
+	<h4 class="page-title font">基本資料清單</h4>
+</div>
+	<div class="row page-title-box">
+	<div class="col-md-12 ">
+	  <div class="col-xs-2">
+	   
+	  </div>
+	  <div class="col-xs-4">
+	    <div class="input-group">
+		    <span class="input-group-addon">會員編號</span>
+		    <input  type="text" class="form-control">
+		</div>
+		
+		<div class="input-group" style="margin-top:15px;">
+		    <span class="input-group-addon">姓名</span>
+		    <input  type="text" class="form-control"  >
+		</div>
+	  </div>
+	  <div class="col-xs-4">
+	    <div class="input-group" >
+		    <span class="input-group-addon">電話</span>
+		    <input  type="text" class="form-control">
+		</div>
+		<div class="input-group" style="margin-top:15px;">
+		    <span class="input-group-addon">Email</span>
+		    <input  type="text" class="form-control">
+		</div>
+	  </div>
+	  
+	  <div class="col-xs-2 ">
+	  	<div style="margin-top:47px;">
+	  	<button type="button" class="btn btn-warning" >查詢</button>
+	  	</div>
+	  </div>
+	 </div>
+	</div>
+	
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active">
+			<a href="#home" data-toggle="tab">
+				 菜鸟教程
+			</a>
+		</li>
+		<li><a href="#ios" data-toggle="tab">iOS</a></li>
+		<li class="dropdown">
+			<a href="#" id="myTabDrop1" class="dropdown-toggle" 
+			   data-toggle="dropdown">Java 
+				<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+				<li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>
+				<li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="home">
+			<div class="row ">
+			  <div class="col-md-12" style="padding-left:32px"> 
+				<button type="button" class="btn btn-info" ng-click="tranToInsertMem()">
+				  <span class="glyphicon glyphicon-plus" style="color:white"></span> 新增
+				</button>
+			  </div>
+			</div>
+			<div class="col-md-12 ">
+				<table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">會員編號</th>
+				      <th scope="col">姓名</th>
+				      <th scope="col">電話</th>
+				      <th scope="col">Email</th>
+				      <th scope="col">操作</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+					<tr ng-repeat="row in memList">
+				      <td>{{ $index + 1 }}</td>
+				      <td>{{ row.person_id }}</td>
+				      <td>{{ row.name }}</td>
+				      <td>{{ row.phone }}</td>
+				      <td>{{ row.email }}</td>
+				      <td><button type="button"  class="btn btn-info" ng-click="update(row)">修改</button></td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+			
+		</div>
+		<div class="tab-pane fade" id="ios">
+			<p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
+				TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+		</div>
+		<div class="tab-pane fade" id="jmeter">
+			<p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+		</div>
+		<div class="tab-pane fade" id="ejb">
+			<p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
+			</p>
+		</div>
+	</div>
+	
+</div>
+</div>
