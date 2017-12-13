@@ -15,7 +15,7 @@ app.controller('logInCtrl', ['$scope' , 'apiService' , '$window' , 'alertService
 		
 		var data = [];
 		data.push({
-			user_id : $scope.user_id,
+			account : $scope.user_id,
 			password : $scope.pwd
 		});
 		
@@ -27,8 +27,8 @@ app.controller('logInCtrl', ['$scope' , 'apiService' , '$window' , 'alertService
         	var str = errResponse.data.lastIndexOf(".html");
         	var sub = errResponse.data.substring(0,str+3);
         	var msg = /[^/]*$/.exec(sub)[0];
-            
-            alertService.open(msg.split(".")[0]);
+        	alertService.error(msg.split(".")[0]);
+//            alertService.open(msg.split(".")[0]);
         })
 		
 	};

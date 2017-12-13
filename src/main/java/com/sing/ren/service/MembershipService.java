@@ -12,5 +12,6 @@ public interface MembershipService {
 	public void update(Map<String,Object> map);
 	public void delete(Map<String,Object> map);
 	public void upsert(Map<String,Object> map);
-	public List<Map<String,Object>> validateAccount(Map<String,Object> map);
+	public List<Map<String,Object>> queryAccount(Map<String,Object> map);
+	public Map<String,Object> getNewAcc(Map<String,Object> map) throws Exception ;
 }

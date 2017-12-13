@@ -61,11 +61,18 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">老師</span>
-			    <select class="selectpicker" data-live-search="true"
-			    		ng-model="addClass.teacher_name" ng-disabled="role != 0"
-			    		ng-options="opt.teacher_name as opt.name for opt in teacherList">
-			    </select>
+			    <select class="form-control" ng-model="addClass.teacher_id"
+					ng-disabled="role != 0">
+					<option value="">請選擇</option>
+					<option ng-repeat="option in teacherList" value="{{option.person_id}}">{{option.name}}</option>
+				</select>
 <!-- 			    <input required type="text" class="form-control" ng-model="addClass.teacher_name" ng-disabled="role != 0"> -->
+<!-- 				<ui-select ng-model="addClass.teacher_name"  ng-disabled="role != 0" style="min-width: 267px;"> -->
+<!-- 				    <ui-select-match placeholder="輸入名字">{{$select.selected.name}}</ui-select-match> -->
+<!-- 				    <ui-select-choices repeat="person.name as person in teacherList"> -->
+<!-- 				      <div ng-bind-html="person.name | highlight: $select.search"></div> -->
+<!-- 				    </ui-select-choices> -->
+<!-- 			 	</ui-select> -->
 			</div>
 		</div>
 		<div class="form-group">
@@ -105,7 +112,12 @@
 		<div class="form-group">
 			<div class="input-group">
 			    <span class="input-group-addon">學生</span>
-			    <input required type="text" class="form-control" ng-model="addClass.student_name" ng-disabled="role != 0">
+			    <input required type="text" class="form-control" ng-model="addClass.student_name" 
+			    	   ng-disabled="title_name == '編輯'" ng-show="title_name == '編輯'">
+			    <select class="form-control" ng-model="addClass.student_id" ng-show="title_name == '新增'">
+					<option value="">請選擇</option>
+					<option ng-repeat="option in studentList" value="{{option.person_id}}">{{option.name}}</option>
+				</select>
 			</div>
 		</div>
 		<div class="form-group">

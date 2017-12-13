@@ -20,10 +20,10 @@ app.service('alertService',['$uibModal',function ($uibModal){
 		});
 	};
 	
-	this.success = function(){
+	this.success = function(str){
 		swal(
 		  'Success !',
-		  'success'
+		  str
 		)
 	};
 	
@@ -31,6 +31,13 @@ app.service('alertService',['$uibModal',function ($uibModal){
 		swal(
 		  'Error !',
 		  'error'
+		)
+	};
+	
+	this.error = function(str){
+		swal(
+		  'Error !',
+		  str
 		)
 	};
 	

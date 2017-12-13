@@ -58,10 +58,14 @@ public class MembershipController {
 		}
 	}
 	
-	@RequestMapping(value = {"/membership/update"}, method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = {"/membership/update"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value=HttpStatus.OK)
-	public void update(HttpSession session) {
-		membershipService.update(new HashMap<String,Object>());
+	public void update(HttpSession session,@RequestBody String json) {
+		try {
+			membershipService.update(comm.jsonToMap(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value = {"/membership/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
@@ -87,15 +91,26 @@ public class MembershipController {
 	
 	@RequestMapping(value = {"/membership/validateAccount"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public Boolean validateAccount(HttpSession session,@RequestBody String json) throws ParseException{
-	//	Map<String,Object> test=new HashMap<String,Object>();
-	//	test.put("account", "admin");
-		List<Map<String,Object>> account=membershipService.validateAccount(comm.jsonToMap(json));
-		if(account==null) {
-		//	System.out.println("true");
+		List<Map<String,Object>> account=membershipService.queryAccount(comm.jsonToMap(json));
+		if(account == null) {
 			return true;
 		}else {
-		//	System.out.println("false");
 			return false;
 		}
+	}
+	
+	@RequestMapping(value = {"/membership/queryMemAccount"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> queryMemAccount(HttpSession session,@RequestBody String json) throws ParseException{
+		return new ResponseEntity<List<Map<String,Object>>>(membershipService.queryAccount(comm.jsonToMap(json)), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = {"/membership/getNewAcc"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String,Object>> getNewAcc(HttpSession session,@RequestBody String json) throws ParseException{
+		try {
+			return new ResponseEntity<Map<String,Object>>(membershipService.getNewAcc(comm.jsonToMap(json)), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
