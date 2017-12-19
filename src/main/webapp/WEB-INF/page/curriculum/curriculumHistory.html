@@ -1,0 +1,92 @@
+<style>
+	.row {
+	  display: flex;
+	}
+</style>
+<div class="row">
+	<div class="row">
+		<div class="col-sm-2">
+			上課狀態
+		</div>
+		<div class="col-sm-2">
+			{{ history.status }}
+		</div>
+		<div class="col-sm-2">
+			上課地點
+		</div>
+		<div class="col-sm-2">
+			{{ history.place }}
+		</div>
+		<div class="col-sm-2">
+			授課老師
+		</div>
+		<div class="col-sm-2">
+			{{ history.teacher_name }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-2">
+			上課日期
+		</div>
+		<div class="col-sm-2">
+			{{ history.date }}
+		</div>
+		<div class="col-sm-2">
+			上課時間
+		</div>
+		<div class="col-sm-2">
+			{{ history.start_time }}
+		</div>
+		<div class="col-sm-2">
+			該堂堂次
+		</div>
+		<div class="col-sm-2">
+			{{ history.count }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-2">
+			課程方案
+		</div>
+		<div class="col-sm-2">
+			{{ history.class }}
+		</div>
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-2">
+		</div>
+		<div class="col-sm-2">
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-6">
+		<table class="table table-bordered">
+			  <thead>
+			  	 <tr>
+			      	<th scope="col">
+				     	日期
+			   	  	</th>
+			   	  	<th scope="col">
+				     	時間
+			   	  	</th>
+			   	  	<th scope="col">
+				     	進度
+			   	  	</th>
+			     </tr>
+			  </thead>
+			  <tbody>
+			  	 <tr ng-repeat="row in dayEvents">
+				    <td>{{ row.date }}</td>
+				    <td>{{ row.time }}</td>
+				    <td>{{ row.classDetail }}</td>
+		    	 </tr>
+		  	</tbody>
+		</table>
+	</div>
+	<div class="col-sm-6">
+		
+	</div>
+</div>
