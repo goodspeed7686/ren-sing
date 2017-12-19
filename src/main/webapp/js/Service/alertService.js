@@ -22,9 +22,10 @@ app.service('alertService',['$uibModal',function ($uibModal){
 	
 	this.success = function(str){
 		swal(
-		  'Success !',
-		  str
-		)
+		    'Susess!',
+	        str,
+	        'success'
+	    )
 	};
 	
 	this.error = function(){
@@ -37,6 +38,20 @@ app.service('alertService',['$uibModal',function ($uibModal){
 	this.error = function(str){
 		swal(
 		  'Error !',
+		  str
+		)
+	};
+	
+	this.waram = function(str){
+		swal(
+		  'Tips !',
+		  str
+		)
+	};
+	
+	this.info = function(str){
+		swal(
+		  'Info !',
 		  str
 		)
 	};

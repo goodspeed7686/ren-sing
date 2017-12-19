@@ -12,7 +12,8 @@
 
 
 
-	<div class="col-sm-8" style="margin-top: 20px;">
+<!-- 	<div class="col-sm-8" style="margin-top: 20px;"> -->
+	<div class="col-sm-12" style="margin-top: 20px;">
 		<div class="btn-toolbar">
 			<div class="btn-group">
 				<button type="button" class="btn btn-default"
@@ -45,137 +46,137 @@
 	
 	
 	
-	<div class="col-sm-4" ng-if="currentEvent.teacher_id == null">
-		<div class="row" style="margin: 200px 0 20px;text-align:center;">
-			<div class="col-sm-10" style="text-align:center;" style="margin-top:: 10px">
-				<button type="button" class="btn btn-info" ng-click="insertOpen()">
-					預約上課
-				</button>
-			</div>
-<!-- 			 <button style="margin:20px" class="btn" ng-click="open()">Open Modal</button> -->
+<!-- 	<div class="col-sm-4" ng-if="currentEvent.teacher_id == null"> -->
+<!-- 		<div class="row" style="margin: 200px 0 20px;text-align:center;"> -->
+<!-- 			<div class="col-sm-10" style="text-align:center;" style="margin-top:: 10px"> -->
+<!-- 				<button type="button" class="btn btn-info" ng-click="insertOpen()"> -->
+<!-- 					預約上課 -->
+<!-- 				</button> -->
+<!-- 			</div> -->
+	 <!-- 			 <button style="margin:20px" class="btn" ng-click="open()">Open Modal</button> --> 
 			
-		</div>
-	</div>
-	<div class="col-sm-4" ng-if="currentEvent.teacher_id != null">
-		<div class="page-header">
-			<h2 style="font-family:微軟正黑體;">{{ currentEvent.student }} 的課程</h2>
-		</div>
-		<table class="table table-striped">
-			<tr>
-				<td>
-					老師
-				</td>
-				<td>
-					{{ currentEvent.teacher }}
-				</td>
-			</tr>
-			<tr>	
-				<td>
-					老師筆記
-				</td>
-				<td>
-					{{ currentEvent.teacher_note }}
-				</td>
-			</tr>
-			<tr>	
-				<td>
-					學生筆記
-				</td>
-				<td>
-					{{ currentEvent.student_note }}
-				</td>
-			</tr>
-			<tr>	
-				<td>
-					song 
-				</td>
-				<td>
-					{{ currentEvent.song }}
-				</td>
-			</tr>	
-			<tr>	
-				<td>
-					回家作業
-				</td>
-				<td>
-					{{ currentEvent.hw }}
-				</td>
-			</tr>
-		</table>
-		<div class="row">
-			<div class="col-sm-6" style="text-align:center;">
-				<label>
-					老師
-				</label>
-			</div>
-			<div class="col-sm-6">
-				<label>
-					{{ currentEvent.teacher }}
-				</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6" style="text-align:center;" ng-click="teacherNoteOpen()">
-				<label>
-					老師筆記
-				</label>
-			</div>
-			<div class="col-sm-6">
-				<label>
-					{{ currentEvent.teacher_note }}
-				</label>
-			</div>
-		</div>
-		<div class="row" ng-click="studentNoteEdit()">
-			<div class="col-sm-6" style="text-align:center;" ng-click="studentNoteOpen()">
-				<label>
-					學生筆記
-				</label>
-			</div>
-			<div class="col-sm-6">
-				<label>
-					{{ currentEvent.student_note }}
-				</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6" style="text-align:center;">
-				<label>
-					song 
-				</label>
-			</div>
-			<div class="col-sm-6">
-				<label>
-					{{ currentEvent.song }}
-				</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-6" style="text-align:center;">
-				<label>
-					回家作業
-				</label>
-			</div>
-			<div class="col-sm-6">
-				<label>
-					{{ currentEvent.hw }}
-				</label>
-			</div>
-		</div>
-<!-- 		<div class="row" ng-if="currentEvent.finish == 0"> -->
-		<div class="row">
-			<div class="col-sm-6" align="right">
-				<button type="button" class="btn btn-success" ng-click="updateCourse(currentEvent)">
-					修改 
-				</button>
-			</div>
-			<div class="col-sm-6">
-				<button type="button" class="btn btn-danger" ng-click="deleteCourse(currentEvent)">
-					刪除
-				</button>
-			</div>
-		</div>
-	</div>
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	<div class="col-sm-4" ng-if="currentEvent.teacher_id != null"> -->
+<!-- 		<div class="page-header"> -->
+<!-- 			<h2 style="font-family:微軟正黑體;">{{ currentEvent.student }} 的課程</h2> -->
+<!-- 		</div> -->
+<!-- 		<table class="table table-striped"> -->
+<!-- 			<tr> -->
+<!-- 				<td> -->
+<!-- 					老師 -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					{{ currentEvent.teacher }} -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 			<tr>	 -->
+<!-- 				<td> -->
+<!-- 					老師筆記 -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					{{ currentEvent.teacher_note }} -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 			<tr>	 -->
+<!-- 				<td> -->
+<!-- 					學生筆記 -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					{{ currentEvent.student_note }} -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 			<tr>	 -->
+<!-- 				<td> -->
+<!-- 					song  -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					{{ currentEvent.song }} -->
+<!-- 				</td> -->
+<!-- 			</tr>	 -->
+<!-- 			<tr>	 -->
+<!-- 				<td> -->
+<!-- 					回家作業 -->
+<!-- 				</td> -->
+<!-- 				<td> -->
+<!-- 					{{ currentEvent.hw }} -->
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-6" style="text-align:center;"> -->
+<!-- 				<label> -->
+<!-- 					老師 -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<label> -->
+<!-- 					{{ currentEvent.teacher }} -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-6" style="text-align:center;" ng-click="teacherNoteOpen()"> -->
+<!-- 				<label> -->
+<!-- 					老師筆記 -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<label> -->
+<!-- 					{{ currentEvent.teacher_note }} -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="row" ng-click="studentNoteEdit()"> -->
+<!-- 			<div class="col-sm-6" style="text-align:center;" ng-click="studentNoteOpen()"> -->
+<!-- 				<label> -->
+<!-- 					學生筆記 -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<label> -->
+<!-- 					{{ currentEvent.student_note }} -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-6" style="text-align:center;"> -->
+<!-- 				<label> -->
+<!-- 					song  -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<label> -->
+<!-- 					{{ currentEvent.song }} -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-6" style="text-align:center;"> -->
+<!-- 				<label> -->
+<!-- 					回家作業 -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<label> -->
+<!-- 					{{ currentEvent.hw }} -->
+<!-- 				</label> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- <!-- 		<div class="row" ng-if="currentEvent.finish == 0"> --> -->
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-sm-6" align="right"> -->
+<!-- 				<button type="button" class="btn btn-success" ng-click="updateCourse(currentEvent)"> -->
+<!-- 					修改  -->
+<!-- 				</button> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-6"> -->
+<!-- 				<button type="button" class="btn btn-danger" ng-click="deleteCourse(currentEvent)"> -->
+<!-- 					刪除 -->
+<!-- 				</button> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	
 	
 </div>

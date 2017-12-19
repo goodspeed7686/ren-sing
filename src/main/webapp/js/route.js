@@ -23,6 +23,20 @@ app.config(function ($routeProvider,$locationProvider) {
 
 	})
 	
+	.when('/curriculum/queryWeekCourses',{
+
+		templateUrl: 'curriculum/queryWeekCourses',
+		controller: 'weekCourseCtrl'
+
+	})
+	
+	.when('/curriculum/queryDailyCourses',{
+
+		templateUrl: 'curriculum/queryDailyCourses',
+		controller: 'dailyCourseCtrl'
+
+	})
+	
 	.when('/class',{
 
 		templateUrl: 'class',

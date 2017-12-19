@@ -13,4 +13,9 @@ public interface CurriculumService {
 	public void update(Map<String,Object> map);
 	public void delete(Map<String,Object> map);
 	public void upsert(Map<String,Object> map);
+	public List<Map<String, Object>> queryWeekEvents(Map<String, Object> map) throws Exception;
+	public List<Map<String,Object>> queryDailyEvents(Map<String,Object> map) throws Exception;
+	public void insertCourse(Map<String,Object> map) throws Exception;
+	public void deleteCourse(Map<String,Object> map) throws Exception;
+	public void signCourse(Map<String,Object> map) throws Exception;
 }

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.ClassMasterDAO;
 import com.sing.ren.service.MasterService;
 import com.sing.ren.service.RSService;
@@ -51,6 +52,8 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	@Override
 	public void insert(Map<String, Object> map) {
 		try {
+			map.put("rest", MapUtils.getInteger(map, "summary") - MapUtils.getInteger(map, "count"));
+			map.put("e_date", CommonTools.getAddMonthAfterDate(MapUtils.getString(map, "s_date"), 8, "yyyy/MM/dd"));
 			classMasterDAO.insertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,6 +63,8 @@ public class MasterServiceImpl extends RSService implements MasterService{
 	@Override
 	public void update(Map<String, Object> map) {
 		try {
+			map.put("rest", MapUtils.getInteger(map, "summary") - MapUtils.getInteger(map, "count"));
+			map.put("e_date", CommonTools.getAddMonthAfterDate(MapUtils.getString(map, "s_date"), 8, "yyyy/MM/dd"));
 			classMasterDAO.update(map);
 		} catch (Exception e) {
 			e.printStackTrace();

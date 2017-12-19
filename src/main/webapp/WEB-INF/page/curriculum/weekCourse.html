@@ -1,0 +1,76 @@
+<style>
+	.select{
+		background : #87CEEB;
+	}
+	.used{
+		background : #708090;
+	}
+	.yours{
+		background : #CD853F;
+	}
+	.empty{
+		background : #F5FFFA;
+	}
+	.block-text{
+		font-weight : bold;
+ 		font-size : 15px; 
+	}
+	.div-right{
+		float:right;
+	}
+</style>
+
+<div ng-controller="weekCourseCtrl" ng-init="loadEvents()">
+<table class="table table-bordered">
+  <thead>
+  	 <tr>
+      	<th scope="col" colspan="8">
+	     	<div style="text-align:center">
+	     		<span class="glyphicon glyphicon-chevron-left" style="float:left" ng-click="pageClick(-1)"></span>
+	     		{{ header.weekTitle }}
+	     		<span class="glyphicon glyphicon-chevron-right" style="float:right" ng-click="pageClick(1)"></span>
+	     	</div>
+   	  	</th>
+    </tr>
+    <tr>
+    	<th scope="col" style="text-align:center">GMT+08</th>
+	    <th scope="col" style="text-align:center">{{ header.week0 }} (Sun)</th>
+	    <th scope="col" style="text-align:center">{{ header.week1 }} (Mon)</th>
+	    <th scope="col" style="text-align:center">{{ header.week2 }} (Tue)</th>
+	    <th scope="col" style="text-align:center">{{ header.week3 }} (Wed)</th>
+	    <th scope="col" style="text-align:center">{{ header.week4 }} (Thus)</th>
+	    <th scope="col" style="text-align:center">{{ header.week5 }} (Fri)</th>
+	    <th scope="col" style="text-align:center">{{ header.week6 }} (Sat)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr ng-repeat="row in weeksEvents">
+	    <th scope="row" style="text-align:center">{{ row.start_time }}</th>
+	    <td ng-class="{ 'select' : row.Sun == 0, 'used' : row.Sun == 1, 'yours' : row.Sun == 2, 'empty' : row.Sun == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 0, row.Sun)"></td>
+	    <td ng-class="{ 'select' : row.Mon == 0, 'used' : row.Mon == 1, 'yours' : row.Mon == 2, 'empty' : row.Mon == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 1, row.Mon)"></td>
+	    <td ng-class="{ 'select' : row.Tue == 0, 'used' : row.Tue == 1, 'yours' : row.Tue == 2, 'empty' : row.Tue == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 2, row.Tue)"></td>
+	    <td class="empty"></td>
+	    <td ng-class="{ 'select' : row.Thus == 0, 'used' : row.Thus == 1, 'yours' : row.Thus == 2, 'empty' : row.Thus == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 4, row.Thus)"></td>
+	    <td ng-class="{ 'select' : row.Fri == 0, 'used' : row.Fri == 1, 'yours' : row.Fri == 2, 'empty' : row.Fri == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 5, row.Fri)"></td>
+	    <td ng-class="{ 'select' : row.Sat == 0, 'used' : row.Sat == 1, 'yours' : row.Sat == 2, 'empty' : row.Sat == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, 6, row.Sat)"></td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+	<tr>
+		<td class="select"></td>
+		<td class="block-text">可選時段</td>
+		<td class="used"></td>
+		<td class="block-text">已劃位</td>
+		<td class="yours"></td>
+		<td class="block-text">您的預約</td>
+	</tr>
+</table>
+</div>

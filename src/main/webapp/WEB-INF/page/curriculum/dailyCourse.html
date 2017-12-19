@@ -1,0 +1,56 @@
+<style>
+	.select{
+		background : #87CEEB;
+	}
+	.signed{
+		background : #708090;
+	}
+	.unsigned{
+		background : #CD853F;
+	}
+	.empty{
+		background : #F5FFFA;
+	}
+	.block-text{
+		font-weight : bold;
+ 		font-size : 15px; 
+	}
+</style>
+
+<div ng-controller="dailyCourseCtrl" ng-init="loadEvents()">
+<table class="table table-bordered">
+  <thead>
+  	 <tr>
+      	<th scope="col" colspan="2">
+	     	<div style="text-align:center">
+	     		<span class="glyphicon glyphicon-chevron-left" style="float:left" ng-click="pageClick(-1)"></span>
+	     		{{ header.dayTitle }}
+	     		<span class="glyphicon glyphicon-chevron-right" style="float:right" ng-click="pageClick(1)"></span>
+	     	</div>
+   	  	</th>
+    </tr>
+    <tr>
+    	<th scope="col" style="text-align:center">GMT+08</th>
+	    <th scope="col" style="text-align:center">{{ header.date }} ({{ header.day }})</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr ng-repeat="row in dayEvents">
+	    <th scope="row" style="text-align:center">{{ row.start_time }}</th>
+	    <td ng-class="{ 'unsigned' : row.sign == 0, 'signed' : row.sign == 1, 'select' : row.sign == 2, 'empty' : row.sign == 3 }"
+	    	ng-click="checkCourse($index + 1, row.start_time, row.sign)"></td>
+    </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+	<tr>
+		<td class="select"></td>
+		<td class="block-text">空堂</td>
+		<td class="signed"></td>
+		<td class="block-text">已簽到</td>
+		<td class="unsigned"></td>
+		<td class="block-text">未簽到</td>
+	</tr>
+</table>
+</div>

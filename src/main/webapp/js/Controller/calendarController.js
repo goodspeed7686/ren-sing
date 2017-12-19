@@ -27,12 +27,21 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	var y = date.getFullYear();
     	var M = date.getMonth();
     	var data = [];
-    	data.push({
-    		'student_id': $cookieStore.get('person_id'),
-    		'date_pre': y + '/' + M,
-    		'date_now': y + '/' + (parseInt( M ) + 1),
-    		'date_next': y + '/' + (parseInt( M ) + 2)
-    	});
+    	if ($cookieStore.get('role') != 0) {
+    		data.push({
+        		'student_id': $cookieStore.get('person_id'),
+        		'date_pre': y + '/' + M,
+        		'date_now': y + '/' + (parseInt( M ) + 1),
+        		'date_next': y + '/' + (parseInt( M ) + 2)
+        	});
+    	}else {
+    		data.push({
+        		'date_pre': y + '/' + M,
+        		'date_now': y + '/' + (parseInt( M ) + 1),
+        		'date_next': y + '/' + (parseInt( M ) + 2)
+        	});
+    	}
+    	
         var events = [];
         apiService.getAPIwithObject("curriculum/query",data)
         .then(function(result) {
@@ -160,18 +169,13 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	var Y = date.split("/")[0];
     	var M = parseInt( date.split("/")[1] ) - 1;
     	var D = date.split("/")[2];
-    	var time = result.time;
-    	var sh = time.split(":")[0];
-    	var sm = time.split(":")[1];
-    	var eh = 0;
-    	var em = 0;
-    	if (parseInt(sm) > 30){
-    		eh = parseInt(sh) + 1;
-    		em = parseInt(sm) - 30;
-    	}else{
-    		eh = sh;
-    		em = parseInt(sm) + 30;
-    	}
+    	var intervalTime = result.interval_time;
+    	var s_time = intervalTime.split("_")[0];
+    	var sh = s_time.substring(0, 2);
+    	var sm = s_time.substring(2);
+    	var e_time = intervalTime.split("_")[1];
+    	var eh = e_time.substring(0, 2);
+    	var em = e_time.substring(2);
     	
     	return {
     		title: title,

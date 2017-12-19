@@ -33,6 +33,14 @@ public class CommonTools {
 	private static DateFormat dh = new SimpleDateFormat("yyyy/MM/dd HH");
 	private static NumberFormat nf = new DecimalFormat("0.00");
 	
+	private static String SUN = "Sun";
+	private static String MON = "Mon";
+	private static String TUE = "Tue";
+	private static String WED = "Wed";
+	private static String THUS = "Thus";
+	private static String FRI = "Fri";
+	private static String SAT = "Sat";
+	
 	/**
 	 * 取得傳入的日期和當時相差幾分
 	 * 
@@ -53,8 +61,8 @@ public class CommonTools {
 	 * @throws ParseException
 	 */
 	public static int countNowDifferenceDay(String strDate) throws ParseException {
-		long compareTime = CommonTools.getMillisecondForString(strDate,"yyyy-MM-dd");
-		long nowTime = CommonTools.getMillisecondForDate(new Date(),"yyyy-MM-dd");
+		long compareTime = CommonTools.getMillisecondForString(strDate,"yyyy/MM/dd");
+		long nowTime = CommonTools.getMillisecondForDate(new Date(),"yyyy/MM/dd");
 		int diffDay = (int)((nowTime - compareTime)/1000/60/60/24);
 		return diffDay;
 	}
@@ -189,7 +197,7 @@ public class CommonTools {
 	}
 
 	/**
-	 * 取當前日子-格式:yyyy-MM-dd
+	 * 取當前日子-格式:yyyy/MM/dd
 	 * 
 	 * @return String
 	 */
@@ -543,17 +551,56 @@ public class CommonTools {
 			return value;
 		}
 	}
+	
+	public static String whatDayIsTheDate (String date) {
+		if (StringUtils.isBlank(date) || date.indexOf("/") < 0) {
+			return "";
+		}
+		String yy = date.split("/")[0];
+		String mm = date.split("/")[1];
+		String dd = date.split("/")[2];
+		String result = "";
+		Calendar startDate = Calendar.getInstance();
+		startDate.set(Integer.parseInt(yy), Integer.parseInt(mm) - 1, Integer.parseInt(dd));
+		switch (startDate.get(Calendar.DAY_OF_WEEK)) {
+			case 1:
+				result = SUN;
+				break;
+			case 2:
+				result = MON;
+				break;
+			case 3:
+				result = TUE;
+				break;
+			case 4:
+				result = WED;
+				break;
+			case 5:
+				result = THUS;
+				break;
+			case 6:
+				result = FRI;
+				break;
+			case 7:
+				result = SAT;
+				break;
+		}
+		return result;
+	}
+	
 	/**
 	 * JSONParser ;
 	 * json to map;
 	 */
 	@SuppressWarnings("unchecked")
-	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException{
+	public Map<String,Object> jsonToMap(String json) throws org.json.simple.parser.ParseException {
 		Map<String,Object> map = null;
-		if(StringUtils.isNotBlank(json)){
+		if(StringUtils.isNotBlank(json)) {
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(json.replaceAll("\\[","").replaceAll("\\]",""));  
 			map = (HashMap<String, Object>)obj;
+		}else {
+			map = new HashMap<String,Object>();
 		}
 		return map;
 	}
@@ -562,47 +609,16 @@ public class CommonTools {
 	 * JSONParser ;
 	 * json to List<map>;
 	 */
-	public List<Map<String,Object>> jsonToList(String json) throws org.json.simple.parser.ParseException{
+	public List<Map<String,Object>> jsonToList(String json) throws org.json.simple.parser.ParseException {
 		List<Map<String,Object>> list=null;
-		if(StringUtils.isNotBlank(json)){
+		if(StringUtils.isNotBlank(json)) {
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(json);  
 			list = (List<Map<String, Object>>)obj;
 		}
 		return list;
 	}
-
-	//  時間加減轉格式    symbol "+":加10  "-":減10
-	public Object timeManage(Object time,String symbol,int diff){
-		String [] array=time.toString().split(":");
-		if(symbol.equals("+")){
-			array[1]=String.valueOf(Integer.parseInt(array[1])+diff);
-			if(Integer.parseInt(array[1])>=60){
-				array[1]=String.valueOf(Integer.parseInt(array[1])-60);
-				array[0]=(Integer.parseInt(array[0])+1)+"";
-			}
-			if(Integer.parseInt(array[0])>23){
-				if(Integer.parseInt(array[1])>0){
-					array[0]="00";
-				}
-			}
-		}else if(symbol.equals("-")){
-			array[1]=String.valueOf(Integer.parseInt(array[1])-diff);
-			if(Integer.parseInt(array[1])<0){
-				array[1]=String.valueOf(60+Integer.parseInt(array[1]));
-				array[0]=(Integer.parseInt(array[0])-1)+"";
-				if(Integer.parseInt(array[0])<0){
-					array[0]="23";
-				}
-				
-			}
-		}
-		if(array[0].length()<2)
-			array[0]="0"+array[0];
-		if(array[1].length()<2)
-			array[1]="0"+array[1];
-		return array[0]+":"+array[1];		
-	} 
+	
 	//學號加上最末位  驗證碼
 	public String verificationNumber (String s){
 		int [] arr={9,8,7,6,5,4,3,2,1};

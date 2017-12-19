@@ -28,18 +28,14 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 	CommonTools comm=new CommonTools();
 	@Override
 	@Transactional (rollbackFor = Exception.class)
-	public void insert(Map<String,Object> map) {
-		try {
-			if (!map.containsKey("person_id") || StringUtils.isBlank(MapUtils.getString(map, "person_id"))) {
-				map.put("person_id", getNewPersonId());
-			}
-			//上個人課才能用()
-			map.put("status", 1);
-			accountDAO.insertDB(map);
-			personDAO.insertDB(map);
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void insert(Map<String,Object> map) throws Exception {
+		if (!map.containsKey("person_id") || StringUtils.isBlank(MapUtils.getString(map, "person_id"))) {
+			map.put("person_id", getNewPersonId());
 		}
+		//上個人課才能用()
+		map.put("status", 1);
+		accountDAO.insertDB(map);
+		personDAO.insertDB(map);
 	}
 
 	@Override

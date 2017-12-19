@@ -64,10 +64,10 @@ public class RSInterceptor extends HandlerInterceptorAdapter {
 			}
 			
 			if (methodName.equals("processLogout")) {
-				if (!isLogin) {
-					resp.sendRedirect("home");
-					return false;
-				}
+//				if (!isLogin) {
+//					resp.sendRedirect("home");
+//					return false;
+//				}
 				return true;
 			}
 			

@@ -1,10 +1,15 @@
 package com.sing.ren.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.MapUtils;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +51,21 @@ public class CurriculumController {
 	public String history() {
 		return "curriculum/popupHistory";
 	}
+	
+	@RequestMapping(value = {"/curriculum/queryDailyCourses"}, method = RequestMethod.GET)
+	public String queryDailyCourses() {
+		return "curriculum/dailyCourse";
+	}
+	
+	@RequestMapping(value = {"/curriculum/queryWeekCourses"}, method = RequestMethod.GET)
+	public String queryWeekCources() {
+		return "curriculum/weekCourse";
+	}
+	
+//	@RequestMapping(value = {"/curriculum/insertCourse"}, method = RequestMethod.GET)
+//	public String insertCource() {
+//		return "curriculum/insertCourse";
+//	}
 
 	/**
 	 * 查詢學生所有課程
@@ -134,5 +154,86 @@ public class CurriculumController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping(value = {"/curriculum/queryWeekEvents"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String,Object>> queryWeekEvents(HttpSession session,@RequestBody String json) throws Exception{
+		Map<String,Object> param = comm.jsonToMap(json);
+		Map<String,Object> result = new HashMap<String,Object>();
+		Map<String,Object> header = new HashMap<String,Object>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		int currentDate = cal.get(Calendar.DATE); 
+		int diffWeek = MapUtils.getInteger(param, "page", 0);
+		cal.set(Calendar.DATE, currentDate + diffWeek*7);
+		SimpleDateFormat dateStringFormat = new SimpleDateFormat( "MMM, yyyy, w" );
+	    String weekTitle = dateStringFormat.format(cal.getTime());
+		header.put("weekTitle",weekTitle);
+		int[] weekArray = {0,1,2,3,4,5,6};
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int day = cal.get(Calendar.DATE);  
+		for (int i=0;i<weekArray.length;i++) {
+			int diffDay = weekArray[i] - (dayOfWeek - 1);
+			cal.set(Calendar.DATE, day + diffDay);
+			dateStringFormat = new SimpleDateFormat( "d" );
+		    String weekDate = dateStringFormat.format(cal.getTime());
+		    header.put("week" + weekArray[i],weekDate);
+		    if (i == 0) {
+		    	dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
+		    	param.put("date_between_start", dateStringFormat.format(cal.getTime()));
+		    }
+		    if (i == 6) {
+		    	dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
+		    	param.put("date_between_end", dateStringFormat.format(cal.getTime()));
+		    }
+		}
+		result.put("header", header);
+		result.put("content", curriculumService.queryWeekEvents(param));
+		
+		return new ResponseEntity<Map<String,Object>> (result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = {"/curriculum/queryDailyEvents"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<String,Object>> queryDailyEvents(HttpSession session,@RequestBody String json) throws Exception{
+		Map<String,Object> param = comm.jsonToMap(json);
+		Map<String,Object> result = new HashMap<String,Object>();
+		Map<String,Object> header = new HashMap<String,Object>();
+		SimpleDateFormat dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		int currentDate = cal.get(Calendar.DATE); 
+		int diffDay = MapUtils.getInteger(param, "page", 0);
+		cal.set(Calendar.DATE, currentDate + diffDay);
+		String date = dateStringFormat.format(cal.getTime());
+		param.put("date", date);
+		dateStringFormat = new SimpleDateFormat( "MMM, yyyy, w" );
+		header.put("dayTitle", dateStringFormat.format(cal.getTime()));
+		dateStringFormat = new SimpleDateFormat( "d" );
+		header.put("date", dateStringFormat.format(cal.getTime()));
+		header.put("day", CommonTools.whatDayIsTheDate(date));
+		
+		result.put("header", header);
+		result.put("content", curriculumService.queryDailyEvents(param));
+		
+		return new ResponseEntity<Map<String,Object>> (result, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = {"/curriculum/insertCourse"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void insertCourse(HttpSession session,@RequestBody String json) throws Exception {
+		curriculumService.insertCourse(comm.jsonToMap(json));
+	}
+	
+	@RequestMapping(value = {"/curriculum/deleteCourse"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void deleteCourse(HttpSession session,@RequestBody String json) throws Exception {
+		curriculumService.deleteCourse(comm.jsonToMap(json));
+	}
+	
+	@RequestMapping(value = {"/curriculum/signCourse"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void signCourse(HttpSession session,@RequestBody String json) throws Exception {
+		curriculumService.signCourse(comm.jsonToMap(json));
 	}
 }

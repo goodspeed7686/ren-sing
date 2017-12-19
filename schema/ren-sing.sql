@@ -26,13 +26,15 @@ CREATE TABLE IF NOT EXISTS `account` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.account 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.account 的資料：~6 rows (大約)
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 REPLACE INTO `account` (`account`, `password`, `role`, `status`, `person_id`) VALUES
-	('000', '000', '1', NULL, '2017090016'),
-	('111', '000', '1', NULL, '2017090027'),
-	('admin', '123123', '0', '1', '9527'),
-	('qwe', 'qwe', '2', '1', '2017100015');
+	('2017120014', '123123', '1', '1', '2017120014'),
+	('2017120025', '123123', '1', '1', '2017120025'),
+	('2017120036', '123123', '2', '1', '2017120036'),
+	('2017120047', '123123', '2', '1', '2017120047'),
+	('2017120058', '123123', '2', '1', '2017120058'),
+	('admin', '123123', '0', '1', '2017100015');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.achievement 結構
@@ -113,30 +115,52 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_master_id` int(11) NOT NULL DEFAULT '0',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
-  `song` varchar(50) DEFAULT '0' COMMENT '歌曲',
+  `song` varchar(50) DEFAULT NULL COMMENT '歌曲',
   `date` varchar(50) NOT NULL COMMENT '上課日期 yyyy/MM/dd',
   `time` varchar(2) NOT NULL COMMENT '上課時間 (對照course_time)',
-  `ranges` int(11) DEFAULT '0' COMMENT '幾個時段',
+  `ranges` int(11) NOT NULL COMMENT '幾個時段',
   `s_time` varchar(10) DEFAULT '' COMMENT '特殊上課時間(開始)',
   `e_time` varchar(10) DEFAULT '' COMMENT '特殊上課時間(結束)',
   `hw` varchar(1000) DEFAULT '' COMMENT '回家作業',
   `teacher_note` varchar(1000) DEFAULT '' COMMENT '老師筆記',
   `student_note` varchar(1000) DEFAULT '' COMMENT '學生筆記',
   `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=阿卡課',
-  `finish` varchar(1) NOT NULL DEFAULT '1' COMMENT '0=結束，1=未結束',
-  `sign` varchar(1) NOT NULL DEFAULT '1' COMMENT '0=已簽到，1=未簽到',
+  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未結束，1=已結束',
+  `sign` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未簽到，1=已簽到',
   `updater` varchar(50) DEFAULT '0',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
+  UNIQUE KEY `Index 2` (`date`,`time`),
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_detail 的資料：~4 rows (大約)
+-- 正在導出表  ren-sing.class_detail 的資料：~25 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
 REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `updater`, `update_time`) VALUES
-	(1, 1, '1', '2017090016', 'song', '2017/11/09', '8', 4, '0', '0', '0', '0', '3333', '0', '0', '1', 'updater', '2017-11-11 16:43:38'),
-	(6, 1112, '123564545', '2017090016', '鬥陣取', '2017/11/09', '7', 0, '0', '0', '大便庫子上', '測試老師2', '測試學生2', '0', '1', '0', 'updater', '2017-11-11 16:43:41'),
-	(7, 2, '2', '2017090016', '好習慣', '2017/11/09', '15', 0, '0', '0', '0', '0', '3333', '1', '0', '1', 'updater', '2017-11-11 16:43:40'),
-	(8, 1111, '123564545', '2017090016', '鬥陣取', '2017/11/09', '6', 0, '0', '0', '大便庫子上', '測試老師3', '測試學生3', '0', '1', '1', 'updater', '2017-11-11 16:43:42');
+	(1, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '1', 1, NULL, NULL, NULL, NULL, NULL, '0', '1', '1', 'updater', '2017-12-16 15:04:05'),
+	(10, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-17 00:00:09'),
+	(9, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '11', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:59:48'),
+	(3, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '3', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:50:23'),
+	(2, 1115, '2017120047', '2017120025', '0', '2017/12/10', '4', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-18 13:30:48'),
+	(4, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:52:35'),
+	(7, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '6', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:59:27'),
+	(5, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:55:29'),
+	(6, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '9', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-16 23:56:40'),
+	(11, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '1', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-17 00:00:29'),
+	(12, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-17 00:00:39'),
+	(14, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-17 00:08:10'),
+	(13, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '2017-12-17 00:08:04'),
+	(18, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '1', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:08:47'),
+	(25, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '13', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:16:50'),
+	(17, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '9', 1, '', '', '', '', '', '0', '1', '0', '0', '2017-12-18 23:50:15'),
+	(33, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '3', 1, '', '', '', '', '', '0', '0', '1', '0', '2017-12-19 00:28:17'),
+	(34, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '6', 1, '', '', '', '', '', '0', '0', '1', '0', '2017-12-19 00:29:38'),
+	(35, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '8', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-19 00:29:45'),
+	(31, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '10', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:25:59'),
+	(32, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '12', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:26:01'),
+	(27, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '2', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:24:48'),
+	(28, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '4', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:24:54'),
+	(29, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '5', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:25:19'),
+	(30, 1115, '2017120047', '2017120025', NULL, '2017/12/21', '6', 1, '', '', '', '', '', '0', '0', '0', '0', '2017-12-18 21:25:54');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_level 結構
@@ -162,25 +186,26 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '課程類型 (0:一對一個別課,1:阿卡團體班)',
   `level` varchar(1) DEFAULT '0' COMMENT '課程等級 (0:入門班,1:基礎班,2:進階班)',
   `status` varchar(50) NOT NULL DEFAULT '0' COMMENT '課程狀態 (0:未結束 1:結束 2:未結束其他理由)',
-  `price` varchar(50) NOT NULL DEFAULT '0' COMMENT '課程原始價錢',
+  `price` varchar(50) DEFAULT '0' COMMENT '課程原始價錢',
   `summary` varchar(5) NOT NULL DEFAULT '0' COMMENT '課堂總數',
   `count` varchar(5) NOT NULL DEFAULT '0' COMMENT '目前上課次數',
   `rest` varchar(5) NOT NULL DEFAULT '0' COMMENT '剩餘課堂數',
-  `s_date` varchar(50) DEFAULT NULL COMMENT '課堂起始時間 (預計) yyyy/mm/dd',
-  `e_date` varchar(10) DEFAULT '0' COMMENT '課堂結束時間 (預計) yyyy/MM/dd',
+  `s_date` varchar(10) NOT NULL COMMENT '課堂起始時間 (預計) yyyy/mm/dd',
+  `e_date` varchar(10) NOT NULL COMMENT '課堂結束時間 (預計) yyyy/MM/dd',
+  `day` varchar(1) DEFAULT NULL COMMENT '星期幾',
+  `time` varchar(2) DEFAULT NULL COMMENT '上課時間 (對照course_time)',
   `place` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課地點',
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
-  `updater` varchar(50) NOT NULL DEFAULT '0',
-  `update_time` varchar(50) NOT NULL DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `updater` varchar(50) DEFAULT '0',
+  `update_time` varchar(50) DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
   PRIMARY KEY (`class_master_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1113 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1116 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.class_master 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.class_master 的資料：~1 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
-REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1111, '音樂課', '0', '0', '0', '25000', '24', '6', '18', '2017/07/02', '2017/9/2', '0', '2017090016', '9527', 'updater', '2017/11/07 06:04:11'),
-	(1112, '喇叭樂課', '1', '1', '0', '25000', '12', '2', '11', '2017/09/02', '2017/10/2', '1', '2017090027', '9527', 'updater', '2017/11/01 21:10:45');
+REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `day`, `time`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
+	(1115, '臻臻個人課', '0', NULL, '1', NULL, '24', '23', '1', '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2017/12/19 00:29:45');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.class_place 結構
@@ -222,36 +247,37 @@ CREATE TABLE IF NOT EXISTS `courses_time` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.courses_time 的資料：~12 rows (大約)
+-- 正在導出表  ren-sing.courses_time 的資料：~13 rows (大約)
 /*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;
 REPLACE INTO `courses_time` (`id`, `interval_time`, `start_time`, `end_time`) VALUES
-	(1, '1300_1339', '13:00', '13:40'),
+	(1, '1300_1340', '13:00', '13:40'),
 	(2, '1340_1420', '13:40', '14:20'),
 	(3, '1420_1500', '14:20', '15:00'),
 	(4, '1500_1540', '15:00', '15:40'),
-	(5, '1620_1700', '16:20', '17:00'),
-	(6, '1540_1620', '15:40', '16:20'),
-	(7, '1800_1840', '18:00', '18:40'),
-	(8, '1840_1920', '18:40', '19:20'),
-	(9, '1920_2000', '19:20', '20:00'),
-	(10, '2000_2040', '20:00', '20:40'),
-	(11, '2040_2120', '20:40', '21:20'),
-	(12, '2120_2200', '21:20', '22:00');
+	(5, '1540_1620', '15:40', '16:20'),
+	(6, '1620_1700', '16:20', '17:00'),
+	(7, '1700_1800', '17:00', '18:00'),
+	(8, '1800_1840', '18:00', '18:40'),
+	(9, '1840_1920', '18:40', '19:20'),
+	(10, '1920_2000', '19:20', '20:00'),
+	(11, '2000_2040', '20:00', '20:40'),
+	(12, '2040_2120', '20:40', '21:20'),
+	(13, '2120_2200', '21:20', '22:00');
 /*!40000 ALTER TABLE `courses_time` ENABLE KEYS */;
 
 -- 導出  表 ren-sing.person 結構
 CREATE TABLE IF NOT EXISTS `person` (
   `person_id` varchar(15) NOT NULL COMMENT '會員編號',
   `virtual_account` varchar(50) DEFAULT '0' COMMENT '繳費虛擬帳號',
-  `name` varchar(50) DEFAULT NULL COMMENT '會員名字',
+  `name` varchar(50) NOT NULL COMMENT '會員名字',
   `nickname` varchar(50) DEFAULT NULL COMMENT '綽號',
   `balance` varchar(50) DEFAULT '0' COMMENT '餘額',
   `id_number` varchar(10) DEFAULT NULL COMMENT '身分證字號',
   `sex` varchar(1) DEFAULT NULL COMMENT '性別 (0:男,1:女)',
-  `birthday` varchar(10) DEFAULT NULL COMMENT '生日',
+  `birthday` varchar(10) NOT NULL COMMENT '生日',
   `local_calls` varchar(15) DEFAULT NULL COMMENT '市話',
-  `phone` varchar(15) DEFAULT NULL COMMENT '電話',
-  `email` varchar(50) DEFAULT NULL COMMENT '信箱',
+  `phone` varchar(15) NOT NULL COMMENT '電話',
+  `email` varchar(50) NOT NULL COMMENT '信箱',
   `skype` varchar(50) DEFAULT NULL COMMENT 'skyoe帳號',
   `career` varchar(50) DEFAULT NULL COMMENT '職業',
   `recipient` varchar(20) DEFAULT NULL COMMENT '收信人',
@@ -263,13 +289,15 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在導出表  ren-sing.person 的資料：~3 rows (大約)
+-- 正在導出表  ren-sing.person 的資料：~6 rows (大約)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
 REPLACE INTO `person` (`person_id`, `virtual_account`, `name`, `nickname`, `balance`, `id_number`, `sex`, `birthday`, `local_calls`, `phone`, `email`, `skype`, `career`, `recipient`, `rec_add`, `rec_num`, `company_tax_id`, `updater`, `update_time`) VALUES
-	('2017090016', '0', '韋小寶', '小寶', '0', '1', '0', '19870806', '22', '11', '1', '11', '11', '11', '11', '11', '11', '11', '11'),
-	('2017090027', '0', '滅絕師太', '妖尼姑', '0', '1', '1', '19870806', '33', '22', '22', '2', '2', '22', '2', '2', '22', '2', '2'),
-	('2017100015', NULL, 'qwe', NULL, NULL, 'C666666666', NULL, '1989/05/11', '24323772', '24323772', '24323772@aaa.aaa', '24323772@aaa.aaa', '5566', '5566', '5566', '5566', NULL, 'updater', '2017/10/29 17:52:52'),
-	('9527', '0', '上帝視角', '勝利組', '0', '9527', '0', '19890513', '02-5566', '09875566', '5566@gmail.com', '5566@gmail.com', '上帝', NULL, NULL, NULL, NULL, NULL, NULL);
+	('2017100015', '0', '上帝視角', '勝利組', '0', '9527', '0', '19890513', '02-5566', '09875566', '5566@gmail.com', '5566@gmail.com', '上帝', NULL, NULL, NULL, NULL, NULL, NULL),
+	('2017120014', NULL, '顏大', NULL, NULL, 'C121328819', '0', '2017/12/16', NULL, '0916372433', 'aaa@aaa.aaa', NULL, '老師', NULL, NULL, NULL, NULL, 'updater', '2017/12/16 14:34:02'),
+	('2017120025', NULL, '安安', NULL, NULL, 'C121328819', '0', '2017/12/16', NULL, '0916372433', 'bbb@bbb.bbb', NULL, '老師', NULL, NULL, NULL, NULL, 'updater', '2017/12/16 14:34:47'),
+	('2017120036', NULL, '麻吉', NULL, NULL, 'C121328819', '1', '2017/12/16', NULL, '0916372433', 'ccc@ccc.ccc', NULL, '主播', NULL, NULL, NULL, NULL, 'updater', '2017/12/16 14:38:41'),
+	('2017120047', NULL, '臻臻', NULL, NULL, 'C121328819', '1', '2017/12/16', NULL, '0916372433', 'ddd@ddd.ddd', NULL, '天下雜誌企劃', NULL, NULL, NULL, NULL, 'updater', '2017/12/16 14:39:35'),
+	('2017120058', NULL, '河神', NULL, NULL, 'C121328819', '0', '2017/12/18', NULL, '0916372433', 'aaa@aaa.aaa', NULL, NULL, NULL, NULL, NULL, NULL, 'updater', '2017/12/18 21:22:34');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

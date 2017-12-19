@@ -38,7 +38,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 			return;
 		}
 		if (isEmpty($scope.mem.password)) {
-			alertService.error("請填寫密碼");
+			alertService.info("請填寫密碼");
 			return;
 		}
 		if (!pwdCheck()) {
@@ -50,11 +50,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
         	$scope.ibackToMem();
         },
         function(errResponse){
-        	var str = errResponse.data.lastIndexOf(".html");
-        	var sub = errResponse.data.substring(0,str+3);
-        	var msg = /[^/]*$/.exec(sub)[0];
-            
-            alertService.error(msg.split(".")[0]);
+            alertService.error("系統錯誤");
         });
 	};
 	
@@ -82,34 +78,34 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 
 	function validate() {
 		if (isEmpty($scope.mem.name)) {
-			alertService.error("請填寫名字");
+			alertService.info("請填寫名字");
 			return false;
 		}else if (isEmpty($scope.mem.id_number)) {
-			alertService.error("請填寫身份證字號");
+			alertService.info("請填寫身份證字號");
 			return false;
 		}else if (!idNumberCheck($scope.mem.id_number)) {
-			alertService.error("身份證字號錯誤，請重新輸入");
+			alertService.info("身份證字號錯誤，請重新輸入");
 			return false;
 		}else if (isEmpty($scope.mem.role)) {
-			alertService.error("請選擇角色");
+			alertService.info("請選擇角色");
 			return false;
 		}else if (isEmpty($scope.mem.sex)) {
-			alertService.error("請選擇性別");
+			alertService.info("請選擇性別");
 			return false;
 		}else if (isEmpty($scope.mem.birthday)) {
-			alertService.error("請填寫生日");
+			alertService.info("請填寫生日");
 			return false;
 		}else if (isEmpty($scope.mem.phone)) {
-			alertService.error("請填寫手機號碼");
+			alertService.info("請填寫手機號碼");
 			return false;
 		}else if (!phoneCheck($scope.mem.phone)) {
-			alertService.error("手機號碼錯誤，請重新輸入");
+			alertService.info("手機號碼錯誤，請重新輸入");
 			return false;
 		}else if (isEmpty($scope.mem.email)) {
-			alertService.error("請填寫Email");
+			alertService.info("請填寫Email");
 			return false;
 		}else if (!emailCheck($scope.mem.email)) {
-			alertService.error("Email格式錯誤，請重新輸入");
+			alertService.info("Email格式錯誤，請重新輸入");
 			return false;
 		}else {
 			return true;
@@ -121,7 +117,7 @@ app.controller('addMbershipCtrl',['$scope', 'apiService', 'alertService', '$wind
 			var pwd = $scope.mem.password;
 			if (pwd.length > 0) {
 				if ($scope.mem.password != $scope.mem.pwdCheck) {
-					alertService.error("密碼與確認密碼不相同");
+					alertService.info("密碼與確認密碼不相同");
 					return false;
 				}else {
 					return true;

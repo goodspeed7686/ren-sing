@@ -1,5 +1,7 @@
 package com.sing.ren.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +11,9 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.sing.ren.Context;
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
@@ -17,8 +21,17 @@ import com.sing.ren.dao.table.CoursesTimeDAO;
 import com.sing.ren.service.CurriculumService;
 import com.sing.ren.service.RSService;
 
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class CurriculumServiceImpl extends RSService implements CurriculumService	{
+	
+	private static String SUN = "Sun";
+	private static String MON = "Mon";
+	private static String TUE = "Tue";
+	private static String WED = "Wed";
+	private static String THUS = "Thus";
+	private static String FRI = "Fri";
+	private static String SAT = "Sat";
 	
 	@Autowired
 	ClassDetailDAO classDetailDAO;
@@ -35,8 +48,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		  masterId.put("class_master_id",MapUtils.getString(map, "class_master_id",""));
 		  List<Map<String, Object>> classMaster=classMasterDAO.queryDB(masterId);
 		  
-		  classMaster.get(0).put("count",Integer.parseInt(MapUtils.getString(classMaster.get(0), "count")+"")+1);
-		  classMaster.get(0).put("rest",Integer.parseInt(MapUtils.getString(classMaster.get(0), "rest")+"")-1);
+		  classMaster.get(0).put("count",MapUtils.getInteger(classMaster.get(0), "count") + 1);
+		  classMaster.get(0).put("rest",MapUtils.getInteger(classMaster.get(0), "summary") - MapUtils.getInteger(classMaster.get(0), "count"));
 		  classMasterDAO.updateDB(classMaster.get(0));
 		  Map<String,Object> time=new HashMap<String,Object>();
 		  time.put("start_time",map.get("time"));
@@ -77,8 +90,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryBreak(Map<String,Object> map) {
 		try {
-			List<Map<String,Object>> coursesTimeList=coursesTimeDAO.queryDB(new HashMap<String,Object>());
-			List<Map<String,Object>> classDetail=classDetailDAO.queryDB(map);
+			List<Map<String,Object>> coursesTimeList = coursesTimeDAO.queryDB(new HashMap<String,Object>());
+			List<Map<String,Object>> classDetail = classDetailDAO.queryDB(map);
 			
 			for (Map<String,Object> detailMap : classDetail) {
 				String date = MapUtils.getString(detailMap, "date", "");
@@ -129,9 +142,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> queryRestClass(Map<String,Object> map) {
 		try {
-			//�ҵ{���A
 			map.put("status", "0");
-			//�ӤH�ҥN�X
 //			map.put("type", "0");
 			List<Map<String,Object>> result=classMasterDAO.queryDB(map);
 
@@ -163,15 +174,198 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public void upsert(Map<String,Object> map) {
 		try {
-			if(MapUtils.getString(map,"type").equals("0")){
-				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"-",10));
-			}else{
-				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"",0));
-			}
-			 classDetailDAO.upsertDB(map);
+//			if(MapUtils.getString(map,"type").equals("0")){
+//				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"-",10));
+//			}else{
+//				map.put("time",comm.timeManage(MapUtils.getString(map,"time"),"",0));
+//			}
+//			 classDetailDAO.upsertDB(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	public List<Map<String,Object>> queryWeekEvents(Map<String,Object> map) throws Exception {
+		List<Map<String,Object>> coursesTimeList = coursesTimeDAO.queryDB(new HashMap<String,Object>());
+		map.put("oreder", "time desc,date");
+		List<Map<String,Object>> courseDetailList = classDetailDAO.queryDB(map);
+		Map<String,Object> session = (Map<String, Object>) this.getSession(true).getAttribute(Context.RS_USER);
+		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+		for (Map<String,Object> courseTimeMap : coursesTimeList) {
+			Map<String,Object> weekMap = getWeekObject();
+			
+			if (MapUtils.getInteger(courseTimeMap, "id") == 7) {
+				for (String key : weekMap.keySet()) {
+					weekMap.put(key, "3");
+				}
+			}else {
+				for (Map<String,Object> detailMap : courseDetailList) {
+					String date = MapUtils.getString(detailMap, "date", "");
+					int time = MapUtils.getInteger(detailMap, "time");
+					if (time == MapUtils.getInteger(courseTimeMap, "id")) {
+						int studentId = MapUtils.getInteger(detailMap, "student_id");
+						int personId = MapUtils.getInteger(session, "person_id");
+						if (studentId == personId) {
+							weekMap.put(CommonTools.whatDayIsTheDate(date), "2");
+						}else {
+							weekMap.put(CommonTools.whatDayIsTheDate(date), "1");
+						}
+					}
+				}
+			}
+			weekMap.put("start_time", MapUtils.getString(courseTimeMap, "start_time", ""));
+			
+			result.add(weekMap);
+		}
+		
+		return result;
+	}
+	
+	private Map<String,Object> getWeekObject() {
+		Map<String,Object> result = new HashMap<String,Object>();
+		//0可選，1已選，2自己，3不可選
+		result.put(SUN, "0");
+		result.put(MON, "0");
+		result.put(TUE, "0");
+		result.put(WED, "0");
+		result.put(THUS, "0");
+		result.put(FRI, "0");
+		result.put(SAT, "0");
+		
+		return result;
+	}
+	
+	@Override
+	public List<Map<String,Object>> queryDailyEvents(Map<String,Object> map) throws Exception {
+		List<Map<String,Object>> coursesTimeList = coursesTimeDAO.queryDB(new HashMap<String,Object>());
+		map.put("oreder", "time desc");
+		List<Map<String,Object>> courseDetailList = classDetailDAO.queryDB(map);
+		for (Map<String,Object> courseTimeMap : coursesTimeList) {
+			courseTimeMap.put("sign", 2);
+			
+			if (MapUtils.getInteger(courseTimeMap, "id") == 7) {
+				courseTimeMap.put("sign", 3);
+			}else {
+				for (Map<String,Object> detailMap : courseDetailList) {
+					int time = MapUtils.getInteger(detailMap, "time");
+					if (time == MapUtils.getInteger(courseTimeMap, "id")) {
+						if (MapUtils.getInteger(detailMap, "sign") == 0) {
+							courseTimeMap.put("sign", 0);
+						}else {
+							courseTimeMap.put("sign", 1);
+						}
+					}
+				}
+			}
+		}
+		
+		return coursesTimeList;
+	}
+	
+	public Map<String,Object> getCurrentPeronalClass() throws Exception {
+		Map<String,Object> session = (Map<String, Object>) this.getSession(true).getAttribute(Context.RS_USER);
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("student_id", MapUtils.getInteger(session, "person_id"));
+		param.put("restMoreThen", "0");
+//		param.put("e_dateMoreThan", CommonTools.getCurrentDate());
+		param.put("status", "1");
+		List<Map<String, Object>> classMasterQuery = classMasterDAO.queryDB(param);
+		if (classMasterQuery.isEmpty()) {
+			throw new Exception("找不到相關課程，請洽服務人員");
+		}
+		Map<String,Object> classMaster = classMasterQuery.get(0);
+		
+		return classMaster;
+	}
+	
+	@Transactional
+	@Override
+	public void insertCourse(Map<String,Object> map) throws Exception {
+		Map<String,Object> time = new HashMap<String,Object>();
+		time.put("start_time",map.get("time"));
+		List<Map<String, Object>> coursesTime = coursesTimeDAO.queryDB(time);
+		
+		Map<String,Object> classMaster = getCurrentPeronalClass();
+		
+		if (MapUtils.getInteger(classMaster, "rest") < 0) {
+			throw new Exception("沒有剩餘課程了");
+		}
+		
+		map.put("time",coursesTime.get(0).get("id"));
+		map.put("class_master_id", MapUtils.getString(classMaster, "class_master_id"));
+		map.put("student_id", MapUtils.getString(classMaster, "student_id"));
+		map.put("teacher_id", MapUtils.getString(classMaster, "teacher_id"));
+		//目前都是個人課，都是一個時段
+		map.put("ranges", 1);
+		//目前都是個人課，type=0
+		map.put("type", 0);
+		map.put("finish", 0);
+		map.put("sign", 0);
+		classDetailDAO.upsertDB(map);
+		
+		classMaster.put("count",MapUtils.getInteger(classMaster, "count") + 1);
+		classMaster.put("rest",MapUtils.getInteger(classMaster, "summary") - MapUtils.getInteger(classMaster, "count"));
+		classMasterDAO.updateDB(classMaster);
+	}
+	
+	@Transactional
+	@Override
+	public void deleteCourse(Map<String,Object> map) throws Exception {
+		Map<String,Object> time = new HashMap<String,Object>();
+		time.put("start_time", map.get("time"));
+		List<Map<String, Object>> coursesTime = coursesTimeDAO.queryDB(time);
+		
+		Map<String,Object> classMaster = getCurrentPeronalClass();
+		if (CommonTools.countNowDifferenceDay(MapUtils.getString(map, "date")) < 2) {
+			//記點
+		}
+		
+		map.put("time",coursesTime.get(0).get("id"));
+		List<Map<String, Object>> classDetailList = classDetailDAO.queryDB(map);
+		if (classDetailList.isEmpty()) {
+			throw new Exception("找不到相關課程，請洽服務人員");
+		}
+		String detailId = MapUtils.getString(classDetailList.get(0), "class_detail_id");
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("class_detail_id", detailId);
+		classDetailDAO.delete(param);
+		if (StringUtils.isNotBlank(MapUtils.getString(classMaster, "day", "")) &&
+				StringUtils.isNotBlank(MapUtils.getString(classMaster, "time", ""))) {
+			param = new HashMap<String,Object>();
+			param.put("class_master_id", MapUtils.getString(classMaster, "class_master_id"));
+			param.put("student_id", MapUtils.getString(classMaster, "student_id"));
+			param.put("teacher_id", MapUtils.getString(classMaster, "teacher_id"));
+			param.put("time", coursesTime.get(0).get("id"));
+			param.put("type", 0);
+			param.put("finish", 0);
+			param.put("sign", 0);
+			
+			List<Map<String, Object>> theLastClassDetailList = classDetailDAO.queryDB(param);
+			if (classDetailList.isEmpty()) {
+				throw new Exception("找不到相關課程，請洽服務人員");
+			}
+			while (true) {
+				Map<String,Object> newDetail = theLastClassDetailList.get(0);
+				newDetail.remove("class_detail_id");
+				newDetail.put("date", CommonTools.getAddDayAfterDate(MapUtils.getString(newDetail, "date"), 7, "yyyy/MM/dd"));
+				theLastClassDetailList = classDetailDAO.queryDB(newDetail);
+				if (classDetailList.isEmpty()) {
+					param.put("date", MapUtils.getString(newDetail, "date"));
+					classDetailDAO.upsertDB(param);
+					break;
+				}
+			}
+		}
+		
+		classMaster.put("count",MapUtils.getInteger(classMaster, "count") - 1);
+		classMaster.put("rest",MapUtils.getInteger(classMaster, "summary") - MapUtils.getInteger(classMaster, "count"));
+		classMasterDAO.updateDB(classMaster);
+	}
+	
+	@Override
+	public void signCourse(Map<String,Object> map) throws Exception {
+		map.put("sign", "1");
+		classDetailDAO.updateSign(map);
+	}
 }
