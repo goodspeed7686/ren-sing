@@ -1,7 +1,9 @@
 //app.service('apiService',['$resource',function ($resource){
-app.factory('apiService', ['$http', '$q' , '$cookieStore', function($http, $q, $cookieStore){
+app.factory('apiService', ['$http', '$q' , '$cookieStore', '$location', function($http, $q, $cookieStore, $location){
 	
-	var REST_SERVICE_URI = 'http://localhost:8080/ren-sing/';
+//	var REST_SERVICE_URI = 'http://localhost:8080/ren-sing/';
+//	var REST_SERVICE_URI =  $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/ren-sing/';
+	var REST_SERVICE_URI = '/ren-sing/';
 	
 	var factory = {
 		getAPI : getAPI ,

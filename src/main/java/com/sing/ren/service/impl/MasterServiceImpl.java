@@ -10,15 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sing.ren.common.CommonTools;
+import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
-import com.sing.ren.service.MasterService;
+import com.sing.ren.service.ClassService;
 import com.sing.ren.service.RSService;
 
 @Service
-public class MasterServiceImpl extends RSService implements MasterService{
+public class MasterServiceImpl extends RSService implements ClassService{
 	
 	@Autowired
 	ClassMasterDAO classMasterDAO;
+	
+	@Autowired
+	ClassDetailDAO classDetailDAO;
 
 	@Override
 	public List<Map<String,Object>> getMaster() {
@@ -41,6 +45,9 @@ public class MasterServiceImpl extends RSService implements MasterService{
 			if (StringUtils.isNotBlank(student_name)){
 				map.put("like_student_name", "%".concat(student_name).concat("%"));
 			}
+			
+			map.put("fromIndex", MapUtils.getInteger(map, "page", 0)*10);
+			map.put("rowLimit", 10);
 			
 			return classMasterDAO.queryDB(map);
 		} catch (Exception e) {
@@ -71,4 +78,17 @@ public class MasterServiceImpl extends RSService implements MasterService{
 		}
 	}
 
+	public List<Map<String,Object>> getDetailList(Map<String, Object> map) throws Exception {
+		map.put("fromIndex", MapUtils.getInteger(map, "page", 0)*10);
+		map.put("rowLimit", 10);
+		classDetailDAO.query(map);
+		
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> queryCount(Map<String, Object> map) throws Exception {
+		return classDetailDAO.queryCountDB(map);
+	}
+	
 }

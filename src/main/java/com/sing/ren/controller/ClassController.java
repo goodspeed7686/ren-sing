@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.sing.ren.common.CommonTools;
-import com.sing.ren.service.MasterService;
+import com.sing.ren.service.ClassService;
 
 @Controller
 public class ClassController {
 	@Autowired
-	MasterService masterService;
+	ClassService classService;
 	
 	CommonTools comm=new CommonTools();
 	
@@ -39,7 +39,7 @@ public class ClassController {
 	@RequestMapping(value = {"/class/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> query(HttpSession session,@RequestBody String json){
 		try {
-			return new ResponseEntity<List<Map<String,Object>>>(masterService.query(comm.jsonToMap(json)), HttpStatus.OK);
+			return new ResponseEntity<List<Map<String,Object>>>(classService.query(comm.jsonToMap(json)), HttpStatus.OK);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +50,7 @@ public class ClassController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void insert(HttpSession session,@RequestBody String json) {
 		try {
-			masterService.insert(comm.jsonToMap(json));
+			classService.insert(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -60,9 +60,15 @@ public class ClassController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void update(HttpSession session,@RequestBody String json) {
 		try {
-			masterService.update(comm.jsonToMap(json));
+			classService.update(comm.jsonToMap(json));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = {"/class/queryCount"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Map<String,Object>> queryCount(HttpSession session,@RequestBody String json) throws Exception {
+		return new ResponseEntity<Map<String,Object>>(classService.queryCount(comm.jsonToMap(json)), HttpStatus.OK);
 	}
 }

@@ -34,6 +34,16 @@ app.controller('classCtrl',['$scope', 'apiService', '$window', '$cookieStore', '
         function(errResponse) {
             console.error('Error while fetching Users');
         });
+		
+		apiService.getAPIwithObject("class/queryCount",data)
+        .then(function(result) {
+        	for (var i=0;i<result.data.size/10;i++) {
+        		$scope.pageSize.push(i+1);
+        	}
+        },
+        function(errResponse) {
+            console.error('Error while fetching Users');
+        });
     };
     
     $scope.tranToInsertClass = function () {

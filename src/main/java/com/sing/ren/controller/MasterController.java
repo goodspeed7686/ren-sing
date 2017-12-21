@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sing.ren.pojo.ClassMaster;
-import com.sing.ren.service.MasterService;
+import com.sing.ren.service.ClassService;
 
 @Controller
 public class MasterController {
 	
 	@Autowired
-	MasterService masterService;
+	ClassService classService;
 
 	@RequestMapping(value = {"/master"}, method = {RequestMethod.GET, RequestMethod.POST})
 	public ResponseEntity<List<Map<String,Object>>> nav(HttpSession session) {
-		return new ResponseEntity<List<Map<String,Object>>>(masterService.getMaster(), HttpStatus.OK);
+		return new ResponseEntity<List<Map<String,Object>>>(classService.getMaster(), HttpStatus.OK);
 	}
 	
 }
