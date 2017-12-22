@@ -13,5 +13,6 @@ public interface MembershipService {
 	public void delete(Map<String,Object> map);
 	public void upsert(Map<String,Object> map);
 	public List<Map<String,Object>> queryAccount(Map<String,Object> map);
-	public Map<String,Object> getNewAcc(Map<String,Object> map) throws Exception ;
+	public Map<String,Object> getNewAcc(Map<String,Object> map) throws Exception;
+	public Map<String, Object> queryCount(Map<String, Object> map) throws Exception;
 }

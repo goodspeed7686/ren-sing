@@ -69,6 +69,6 @@ public class ClassController {
 	@RequestMapping(value = {"/class/queryCount"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<Map<String,Object>> queryCount(HttpSession session,@RequestBody String json) throws Exception {
-		return new ResponseEntity<Map<String,Object>>(classService.queryCount(comm.jsonToMap(json)), HttpStatus.OK);
+		return new ResponseEntity<Map<String,Object>>(classService.queryMasterCount(comm.jsonToMap(json)), HttpStatus.OK);
 	}
 }

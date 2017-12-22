@@ -125,4 +125,10 @@ public class MembershipController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = {"/membership/queryCount"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Map<String,Object>> queryCount(HttpSession session,@RequestBody String json) throws Exception {
+		return new ResponseEntity<Map<String,Object>>(membershipService.queryCount(comm.jsonToMap(json)), HttpStatus.OK);
+	}
 }

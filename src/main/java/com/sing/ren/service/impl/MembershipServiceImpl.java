@@ -57,6 +57,9 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 			map.put("like_email", "%".concat(email).concat("%"));
 		}
 		
+		map.put("fromIndex", (MapUtils.getInteger(map, "page", 1) - 1)*10);
+		map.put("rowLimit", 10);
+		
 		try {
 			return personDAO.likeQueryDB(map);
 		} catch (Exception e) {
@@ -125,6 +128,28 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 		Map<String,Object> result=new HashMap<>();
 		result.put("account", getNewPersonId());
 		return result;
+	}
+	
+	@Override
+	public Map<String, Object> queryCount(Map<String, Object> map) throws Exception {
+		String personId = MapUtils.getString(map, "person_id", "");
+		String name = MapUtils.getString(map, "name", "");
+		String phone = MapUtils.getString(map, "phone", "");
+		String email = MapUtils.getString(map, "email", "");
+		if (StringUtils.isNotBlank(personId)){
+			map.put("like_person_id", "%".concat(personId).concat("%"));
+		}
+		if (StringUtils.isNotBlank(name)){
+			map.put("like_name", "%".concat(name).concat("%"));
+		}
+		if (StringUtils.isNotBlank(phone)){
+			map.put("like_phone", "%".concat(phone).concat("%"));
+		}
+		if (StringUtils.isNotBlank(email)){
+			map.put("like_email", "%".concat(email).concat("%"));
+		}
+		
+		return personDAO.queryCountDB(map);
 	}
 	
 	private String getNewPersonId() throws Exception {

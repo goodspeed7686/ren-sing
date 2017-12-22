@@ -115,15 +115,13 @@
 	<nav aria-label="Page navigation example" style="text-align:center">
 	  <ul class="pagination justify-content-end">
 	    <li class="page-item" ng-class="{disabled : theFirstPage}">
-	      <a class="page-link" href="#" tabindex="-1">Previous</a>
+	      <a class="page-link" tabindex="-1" ng-click="preClick()">Previous</a>
 	    </li>
 	    <li class="page-item" ng-repeat="page in pageSize">
-	    	<a class="page-link" href="#">$index</a>
+	    	<a class="page-link" ng-click="changePage(page.page)">{{ page.page }}</a>
     	</li>
-<!-- 	    <li class="page-item"><a class="page-link" href="#">2</a></li> -->
-<!-- 	    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
 	    <li class="page-item" ng-class="{disabled : theLastPage}">
-	      <a class="page-link" href="#">Next</a>
+	      <a class="page-link" ng-click="nextClick()">Next</a>
 	    </li>
 	  </ul>
 	</nav>

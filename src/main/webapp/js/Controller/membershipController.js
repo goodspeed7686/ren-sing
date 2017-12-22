@@ -6,24 +6,9 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
 	$scope.loadEvents = function () {
 		$scope.role = $cookieStore.get('role');
 		
-		var data = [];
-		if ($cookieStore.get('role') != '0'){
-			data.push({
-	    		'student_id': $cookieStore.get('person_id')
-	    	});
-		}else {
-			data.push({
-	    		'student_id': ''
-	    	});
-		}
-
-		apiService.getAPIwithObject("membership/query",data)
-        .then(function(result) {
-        	$scope.memList = result.data;
-        },
-        function(errResponse){
-            console.error('Error while fetching Users');
-        });
+		$scope.setMemQueryData();
+		$scope.memQueryFunction($scope.memQuery);
+    	$scope.queryCount($scope.memQuery);
     };
     
     $scope.tranToInsertMem = function () {
@@ -39,11 +24,29 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
     };
     
     $scope.query = function(){
+    	$scope.setMemQueryData();
+    	$scope.memQueryFunction($scope.memQuery);
+    	$scope.queryCount($scope.memQuery);
+    };
+    
+    $scope.changePage =  function(page) {
+    	$scope.paging = page;
+    	$scope.setMemQueryData();
+    	$scope.memQuery.page = page;
+    	$scope.memQueryFunction($scope.memQuery);
+    	$scope.showPreAndNextPage($scope.paging);
+    };
+    
+    $scope.setMemQueryData = function() {
     	if ($cookieStore.get('role') != '0') {
     		$scope.memQuery.student_id = $cookieStore.get('person_id');
     	}
-    	
-    	apiService.getAPIwithObject("membership/query",$scope.memQuery)
+    	$scope.memQuery.orderForMasterQuery = ' ';
+    	$scope.memQuery.page = 1;
+    };
+    
+    $scope.memQueryFunction = function(data) {
+    	apiService.getAPIwithObject("membership/query",data)
         .then(function(result) {
         	$scope.memList = result.data;
         },
@@ -51,5 +54,52 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
             console.error('Error while fetching Users');
         });
     };
-
+    
+    $scope.preClick = function() {
+    	$scope.paging -= 1;
+    	$scope.setMemQueryData();
+    	$scope.memQuery.page = $scope.paging;
+    	$scope.memQueryFunction($scope.memQuery);
+    	$scope.showPreAndNextPage($scope.paging);
+    };
+    
+    $scope.nextClick = function() {
+    	$scope.paging += 1;
+    	$scope.setMemQueryData();
+    	$scope.memQuery.page = $scope.paging;
+    	$scope.memQueryFunction($scope.memQuery);
+    	$scope.showPreAndNextPage($scope.paging);
+    };
+    
+    $scope.queryCount = function(data) {
+    	apiService.getAPIwithObject("membership/queryCount",data)
+        .then(function(result) {
+        	$scope.pageSize = [];
+        	var maxPages = result.data.count/10;
+        	for (var i=0;i<maxPages;i++) {
+        		$scope.pageSize.push({
+        			'page' : i+1
+        		});
+        	}
+        	$scope.showPreAndNextPage(1);
+        },
+        function(errResponse) {
+            console.error('Error while fetching Users');
+        });
+    };
+    
+    $scope.showPreAndNextPage = function(page) {
+    	var maxPages = $scope.pageSize.length;
+    	
+    	if (maxPages == 1) {
+    		$scope.theFirstPage = true;
+    		$scope.theLastPage = true;
+    	}else if (page == 1) {
+    		$scope.theFirstPage = true;
+    		$scope.theLastPage = false;
+    	}else if (maxPages == page) {
+    		$scope.theFirstPage = false;
+    		$scope.theLastPage = true;
+    	}
+    }
 }]);
