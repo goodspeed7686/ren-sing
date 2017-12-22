@@ -16,7 +16,7 @@ import com.sing.ren.service.ClassService;
 import com.sing.ren.service.RSService;
 
 @Service
-public class MasterServiceImpl extends RSService implements ClassService{
+public class ClassServiceImpl extends RSService implements ClassService{
 	
 	@Autowired
 	ClassMasterDAO classMasterDAO;
@@ -46,7 +46,7 @@ public class MasterServiceImpl extends RSService implements ClassService{
 				map.put("like_student_name", "%".concat(student_name).concat("%"));
 			}
 			
-			map.put("fromIndex", MapUtils.getInteger(map, "page", 0)*10);
+			map.put("fromIndex", (MapUtils.getInteger(map, "page", 1) - 1)*10);
 			map.put("rowLimit", 10);
 			
 			return classMasterDAO.queryDB(map);
@@ -79,7 +79,7 @@ public class MasterServiceImpl extends RSService implements ClassService{
 	}
 
 	public List<Map<String,Object>> getDetailList(Map<String, Object> map) throws Exception {
-		map.put("fromIndex", MapUtils.getInteger(map, "page", 0)*10);
+		map.put("fromIndex", (MapUtils.getInteger(map, "page", 1) - 1)*10);
 		map.put("rowLimit", 10);
 		classDetailDAO.query(map);
 		
@@ -87,8 +87,17 @@ public class MasterServiceImpl extends RSService implements ClassService{
 	}
 
 	@Override
-	public Map<String, Object> queryCount(Map<String, Object> map) throws Exception {
-		return classDetailDAO.queryCountDB(map);
+	public Map<String, Object> queryMasterCount(Map<String, Object> map) throws Exception {
+		String teacher_name = MapUtils.getString(map, "teacher_name", "");
+		String student_name = MapUtils.getString(map, "student_name", "");
+		if (StringUtils.isNotBlank(teacher_name)){
+			map.put("like_teacher_name", "%".concat(teacher_name).concat("%"));
+		}
+		if (StringUtils.isNotBlank(student_name)){
+			map.put("like_student_name", "%".concat(student_name).concat("%"));
+		}
+		
+		return classMasterDAO.queryCountDB(map);
 	}
 	
 }
