@@ -94,7 +94,7 @@
 		      <th scope="col">類別</th>
 		      <th scope="col">老師</th>
 		      <th scope="col">學生</th>
-		      <th scope="col">操作</th>
+		      <th scope="col" colspan="2">操作</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -105,7 +105,10 @@
 		      <td>{{ row.type_name }}</td>
 		      <td>{{ row.teacher_name }}</td>
 		      <td>{{ row.student_name }}</td>
-		      <td><button type="button"  class="btn btn-info" ng-click="update(row)">修改</button></td>
+		      <td>
+		      	<button type="button"  class="btn btn-info" ng-click="update(row)">修改</button>
+		      	<button type="button"  class="btn btn-info" ng-click="openDetail(row)">課程明細</button>	
+   			  </td>
 		    </tr>
 		  </tbody>
 		</table>

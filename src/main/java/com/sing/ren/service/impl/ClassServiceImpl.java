@@ -55,6 +55,23 @@ public class ClassServiceImpl extends RSService implements ClassService{
 		}
 		return null;
 	}
+	
+	@Override
+	public List<Map<String, Object>> queryDetail(Map<String, Object> map) throws Exception {
+		String teacher_name = MapUtils.getString(map, "teacher_name", "");
+		String student_name = MapUtils.getString(map, "student_name", "");
+		if (StringUtils.isNotBlank(teacher_name)){
+			map.put("like_teacher_name", "%".concat(teacher_name).concat("%"));
+		}
+		if (StringUtils.isNotBlank(student_name)){
+			map.put("like_student_name", "%".concat(student_name).concat("%"));
+		}
+		
+		map.put("fromIndex", (MapUtils.getInteger(map, "page", 1) - 1)*10);
+		map.put("rowLimit", 10);
+		
+		return classDetailDAO.queryDB(map);
+	}
 
 	@Override
 	public void insert(Map<String, Object> map) {
@@ -76,14 +93,6 @@ public class ClassServiceImpl extends RSService implements ClassService{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public List<Map<String,Object>> getDetailList(Map<String, Object> map) throws Exception {
-		map.put("fromIndex", (MapUtils.getInteger(map, "page", 1) - 1)*10);
-		map.put("rowLimit", 10);
-		classDetailDAO.query(map);
-		
-		return null;
 	}
 
 	@Override
