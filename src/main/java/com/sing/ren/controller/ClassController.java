@@ -31,9 +31,19 @@ public class ClassController {
 		return "class/classList";
 	}
 	
+	@RequestMapping(value = {"/classDetail"}, method = RequestMethod.GET)
+	public String classDetail() {
+		return "class/classDetailList";
+	}
+	
 	@RequestMapping(value = {"/addClass"}, method = RequestMethod.GET)
 	public String addClass() {
 		return "class/addClass";
+	}
+	
+	@RequestMapping(value = {"/addClassDetail"}, method = RequestMethod.GET)
+	public String addClassDetail() {
+		return "class/addClassDetail";
 	}
 	
 	@RequestMapping(value = {"/class/query"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
@@ -44,6 +54,11 @@ public class ClassController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value = {"/class/queryDetail"}, method = RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> queryDetail(HttpSession session,@RequestBody String json) throws Exception{
+		return new ResponseEntity<List<Map<String,Object>>>(classService.queryDetail(comm.jsonToMap(json)), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = {"/class/insert"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)

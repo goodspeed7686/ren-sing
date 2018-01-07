@@ -51,6 +51,20 @@ app.config(function ($routeProvider,$locationProvider) {
 
 	})
 	
+	.when('/classDetail',{
+
+		templateUrl: 'classDetail',
+		controller: 'classDetailCtrl'
+
+	})
+	
+	.when('/addDetailClass',{
+
+		templateUrl: 'addDetailClass',
+		controller: 'addDetailClassCtrl'
+
+	})
+	
 	.when('/membership',{
 
 		templateUrl: 'membership',
