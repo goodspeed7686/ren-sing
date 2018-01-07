@@ -16,7 +16,11 @@
  		font-size : 15px; 
 	}
 </style>
-
+<script type="text/javascript">
+	function test(){
+		alert(" 你按到了！")
+	}
+</script>
 <div ng-controller="dailyCourseCtrl" ng-init="loadEvents()">
 <table class="table table-bordered">
   <thead>
@@ -38,7 +42,7 @@
 
     <tr ng-repeat="row in dayEvents">
 	    <th scope="row" style="text-align:center">{{ row.start_time }}</th>
-	    <td ng-class="{ 'unsigned' : row.sign == 0, 'signed' : row.sign == 1, 'select' : row.sign == 2, 'empty' : row.sign == 3 }"
+	    <td onclick="test()" ng-class="{ 'unsigned' : row.sign == 0, 'signed' : row.sign == 1, 'select' : row.sign == 2, 'empty' : row.sign == 3 }"
 	    	ng-click="checkCourse($index + 1, row.start_time, row.sign)"></td>
     </tr>
   </tbody>
