@@ -66,4 +66,14 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
 	    	});
 		}
 	}
+	
+	$scope.showDayCourse = function(ranges) {
+		if (ranges) {
+			$scope.ranges = ranges;
+		}else if ($scope.ranges && $scope.ranges > 1) {
+			$scope.ranges --;
+			return false;
+		}
+		return true;
+	}
 }]);
