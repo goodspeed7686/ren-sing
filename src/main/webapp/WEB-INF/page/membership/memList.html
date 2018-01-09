@@ -1,3 +1,5 @@
+ <link rel="stylesheet" href="css/select2.min.css"> 
+<script src="js/lib/select2.full.min.js"></script>
 <style>
 .page-title-box {
   background: #ffffff;
@@ -22,7 +24,17 @@
 	font-family: Microsoft JhengHei;
 }
 </style>
+<script type="text/javascript">  
+var data = [{ id: 0, text: '韋小寶' }, { id: 1, text: '滅絕師太' }, { id: 2, text: '安安' }, { id: 3, text: '土豆S' }];
+	 
+    $('#test').select2({
+    	data: data,
+    	  placeholder:'請選擇',
+    	  allowClear:true
+    });  
 
+
+</script>
 <div ng-init="loadEvents()">
 <div class="row">
 <div class="page-title-box">
@@ -40,27 +52,41 @@
 	  <div class="col-xs-4">
 	    <div class="input-group">
 		    <span class="input-group-addon">會員編號</span>
-		    <input  type="text" class="form-control" ng-model="memQuery.person_id">
+		    <input  type="text" class="form-control" ng-model="memQuery.person_id" style="height: 28px;">
 		</div>
 		
 		<div class="input-group" style="margin-top:15px;">
 		    <span class="input-group-addon">姓名</span>
-		    <input  type="text" class="form-control" ng-model="memQuery.name">
+	<!--	   <input  type="text" class="form-control" ng-model="memQuery.name">   -->
+		    <select class="form-control" id="test" name="type" >  
+                            <option value="" data-name="">韋小寶 </option>  
+                            <option value="" data-name="">滅絕師太</option>  
+                            <option value="" data-name="">安安</option>
+                            <option value="" data-name="">韋小寶 </option>  
+                            <option value="" data-name="">滅絕師太</option>  
+                            <option value="" data-name="">安安</option>  <option value="" data-name="">韋小寶 </option>  
+                            <option value="" data-name="">滅絕師太</option>  
+                            <option value="" data-name="">安安</option>  <option value="" data-name="">韋小寶 </option>  
+                            <option value="" data-name="">滅絕師太</option>  
+                            <option value="" data-name="">安安</option>  <option value="" data-name="">韋小寶 </option>  
+                            <option value="" data-name="">滅絕師太</option>  
+                            <option value="" data-name="">安安</option>    
+            </select>  
 		</div>
 	  </div>
 	  <div class="col-xs-4">
 	    <div class="input-group" >
 		    <span class="input-group-addon">電話</span>
-		    <input  type="text" class="form-control" ng-model="memQuery.phone">
+		    <input  type="text" class="form-control" ng-model="memQuery.phone" style="height: 28px;">
 		</div>
 		<div class="input-group" style="margin-top:15px;">
 		    <span class="input-group-addon">Email</span>
-		    <input  type="text" class="form-control" ng-model="memQuery.email">
+		    <input  type="text" class="form-control" ng-model="memQuery.email" style="height: 28px;">
 		</div>
 	  </div>
 	  
 	  <div class="col-xs-2 ">
-	  	<div style="margin-top:47px;">
+	  	<div style="margin-top:35px;">
 	  	<button type="button" class="btn btn-warning"  ng-click="query()">查詢</button>
 	  	</div>
 	  </div>

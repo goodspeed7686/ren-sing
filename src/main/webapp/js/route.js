@@ -86,7 +86,12 @@ app.config(function ($routeProvider,$locationProvider) {
 		controller: 'propertiesCtrl'
 
 	})
-	
+	.when('/java',{
+
+		templateUrl: 'java',
+		
+
+	})
 	.when('/addAcc',{
 
 		templateUrl: 'addAcc',
