@@ -39,7 +39,20 @@
     <tr ng-repeat="row in dayEvents">
 	    <th scope="row" style="text-align:center">{{ row.start_time }}</th>
 	    <td ng-class="{ 'unsigned' : row.sign == 0, 'signed' : row.sign == 1, 'select' : row.sign == 2, 'empty' : row.sign == 3 }"
-	    	ng-click="checkCourse($index + 1, row.start_time, row.sign)"></td>
+	    	rowspan="{{ row.ranges }}"
+	    	ng-show="showDayCourse(row.ranges)">
+	    	<div ng-show="{{ row.id != 7 }}" style="text-align:right;">
+		    	<button type="button" class="btn btn-xs" ng-click="checkCourse($index + 1, row.start_time, row.sign)"
+		    		ng-show="{{ !row.ranges && row.sign == 0 }}">
+					<span class="glyphicon glyphicon-plus"></span> 簽到
+				</button>
+				<button type="button" class="btn btn-default btn-xs" ng-click="tranToInsertClass()"
+					ng-show="{{ !row.ranges && row.sign != 2 }}">
+					<span class="glyphicon glyphicon-plus" style="color:white"></span> 筆記
+				</button>
+			</div>
+			<div ng-show="{{ row.ranges }}">{{ row.class_name }}</div>
+    	</td>
     </tr>
   </tbody>
 </table>

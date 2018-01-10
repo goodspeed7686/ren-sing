@@ -192,6 +192,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		List<Map<String,Object>> courseDetailList = classDetailDAO.queryDB(map);
 		Map<String,Object> session = (Map<String, Object>) this.getSession(true).getAttribute(Context.RS_USER);
 		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+		int extendsClassTime = 0;//課堂開始時間
+		int extendsClassRanges = 1;//預設都是單人課
+		int extendsClassStatus = 0;//預設是空堂
+		int countClassRanges = 0;//計算
+		String extendsClassDate = "";
 		for (Map<String,Object> courseTimeMap : coursesTimeList) {
 			Map<String,Object> weekMap = getWeekObject();
 			
@@ -203,13 +208,33 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 				for (Map<String,Object> detailMap : courseDetailList) {
 					String date = MapUtils.getString(detailMap, "date", "");
 					int time = MapUtils.getInteger(detailMap, "time");
+					if (StringUtils.equals(date, extendsClassDate) && extendsClassRanges >= 2
+							&& extendsClassTime + extendsClassRanges >= time && countClassRanges <= extendsClassRanges) {
+						weekMap.put(CommonTools.whatDayIsTheDate(date), extendsClassStatus);
+						countClassRanges ++;
+						if (countClassRanges == extendsClassRanges) {
+							extendsClassTime = 0;//課堂開始時間
+							extendsClassRanges = 1;//預設都是單人課
+							extendsClassStatus = 0;//預設是空堂
+							countClassRanges = 0;
+							extendsClassDate = "";
+						}
+					}
 					if (time == MapUtils.getInteger(courseTimeMap, "id")) {
+						int ranges = MapUtils.getInteger(detailMap, "ranges");
 						int studentId = MapUtils.getInteger(detailMap, "student_id");
 						int personId = MapUtils.getInteger(session, "person_id");
 						if (studentId == personId) {
 							weekMap.put(CommonTools.whatDayIsTheDate(date), "2");
+							extendsClassStatus = 2;
 						}else {
 							weekMap.put(CommonTools.whatDayIsTheDate(date), "1");
+							extendsClassStatus = 1;
+						}
+						if (ranges > 1) {
+							extendsClassRanges = ranges;
+							extendsClassDate = date;
+							extendsClassTime = time;
 						}
 					}
 				}
@@ -248,6 +273,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 				courseTimeMap.put("sign", 3);
 			}else {
 				for (Map<String,Object> detailMap : courseDetailList) {
+					int ranges = MapUtils.getInteger(detailMap, "ranges");
 					int time = MapUtils.getInteger(detailMap, "time");
 					if (time == MapUtils.getInteger(courseTimeMap, "id")) {
 						if (MapUtils.getInteger(detailMap, "sign") == 0) {
@@ -255,7 +281,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 						}else {
 							courseTimeMap.put("sign", 1);
 						}
+						if (ranges > 1) {
+							courseTimeMap.put("ranges", ranges );
+						}
 					}
+					courseTimeMap.put("class_name", MapUtils.getString(detailMap, "class_name") );
 				}
 			}
 		}
@@ -340,10 +370,11 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			param.put("type", 0);
 			param.put("finish", 0);
 			param.put("sign", 0);
+			param.put("ranges", 1);//一定要個人課才能改課
 			
 			List<Map<String, Object>> theLastClassDetailList = classDetailDAO.queryDB(param);
 			if (classDetailList.isEmpty()) {
-				throw new Exception("找不到相關課程，請洽服務人員");
+				throw new Exception("無法更改課程，請洽服務人員");
 			}
 			while (true) {
 				Map<String,Object> newDetail = theLastClassDetailList.get(0);
