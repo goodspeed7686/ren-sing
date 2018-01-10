@@ -26,75 +26,44 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
         });
 	}
 	
-//	$scope.checkCourse = function (classTimeId, time, determinPage) {
-//		var today = new Date();
-//		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + $scope.page);
-//		var chooseDateStr = chooseDayStr + " " + time;
-//		var chooseDay = new Date(chooseDateStr);
-//		var diff = chooseDay.getTime() - today.getTime();
-//		
-////		if (diff/1000/60/60/24 < 0) {
-////			alertService.waram("這堂課的選課時間已經超過了，請選擇未來時段的課程");
-////			return;
-////		}
-//		if (diff/1000/60/60/24 < 0) {
-//			swal({
-//				  title: '<h3>筆記</h3>',
-//				  input: 'text',
-//				  showCancelButton: true,
-//				  confirmButtonText: '送出',
-//				  cancelButtonText: '取消',
-//				  showLoaderOnConfirm: true,
-//				  preConfirm: (email) => {
-//				    return new Promise((resolve) => {
-//				      setTimeout(() => {
-//				        if (email === 'taken@example.com') {
-//				          swal.showValidationError(
-//				            'This email is already taken.'
-//				          )
-//				        }
-//				        resolve()
-//				      }, 1000)
-//				    })
-//				  },
-//				  allowOutsideClick: false
-//				}).then((result) => {
-//				  if (result.value) {
-//				    swal({
-//				      type: 'success',
-//				      title: '新增成功!',
-//				      html: '上課筆記: ' + result.value
-//				    })
-//				  }
-//				})
-//		}
-//		
-//		if (determinPage == 0) {
-//			swal({
-//	    		title: "簽到",
-//	    		text: "要開始上課摟!",
-//	    		type: "success",
-//	    		confirmButtonColor: "#DD6B55",
-//	    		confirmButtonText: "確定",
-//	    		confirmButtonClass: 'btn btn-success',
-//	    		buttonsStyling: false,
-//	    		reverseButtons: true
-//	    	}).then((result) => {
-//	    		if (result.value) {
-//	    			var data = [];
-//	    			data.push({
-//	    				time : classTimeId,
-//	    				date : chooseDayStr
-//	    			})
-//	    			apiService.getAPIwithObject("curriculum/signCourse",data)
-//	    	        .then(function(result) {
-//	    	        	$scope.queryFunction();
-//	    	        },
-//	    	        function(errResponse) {
-//	    	            console.error('Error while fetching Users');
-//	    	        });
-//	    		}
-//	    	});
-//		}
-//	}
+	$scope.checkCourse = function (classTimeId, time, determinPage) {
+		var today = new Date();
+		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + $scope.page);
+		var chooseDateStr = chooseDayStr + " " + time;
+		var chooseDay = new Date(chooseDateStr);
+		var diff = chooseDay.getTime() - today.getTime();
+		
+		if (diff/1000/60/60/24 < 0) {
+			alertService.waram("這堂課的選課時間已經超過了，請選擇未來時段的課程");
+			return;
+		}
+		
+		if (determinPage == 0) {
+			swal({
+	    		title: "簽到",
+	    		text: "要開始上課摟!",
+	    		type: "success",
+	    		confirmButtonColor: "#DD6B55",
+	    		confirmButtonText: "確定",
+	    		confirmButtonClass: 'btn btn-success',
+	    		buttonsStyling: false,
+	    		reverseButtons: true
+	    	}).then((result) => {
+	    		if (result.value) {
+	    			var data = [];
+	    			data.push({
+	    				time : classTimeId,
+	    				date : chooseDayStr
+	    			})
+	    			apiService.getAPIwithObject("curriculum/signCourse",data)
+	    	        .then(function(result) {
+	    	        	$scope.queryFunction();
+	    	        },
+	    	        function(errResponse) {
+	    	            console.error('Error while fetching Users');
+	    	        });
+	    		}
+	    	});
+		}
+	}
 }]);
