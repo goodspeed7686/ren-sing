@@ -197,10 +197,11 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '課程類型 (0:一對一個別課,1:阿卡團體班)',
   `level` varchar(1) DEFAULT '0' COMMENT '課程等級 (0:入門班,1:基礎班,2:進階班)',
   `status` varchar(50) NOT NULL DEFAULT '0' COMMENT '課程狀態 (0:未結束 1:結束 2:未結束其他理由)',
-  `price` varchar(50) DEFAULT '0' COMMENT '課程原始價錢',
-  `summary` varchar(5) NOT NULL DEFAULT '0' COMMENT '課堂總數',
-  `count` varchar(5) NOT NULL DEFAULT '0' COMMENT '目前上課次數',
-  `rest` varchar(5) NOT NULL DEFAULT '0' COMMENT '剩餘課堂數',
+  `summary` varchar(2) NOT NULL DEFAULT '0' COMMENT '課堂總數',
+  `count` varchar(2) NOT NULL DEFAULT '0' COMMENT '目前上課次數',
+  `rest` varchar(2) NOT NULL DEFAULT '0' COMMENT '剩餘課堂數',
+  `punish_class` varchar(2) DEFAULT '0' COMMENT '懲罰堂數',
+  `punish_point` varchar(2) DEFAULT '0' COMMENT '懲罰點數',
   `s_date` varchar(10) NOT NULL COMMENT '課堂起始時間 (預計) yyyy/mm/dd',
   `e_date` varchar(10) NOT NULL COMMENT '課堂結束時間 (預計) yyyy/MM/dd',
   `day` varchar(1) DEFAULT NULL COMMENT '星期幾',
@@ -213,10 +214,10 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   PRIMARY KEY (`class_master_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1116 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_master 的資料：~0 rows (大約)
+-- 正在傾印表格  ren-sing.class_master 的資料：~1 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
-REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `price`, `summary`, `count`, `rest`, `s_date`, `e_date`, `day`, `time`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1115, '臻臻個人課', '0', NULL, '1', NULL, '24', '24', '0', '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2018/01/09 16:46:57');
+REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `summary`, `count`, `rest`, `punish_class`, `punish_point`, `s_date`, `e_date`, `day`, `time`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
+	(1115, '臻臻個人課', '0', NULL, '1', '24', '24', '0', '0', NULL, '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2018/01/09 16:46:57');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
 -- 傾印  表格 ren-sing.class_place 結構
@@ -259,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `courses_time` (
   `start_time` varchar(50) DEFAULT '0',
   `end_time` varchar(50) DEFAULT '0',
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- 正在傾印表格  ren-sing.courses_time 的資料：~13 rows (大約)
 /*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;

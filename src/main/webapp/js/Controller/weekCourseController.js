@@ -94,7 +94,7 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
 		        function(errResponse) {
 		        	swal(
 				        'Error',
-				        'errResponse',
+				        errResponse.data.errorMessage,
 				        'error'
 				    )
 		        });

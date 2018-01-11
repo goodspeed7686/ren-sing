@@ -221,8 +221,15 @@ public class CurriculumController {
 	
 	@RequestMapping(value = {"/curriculum/insertCourse"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void insertCourse(HttpSession session,@RequestBody String json) throws Exception {
-		curriculumService.insertCourse(comm.jsonToMap(json));
+	public ResponseEntity<Object> insertCourse(HttpSession session,@RequestBody String json) throws Exception{
+		try {
+			curriculumService.insertCourse(comm.jsonToMap(json));
+		} catch (Exception e) {
+			Map<String,Object> result = new HashMap<String,Object>();
+			result.put("errorMessage", e.getMessage());
+			return new ResponseEntity<Object>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return null;
 	}
 	
 	@RequestMapping(value = {"/curriculum/deleteCourse"}, method=RequestMethod.POST, consumes= MediaType.APPLICATION_JSON_VALUE)

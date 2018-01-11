@@ -26,7 +26,6 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
         });
 	}
 	
-
 	$scope.checkCourse = function (classTimeId, time, determinPage) {
 		var today = new Date();
 		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + $scope.page);
@@ -77,5 +76,4 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
 		}
 		return true;
 	}
-
 }]);
