@@ -25,7 +25,7 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
             console.error('Error while fetching Users');
         });
 	}
-	
+
 	$scope.checkCourse = function (classTimeId, time, determinPage) {
 		var today = new Date();
 		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + (today.getDate() + $scope.page);
@@ -66,7 +66,7 @@ app.controller('dailyCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'aler
 	    	});
 		}
 	}
-	
+
 	$scope.showDayCourse = function(ranges) {
 		if (ranges) {
 			$scope.ranges = ranges;
