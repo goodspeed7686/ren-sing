@@ -315,14 +315,39 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		Map<String,Object> time = new HashMap<String,Object>();
 		time.put("start_time",map.get("time"));
 		List<Map<String, Object>> coursesTime = coursesTimeDAO.queryDB(time);
-		
+		String courseTimeId = (String) coursesTime.get(0).get("id");
 		Map<String,Object> classMaster = getCurrentPeronalClass();
 		
-		if (MapUtils.getInteger(classMaster, "rest") < 0) {
+		if (MapUtils.getInteger(classMaster, "finish") == 1) {
 			throw new Exception("沒有剩餘課程了");
 		}
 		
-		map.put("time",coursesTime.get(0).get("id"));
+		insertClassProcess(map, classMaster, courseTimeId);
+//		map.put("time",coursesTime.get(0).get("id"));
+//		map.put("class_master_id", MapUtils.getString(classMaster, "class_master_id"));
+//		map.put("student_id", MapUtils.getString(classMaster, "student_id"));
+//		map.put("teacher_id", MapUtils.getString(classMaster, "teacher_id"));
+//		//目前都是個人課，都是一個時段
+//		map.put("ranges", 1);
+//		//目前都是個人課，type=0
+//		map.put("type", 0);
+//		int count = MapUtils.getInteger(classMaster, "count") + 1;
+//		int rest = MapUtils.getInteger(classMaster, "summary") - count;
+//		if (rest > 0) {
+//			map.put("finish", 0);
+//		}else {
+//			map.put("finish", 1);
+//		}
+//		map.put("sign", 0);
+//		classDetailDAO.upsertDB(map);
+//		
+//		classMaster.put("count", count);
+//		classMaster.put("rest", rest);
+//		classMasterDAO.updateDB(classMaster);
+	}
+	
+	private void insertClassProcess(Map<String,Object> map,Map<String,Object> classMaster,String courseTimeId) throws Exception {
+		map.put("time", courseTimeId);
 		map.put("class_master_id", MapUtils.getString(classMaster, "class_master_id"));
 		map.put("student_id", MapUtils.getString(classMaster, "student_id"));
 		map.put("teacher_id", MapUtils.getString(classMaster, "teacher_id"));
@@ -330,12 +355,18 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		map.put("ranges", 1);
 		//目前都是個人課，type=0
 		map.put("type", 0);
-		map.put("finish", 0);
+		int count = MapUtils.getInteger(classMaster, "count") + 1;
+		int rest = MapUtils.getInteger(classMaster, "summary") - count;
+		if (rest > 0) {
+			map.put("finish", 0);
+		}else {
+			map.put("finish", 1);
+		}
 		map.put("sign", 0);
 		classDetailDAO.upsertDB(map);
 		
-		classMaster.put("count",MapUtils.getInteger(classMaster, "count") + 1);
-		classMaster.put("rest",MapUtils.getInteger(classMaster, "summary") - MapUtils.getInteger(classMaster, "count"));
+		classMaster.put("count", count);
+		classMaster.put("rest", rest);
 		classMasterDAO.updateDB(classMaster);
 	}
 	

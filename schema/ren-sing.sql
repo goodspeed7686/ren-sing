@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- 主機:                           127.0.0.1
--- 伺服器版本:                        5.7.20-log - MySQL Community Server (GPL)
--- 伺服器操作系統:                      Win64
--- HeidiSQL 版本:                  9.5.0.5196
+-- 服務器版本:                        5.7.18-log - MySQL Community Server (GPL)
+-- 服務器操作系統:                      Win64
+-- HeidiSQL 版本:                  9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -12,12 +12,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- 傾印 ren-sing 的資料庫結構
+-- 導出 ren-sing 的資料庫結構
 DROP DATABASE IF EXISTS `ren-sing`;
 CREATE DATABASE IF NOT EXISTS `ren-sing` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ren-sing`;
 
--- 傾印  表格 ren-sing.account 結構
+-- 導出  表 ren-sing.account 結構
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE IF NOT EXISTS `account` (
   `account` varchar(50) NOT NULL COMMENT '帳號',
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.account 的資料：~6 rows (大約)
+-- 正在導出表  ren-sing.account 的資料：~6 rows (大約)
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 REPLACE INTO `account` (`account`, `password`, `role`, `status`, `person_id`) VALUES
 	('2017120014', '123123', '1', '1', '2017120014'),
@@ -39,7 +39,7 @@ REPLACE INTO `account` (`account`, `password`, `role`, `status`, `person_id`) VA
 	('admin', '123123', '0', '1', '2017100015');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.achievement 結構
+-- 導出  表 ren-sing.achievement 結構
 DROP TABLE IF EXISTS `achievement`;
 CREATE TABLE IF NOT EXISTS `achievement` (
   `achievement_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS `achievement` (
   PRIMARY KEY (`achievement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.achievement 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.achievement 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `achievement` DISABLE KEYS */;
 /*!40000 ALTER TABLE `achievement` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.achievement_log 結構
+-- 導出  表 ren-sing.achievement_log 結構
 DROP TABLE IF EXISTS `achievement_log`;
 CREATE TABLE IF NOT EXISTS `achievement_log` (
   `achievement_log_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -70,11 +70,11 @@ CREATE TABLE IF NOT EXISTS `achievement_log` (
   UNIQUE KEY `id` (`achievement_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.achievement_log 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.achievement_log 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `achievement_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `achievement_log` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.bill 結構
+-- 導出  表 ren-sing.bill 結構
 DROP TABLE IF EXISTS `bill`;
 CREATE TABLE IF NOT EXISTS `bill` (
   `bill_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -90,11 +90,11 @@ CREATE TABLE IF NOT EXISTS `bill` (
   PRIMARY KEY (`bill_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.bill 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.bill 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `bill` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bill` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.bill_log 結構
+-- 導出  表 ren-sing.bill_log 結構
 DROP TABLE IF EXISTS `bill_log`;
 CREATE TABLE IF NOT EXISTS `bill_log` (
   `bill_log_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -111,11 +111,11 @@ CREATE TABLE IF NOT EXISTS `bill_log` (
   UNIQUE KEY `bill_log_id` (`bill_log_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.bill_log 的資料：~0 rows (大約)
+-- 正在導出表  ren-sing.bill_log 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `bill_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bill_log` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.class_detail 結構
+-- 導出  表 ren-sing.class_detail 結構
 DROP TABLE IF EXISTS `class_detail`;
 CREATE TABLE IF NOT EXISTS `class_detail` (
   `class_detail_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -131,35 +131,35 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `hw` varchar(1000) DEFAULT '' COMMENT '回家作業',
   `teacher_note` varchar(1000) DEFAULT '' COMMENT '老師筆記',
   `student_note` varchar(1000) DEFAULT '' COMMENT '學生筆記',
-  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=阿卡課',
-  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未結束，1=已結束',
+  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未結束，1=結束',
+  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=團體課',
   `sign` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未簽到，1=已簽到',
-  `detail_status` varchar(1) DEFAULT '0' COMMENT '0=不可預約，1=可預約',
+  `status` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=正常課程，1=保留課程，2=預約課程',
   `updater` varchar(50) DEFAULT '0',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   UNIQUE KEY `Index 2` (`date`,`time`),
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_detail 的資料：~25 rows (大約)
+-- 正在導出表  ren-sing.class_detail 的資料：~26 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
-REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `detail_status`, `updater`, `update_time`) VALUES
-	(1, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '1', 1, NULL, NULL, NULL, NULL, NULL, '0', '1', '1', '0', 'updater', '2017-12-16 15:04:05'),
-	(10, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:09'),
-	(9, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '11', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:59:48'),
-	(3, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '3', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:50:23'),
-	(2, 1115, '2017120047', '2017120025', '0', '2017/12/10', '4', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-18 13:30:48'),
-	(4, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:52:35'),
-	(7, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '6', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:59:27'),
-	(5, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:55:29'),
-	(6, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '9', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:56:40'),
-	(11, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '1', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:29'),
-	(12, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:39'),
-	(14, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:08:10'),
-	(13, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:08:04'),
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `finish`, `type`, `sign`, `status`, `updater`, `update_time`) VALUES
+	(1, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '1', 1, NULL, NULL, NULL, NULL, NULL, '0', '0', '1', '1', 'updater', '2017-12-16 15:04:05'),
+	(10, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '10', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:09'),
+	(9, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '11', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:59:48'),
+	(3, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '3', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:50:23'),
+	(2, 1115, '2017120047', '2017120025', '0', '2017/12/10', '4', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-18 13:30:48'),
+	(4, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '5', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:52:35'),
+	(7, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '6', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:59:27'),
+	(5, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '8', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:55:29'),
+	(6, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '9', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:56:40'),
+	(11, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '1', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:29'),
+	(12, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '10', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:39'),
+	(14, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '5', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:08:10'),
+	(13, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '8', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:08:04'),
 	(18, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '1', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-18 21:08:47'),
 	(25, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '13', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-18 21:16:50'),
-	(17, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '9', 1, '', '', '', '', '', '0', '1', '0', '0', '0', '2017-12-18 23:50:15'),
+	(17, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '9', 1, '', '', '', '', '', '0', '0', '0', '1', '0', '2017-12-18 23:50:15'),
 	(33, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '3', 1, '', '', '', '', '', '0', '0', '1', '0', '0', '2017-12-19 00:28:17'),
 	(34, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '6', 1, '', '', '', '', '', '0', '0', '1', '0', '0', '2017-12-19 00:29:38'),
 	(35, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '8', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-19 00:29:45'),
@@ -172,7 +172,7 @@ REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`,
 	(36, 1115, '2017120047', '2017120025', NULL, '2018/1/9', '8', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2018-01-09 16:46:57');
 /*!40000 ALTER TABLE `class_detail` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.class_level 結構
+-- 導出  表 ren-sing.class_level 結構
 DROP TABLE IF EXISTS `class_level`;
 CREATE TABLE IF NOT EXISTS `class_level` (
   `class_level_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `class_level` (
   PRIMARY KEY (`class_level_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_level 的資料：~3 rows (大約)
+-- 正在導出表  ren-sing.class_level 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `class_level` DISABLE KEYS */;
 REPLACE INTO `class_level` (`class_level_id`, `level`, `name`) VALUES
 	(1, '1', '入門班'),
@@ -189,7 +189,7 @@ REPLACE INTO `class_level` (`class_level_id`, `level`, `name`) VALUES
 	(3, '3', '進階班');
 /*!40000 ALTER TABLE `class_level` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.class_master 結構
+-- 導出  表 ren-sing.class_master 結構
 DROP TABLE IF EXISTS `class_master`;
 CREATE TABLE IF NOT EXISTS `class_master` (
   `class_master_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,13 +214,13 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   PRIMARY KEY (`class_master_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1116 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_master 的資料：~1 rows (大約)
+-- 正在導出表  ren-sing.class_master 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `summary`, `count`, `rest`, `punish_class`, `punish_point`, `s_date`, `e_date`, `day`, `time`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
 	(1115, '臻臻個人課', '0', NULL, '1', '24', '24', '0', '0', NULL, '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2018/01/09 16:46:57');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.class_place 結構
+-- 導出  表 ren-sing.class_place 結構
 DROP TABLE IF EXISTS `class_place`;
 CREATE TABLE IF NOT EXISTS `class_place` (
   `class_place_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -229,14 +229,14 @@ CREATE TABLE IF NOT EXISTS `class_place` (
   PRIMARY KEY (`class_place_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_place 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.class_place 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_place` DISABLE KEYS */;
 REPLACE INTO `class_place` (`class_place_id`, `place`, `name`) VALUES
 	(1, '0', '菜寮'),
 	(2, '1', '新竹');
 /*!40000 ALTER TABLE `class_place` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.class_type 結構
+-- 導出  表 ren-sing.class_type 結構
 DROP TABLE IF EXISTS `class_type`;
 CREATE TABLE IF NOT EXISTS `class_type` (
   `class_type_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -245,14 +245,14 @@ CREATE TABLE IF NOT EXISTS `class_type` (
   UNIQUE KEY `class_type_id` (`class_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_type 的資料：~2 rows (大約)
+-- 正在導出表  ren-sing.class_type 的資料：~2 rows (大約)
 /*!40000 ALTER TABLE `class_type` DISABLE KEYS */;
 REPLACE INTO `class_type` (`class_type_id`, `type`, `name`) VALUES
 	(1, '0', '一對一個人課'),
 	(2, '1', '阿卡基礎班');
 /*!40000 ALTER TABLE `class_type` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.courses_time 結構
+-- 導出  表 ren-sing.courses_time 結構
 DROP TABLE IF EXISTS `courses_time`;
 CREATE TABLE IF NOT EXISTS `courses_time` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -262,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `courses_time` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.courses_time 的資料：~13 rows (大約)
+-- 正在導出表  ren-sing.courses_time 的資料：~13 rows (大約)
 /*!40000 ALTER TABLE `courses_time` DISABLE KEYS */;
 REPLACE INTO `courses_time` (`id`, `interval_time`, `start_time`, `end_time`) VALUES
 	(1, '1300_1340', '13:00', '13:40'),
@@ -280,7 +280,7 @@ REPLACE INTO `courses_time` (`id`, `interval_time`, `start_time`, `end_time`) VA
 	(13, '2120_2200', '21:20', '22:00');
 /*!40000 ALTER TABLE `courses_time` ENABLE KEYS */;
 
--- 傾印  表格 ren-sing.person 結構
+-- 導出  表 ren-sing.person 結構
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE IF NOT EXISTS `person` (
   `person_id` varchar(15) NOT NULL COMMENT '會員編號',
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.person 的資料：~6 rows (大約)
+-- 正在導出表  ren-sing.person 的資料：~6 rows (大約)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
 REPLACE INTO `person` (`person_id`, `virtual_account`, `name`, `nickname`, `balance`, `id_number`, `sex`, `birthday`, `local_calls`, `phone`, `email`, `skype`, `career`, `recipient`, `rec_add`, `rec_num`, `company_tax_id`, `updater`, `update_time`) VALUES
 	('2017100015', '0', '上帝視角', '勝利組', '0', '9527', '0', '19890513', '02-5566', '09875566', '5566@gmail.com', '5566@gmail.com', '上帝', NULL, NULL, NULL, NULL, NULL, NULL),
