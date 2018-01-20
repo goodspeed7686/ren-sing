@@ -71,6 +71,8 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
     	swal({
     		title: date + "   " + day,
     		text: time + "   " + "聲音個別課",
+    		input: 'checkbox',
+		    inputPlaceholder: '預約往後每週' + day + '的' + time,
     		type: "info",
     		showCancelButton: true,
     		confirmButtonColor: "#DD6B55",
@@ -80,12 +82,20 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
     		buttonsStyling: false,
     		reverseButtons: true
     	}).then((result) => {
-		    if (result.value) {
+		    if (!result.dismiss) {
 		    	data = [];
-		    	data.push({
-		    		time : time,
-		    		date : date
-		    	})
+		    	if (result.value == 1) {
+		    		data.push({
+		    			time : time,
+			    		date : date,
+			    		alwaysThisDate : true
+			    	})
+		    	}else {
+		    		data.push({
+			    		time : time,
+			    		date : date
+			    	})
+		    	}
 		    	apiService.getAPIwithObject("curriculum/insertCourse",data)
 		        .then(function(result) {
 		        	alertService.success("新增成功");
@@ -98,9 +108,6 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
 				        'error'
 				    )
 		        });
-			    
-		  // result.dismiss can be 'cancel', 'overlay',
-		  // 'close', and 'timer'
 		    }
     	});
     };

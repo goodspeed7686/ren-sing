@@ -1,5 +1,6 @@
 package com.sing.ren.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,7 @@ import com.sing.ren.Context;
 import com.sing.ren.common.CommonTools;
 import com.sing.ren.dao.table.ClassDetailDAO;
 import com.sing.ren.dao.table.ClassMasterDAO;
+import com.sing.ren.dao.table.ClassMasterHistoryDAO;
 import com.sing.ren.dao.table.CoursesTimeDAO;
 import com.sing.ren.service.CurriculumService;
 import com.sing.ren.service.RSService;
@@ -39,6 +41,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	ClassMasterDAO classMasterDAO;
 	@Autowired
 	CoursesTimeDAO coursesTimeDAO;
+	@Autowired
+	ClassMasterHistoryDAO classMasterHistoryDAO;
 	
 	CommonTools comm=new CommonTools();
 	@Override
@@ -298,7 +302,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("student_id", MapUtils.getInteger(session, "person_id"));
 		param.put("restMoreThen", "0");
-//		param.put("e_dateMoreThan", CommonTools.getCurrentDate());
+		param.put("e_dateMoreThan", CommonTools.getCurrentDate()); 
 		param.put("status", "1");
 		List<Map<String, Object>> classMasterQuery = classMasterDAO.queryDB(param);
 		if (classMasterQuery.isEmpty()) {
@@ -322,28 +326,19 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 			throw new Exception("沒有剩餘課程了");
 		}
 		
-		insertClassProcess(map, classMaster, courseTimeId);
-//		map.put("time",coursesTime.get(0).get("id"));
-//		map.put("class_master_id", MapUtils.getString(classMaster, "class_master_id"));
-//		map.put("student_id", MapUtils.getString(classMaster, "student_id"));
-//		map.put("teacher_id", MapUtils.getString(classMaster, "teacher_id"));
-//		//目前都是個人課，都是一個時段
-//		map.put("ranges", 1);
-//		//目前都是個人課，type=0
-//		map.put("type", 0);
-//		int count = MapUtils.getInteger(classMaster, "count") + 1;
-//		int rest = MapUtils.getInteger(classMaster, "summary") - count;
-//		if (rest > 0) {
-//			map.put("finish", 0);
-//		}else {
-//			map.put("finish", 1);
-//		}
-//		map.put("sign", 0);
-//		classDetailDAO.upsertDB(map);
-//		
-//		classMaster.put("count", count);
-//		classMaster.put("rest", rest);
-//		classMasterDAO.updateDB(classMaster);
+		if (MapUtils.getString(map, "alwaysThisDate", "").equals("true")) {
+			String date = MapUtils.getString(map, "date");
+			String eClassDate = MapUtils.getString(classMaster, "e_date");
+			int rest = MapUtils.getInteger(classMaster, "rest");
+
+			for (int i=0;i<rest;i++) {
+				if (determinTheAfter7DateBeforeLinmitDate(date, eClassDate)) {
+					insertClassProcess(map, classMaster, courseTimeId);
+				}
+			}
+		}else {
+			insertClassProcess(map, classMaster, courseTimeId);
+		}
 	}
 	
 	private void insertClassProcess(Map<String,Object> map,Map<String,Object> classMaster,String courseTimeId) throws Exception {
@@ -368,6 +363,21 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		classMaster.put("count", count);
 		classMaster.put("rest", rest);
 		classMasterDAO.updateDB(classMaster);
+		classMasterHistoryDAO.insertDB(classMaster);
+	}
+	
+	private Boolean determinTheAfter7DateBeforeLinmitDate(String date,String eClassDate) throws ParseException {
+		Date selectDate = CommonTools.getDateForString(date, "yyyy/MM/dd");
+		Date limitDate = CommonTools.getDateForString(eClassDate, "yyyy/MM/dd");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(selectDate);
+		calendar.add(Calendar.DATE, 7);
+		Date after7Date = calendar.getTime();
+		if (limitDate.before(after7Date)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	@Transactional
@@ -423,6 +433,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		classMaster.put("count",MapUtils.getInteger(classMaster, "count") - 1);
 		classMaster.put("rest",MapUtils.getInteger(classMaster, "summary") - MapUtils.getInteger(classMaster, "count"));
 		classMasterDAO.updateDB(classMaster);
+		classMasterHistoryDAO.insertDB(classMaster);
 	}
 	
 	@Override

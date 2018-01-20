@@ -449,20 +449,18 @@ public class CommonTools {
 		return df.parse(strDate).getTime();
 
 	}
+	
 	/**
-	 * 以傳入字串日期和格式取出從1970/01/01到該日期的毫秒
+	 * 以傳入字串日期轉型date
 	 * 
-	 * @return String
+	 * @return date
 	 * @throws ParseException
 	 */
 	public static Date getDateForString(String strDate, String style) throws ParseException {
 		DateFormat df = new SimpleDateFormat(style);
 		return df.parse(strDate);
-
 	}
 
-	
-	
 	/**
 	 * 取得四捨五入
 	 * 
@@ -473,7 +471,6 @@ public class CommonTools {
 			return "0";
 		}
 		return nf.format(new BigDecimal((Double.parseDouble(dividend)/Double.parseDouble(divisor))+"").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
 	}
 	
 	/**
@@ -486,7 +483,6 @@ public class CommonTools {
 			return "0";
 		}
 		return nf.format(new BigDecimal((Double.parseDouble(dividend)/Double.parseDouble(divisor)*100)+"").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
 	}
 	
 	/**
