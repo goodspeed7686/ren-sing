@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `achievement` (
   `score` varchar(10) NOT NULL DEFAULT '0' COMMENT '分期檢定分數 (目前)',
   `date` varchar(50) NOT NULL DEFAULT '0' COMMENT '分期檢定日期 (目前)',
   `updater` varchar(50) DEFAULT NULL,
-  `update_time` varchar(50) DEFAULT NULL COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   PRIMARY KEY (`achievement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -131,35 +131,35 @@ CREATE TABLE IF NOT EXISTS `class_detail` (
   `hw` varchar(1000) DEFAULT '' COMMENT '回家作業',
   `teacher_note` varchar(1000) DEFAULT '' COMMENT '老師筆記',
   `student_note` varchar(1000) DEFAULT '' COMMENT '學生筆記',
-  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=阿卡課',
-  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未結束，1=已結束',
+  `finish` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未結束，1=結束',
+  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=個別課，1=團體課',
   `sign` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=未簽到，1=已簽到',
-  `detail_status` varchar(1) DEFAULT '0' COMMENT '0=不可預約，1=可預約',
+  `status` varchar(1) NOT NULL DEFAULT '0' COMMENT '0=正常課程，1=保留課程，2=預約課程',
   `updater` varchar(50) DEFAULT '0',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   UNIQUE KEY `Index 2` (`date`,`time`),
   UNIQUE KEY `class_detail_id` (`class_detail_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_detail 的資料：~25 rows (大約)
+-- 正在傾印表格  ren-sing.class_detail 的資料：~26 rows (大約)
 /*!40000 ALTER TABLE `class_detail` DISABLE KEYS */;
-REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `type`, `finish`, `sign`, `detail_status`, `updater`, `update_time`) VALUES
-	(1, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '1', 1, NULL, NULL, NULL, NULL, NULL, '0', '1', '1', '0', 'updater', '2017-12-16 15:04:05'),
-	(10, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:09'),
-	(9, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '11', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:59:48'),
-	(3, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '3', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:50:23'),
-	(2, 1115, '2017120047', '2017120025', '0', '2017/12/10', '4', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-18 13:30:48'),
-	(4, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:52:35'),
-	(7, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '6', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:59:27'),
-	(5, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:55:29'),
-	(6, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '9', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-16 23:56:40'),
-	(11, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '1', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:29'),
-	(12, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '10', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:00:39'),
-	(14, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '5', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:08:10'),
-	(13, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '8', 1, '', '', '', '', '', '0', '1', '1', '0', '0', '2017-12-17 00:08:04'),
+REPLACE INTO `class_detail` (`class_detail_id`, `class_master_id`, `student_id`, `teacher_id`, `song`, `date`, `time`, `ranges`, `s_time`, `e_time`, `hw`, `teacher_note`, `student_note`, `finish`, `type`, `sign`, `status`, `updater`, `update_time`) VALUES
+	(1, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '1', 1, NULL, NULL, NULL, NULL, NULL, '0', '0', '1', '1', 'updater', '2017-12-16 15:04:05'),
+	(10, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '10', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:09'),
+	(9, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '11', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:59:48'),
+	(3, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '3', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:50:23'),
+	(2, 1115, '2017120047', '2017120025', '0', '2017/12/10', '4', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-18 13:30:48'),
+	(4, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '5', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:52:35'),
+	(7, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '6', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:59:27'),
+	(5, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '8', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:55:29'),
+	(6, 1115, '2017120047', '2017120025', NULL, '2017/12/10', '9', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-16 23:56:40'),
+	(11, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '1', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:29'),
+	(12, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '10', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:00:39'),
+	(14, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '5', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:08:10'),
+	(13, 1115, '2017120047', '2017120025', NULL, '2017/12/17', '8', 1, '', '', '', '', '', '0', '0', '1', '1', '0', '2017-12-17 00:08:04'),
 	(18, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '1', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-18 21:08:47'),
 	(25, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '13', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-18 21:16:50'),
-	(17, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '9', 1, '', '', '', '', '', '0', '1', '0', '0', '0', '2017-12-18 23:50:15'),
+	(17, 1115, '2017120047', '2017120025', NULL, '2017/12/18', '9', 1, '', '', '', '', '', '0', '0', '0', '1', '0', '2017-12-18 23:50:15'),
 	(33, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '3', 1, '', '', '', '', '', '0', '0', '1', '0', '0', '2017-12-19 00:28:17'),
 	(34, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '6', 1, '', '', '', '', '', '0', '0', '1', '0', '0', '2017-12-19 00:29:38'),
 	(35, 1115, '2017120047', '2017120025', NULL, '2017/12/19', '8', 1, '', '', '', '', '', '0', '0', '0', '0', '0', '2017-12-19 00:29:45'),
@@ -210,15 +210,45 @@ CREATE TABLE IF NOT EXISTS `class_master` (
   `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
   `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
   `updater` varchar(50) DEFAULT '0',
-  `update_time` varchar(50) DEFAULT '0' COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   PRIMARY KEY (`class_master_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1116 DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  ren-sing.class_master 的資料：~1 rows (大約)
+-- 正在傾印表格  ren-sing.class_master 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `class_master` DISABLE KEYS */;
 REPLACE INTO `class_master` (`class_master_id`, `name`, `type`, `level`, `status`, `summary`, `count`, `rest`, `punish_class`, `punish_point`, `s_date`, `e_date`, `day`, `time`, `place`, `teacher_id`, `student_id`, `updater`, `update_time`) VALUES
-	(1115, '臻臻個人課', '0', NULL, '1', '24', '24', '0', '0', NULL, '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2018/01/09 16:46:57');
+	(1115, '臻臻個人課', '0', NULL, '1', '24', '24', '0', '0', NULL, '2017/12/16', '2018/08/16', '', NULL, '0', '2017120025', '2017120047', 'updater', '2018-01-20 19:06:25');
 /*!40000 ALTER TABLE `class_master` ENABLE KEYS */;
+
+-- 傾印  表格 ren-sing.class_master_history 結構
+DROP TABLE IF EXISTS `class_master_history`;
+CREATE TABLE IF NOT EXISTS `class_master_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_master_id` int(11) NOT NULL DEFAULT '0' COMMENT '主課程id',
+  `name` varchar(50) NOT NULL DEFAULT '0' COMMENT '課堂名稱',
+  `type` varchar(1) NOT NULL DEFAULT '0' COMMENT '課程類型 (0:一對一個別課,1:阿卡團體班)',
+  `level` varchar(1) DEFAULT '0' COMMENT '課程等級 (0:入門班,1:基礎班,2:進階班)',
+  `status` varchar(50) NOT NULL DEFAULT '0' COMMENT '課程狀態 (0:未結束 1:結束 2:未結束其他理由)',
+  `summary` varchar(2) NOT NULL DEFAULT '0' COMMENT '課堂總數',
+  `count` varchar(2) NOT NULL DEFAULT '0' COMMENT '目前上課次數',
+  `rest` varchar(2) NOT NULL DEFAULT '0' COMMENT '剩餘課堂數',
+  `punish_class` varchar(2) DEFAULT '0' COMMENT '懲罰堂數',
+  `punish_point` varchar(2) DEFAULT '0' COMMENT '懲罰點數',
+  `s_date` varchar(10) NOT NULL COMMENT '課堂起始時間 (預計) yyyy/mm/dd',
+  `e_date` varchar(10) NOT NULL COMMENT '課堂結束時間 (預計) yyyy/MM/dd',
+  `day` varchar(1) DEFAULT NULL COMMENT '星期幾',
+  `time` varchar(2) DEFAULT NULL COMMENT '上課時間 (對照course_time)',
+  `place` varchar(50) NOT NULL DEFAULT '0' COMMENT '上課地點',
+  `teacher_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '老師',
+  `student_id` varchar(15) NOT NULL DEFAULT '0' COMMENT '學生',
+  `updater` varchar(50) DEFAULT '0',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1116 DEFAULT CHARSET=utf8;
+
+-- 正在傾印表格  ren-sing.class_master_history 的資料：~0 rows (大約)
+/*!40000 ALTER TABLE `class_master_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `class_master_history` ENABLE KEYS */;
 
 -- 傾印  表格 ren-sing.class_place 結構
 DROP TABLE IF EXISTS `class_place`;
@@ -301,7 +331,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `rec_num` varchar(15) DEFAULT NULL COMMENT '收信人電話',
   `company_tax_id` varchar(30) DEFAULT NULL COMMENT '統一編號',
   `updater` varchar(50) DEFAULT NULL,
-  `update_time` varchar(50) DEFAULT NULL COMMENT 'yyyy/MM/dd hh:mm:ss',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'yyyy/MM/dd hh:mm:ss',
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

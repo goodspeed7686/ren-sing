@@ -32,7 +32,7 @@ public class MembershipServiceImpl extends RSService implements MembershipServic
 		if (!map.containsKey("person_id") || StringUtils.isBlank(MapUtils.getString(map, "person_id"))) {
 			map.put("person_id", getNewPersonId());
 		}
-		//¤W­Ó¤H½Ò¤~¯à¥Î()
+		//ä¸Šå€‹äººèª²æ‰èƒ½ç”¨()
 		map.put("status", 1);
 		accountDAO.insertDB(map);
 		personDAO.insertDB(map);
