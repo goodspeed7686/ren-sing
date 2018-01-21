@@ -9,6 +9,28 @@ app.controller('membershipCtrl',['$scope', 'apiService', '$window', '$cookieStor
 		$scope.setMemQueryData();
 		$scope.memQueryFunction($scope.memQuery);
     	$scope.queryCount($scope.memQuery);
+    	
+    	apiService.getAPIwithObject("person/queryForRole",null)
+        .then(function(result) {
+        	$scope.teacherList = result.data;
+        	var select2Json = [];
+        	for (var i in result.data) {
+        		select2Json.push({
+        			id : result.data[i].person_id,
+        			text : result.data[i].name
+        		})
+        	}
+        	$('#test').select2({
+            	data: select2Json,
+            	placeholder:'請選擇',
+            	allowClear:true,
+            	tags: true, 
+                tokenSeparators: [',', ' ']
+            });  
+        },
+        function(errResponse){
+            console.error('Error while fetching Users');
+        });
     };
     
     $scope.tranToInsertMem = function () {
