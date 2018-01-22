@@ -27,18 +27,18 @@ app.controller('calendarCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alertSe
     	var y = date.getFullYear();
     	var M = date.getMonth();
     	var data = [];
+    	var month = parseInt( M ) + 1;
+    	if (month < 10) {
+    		month = "0" + month;
+    	}
     	if ($cookieStore.get('role') != 0) {
     		data.push({
         		'student_id': $cookieStore.get('person_id'),
-        		'date_pre': y + '/' + M,
-        		'date_now': y + '/' + (parseInt( M ) + 1),
-        		'date_next': y + '/' + (parseInt( M ) + 2)
+        		'date_now': y + '/' + month
         	});
     	}else {
     		data.push({
-        		'date_pre': y + '/' + M,
-        		'date_now': y + '/' + (parseInt( M ) + 1),
-        		'date_next': y + '/' + (parseInt( M ) + 2)
+        		'date_now': y + '/' + month
         	});
     	}
     	

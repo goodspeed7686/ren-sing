@@ -27,8 +27,8 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
 	}
 	
 	$scope.checkCourse = function (classTimeId, time, day, determinPage) {
-		var today = new Date();
-		var date = getScopeValue(day);
+		var today = new Date();//這裡寫錯了下個禮拜的就會錯
+		var date = getTwoDigits(getScopeValue(day));
 		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + date;
 		var chooseDateStr = chooseDayStr + " " + time;
 		var chooseDay = new Date(chooseDateStr);
@@ -67,7 +67,7 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
 		}
 	}
 	
-	$scope.insertCourse = function(time, date, day) {    	
+	$scope.insertCourse = function(time, date, day) {	
     	swal({
     		title: date + "   " + day,
     		text: time + "   " + "聲音個別課",
@@ -181,4 +181,10 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
     		return "Sat";
     };
 	
+    function getTwoDigits(num) {
+    	if (month < 10) {
+    		num = "0" + num;
+    	}
+    	return num;
+    }
 }]);

@@ -69,15 +69,15 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	@Override
 	public List<Map<String,Object>> query(Map<String,Object> map) {
 		try {
-			if (StringUtils.isNotBlank(MapUtils.getString(map, "date_pre", "")) &&
-				StringUtils.isNotBlank(MapUtils.getString(map, "date_now", "")) &&
-				StringUtils.isNotBlank(MapUtils.getString(map, "date_next", ""))){
-				map.put("date_pre", map.get("date_pre").toString().concat("%"));
+			String date_now = MapUtils.getString(map, "date_now", "");
+			if (StringUtils.isNotBlank(date_now)){
+				date_now.contains("/1");
+				map.put("date_pre", CommonTools.getAddMonthAfterDate(date_now, -1, "yyyy/MM").concat("%"));
 				map.put("date_now", map.get("date_now").toString().concat("%"));
-				map.put("date_next", map.get("date_next").toString().concat("%"));
+				map.put("date_next", CommonTools.getAddMonthAfterDate(date_now, 1, "yyyy/MM").concat("%"));
 			}
 			
-			List<Map<String,Object>> list=classDetailDAO.queryDB(map);
+			List<Map<String,Object>> list = classDetailDAO.queryDB(map);
 //			for(Map<String,Object> map2 :list){
 //				if(MapUtils.getString(map2, "type","").equals("0")){
 //					map2.put("time",comm.timeManage(MapUtils.getString(map2, "time",""),"+",10));
@@ -306,7 +306,7 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		param.put("status", "1");
 		List<Map<String, Object>> classMasterQuery = classMasterDAO.queryDB(param);
 		if (classMasterQuery.isEmpty()) {
-			throw new Exception("找不到相關課程，請洽服務人員");
+			throw new Exception("沒有剩餘課程了，請洽服務人員");
 		}
 		Map<String,Object> classMaster = classMasterQuery.get(0);
 		
@@ -319,12 +319,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 		Map<String,Object> time = new HashMap<String,Object>();
 		time.put("start_time",map.get("time"));
 		List<Map<String, Object>> coursesTime = coursesTimeDAO.queryDB(time);
-		String courseTimeId = (String) coursesTime.get(0).get("id");
+		String courseTimeId = MapUtils.getString(coursesTime.get(0), "id");
 		Map<String,Object> classMaster = getCurrentPeronalClass();
-		
-		if (MapUtils.getInteger(classMaster, "finish") == 1) {
-			throw new Exception("沒有剩餘課程了");
-		}
 		
 		if (MapUtils.getString(map, "alwaysThisDate", "").equals("true")) {
 			String date = MapUtils.getString(map, "date");
@@ -367,8 +363,8 @@ public class CurriculumServiceImpl extends RSService implements CurriculumServic
 	}
 	
 	private Boolean determinTheAfter7DateBeforeLinmitDate(String date,String eClassDate) throws ParseException {
-		Date selectDate = CommonTools.getDateForString(date, "yyyy/MM/dd");
-		Date limitDate = CommonTools.getDateForString(eClassDate, "yyyy/MM/dd");
+		Date selectDate = CommonTools.getStrDateChangeDate(date, "yyyy/MM/dd");
+		Date limitDate = CommonTools.getStrDateChangeDate(eClassDate, "yyyy/MM/dd");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(selectDate);
 		calendar.add(Calendar.DATE, 7);

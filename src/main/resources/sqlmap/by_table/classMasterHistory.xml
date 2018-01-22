@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="ren.sing.dao.table">
 
-	<insert id="class_master_insert" parameterClass="java.util.HashMap">
+	<insert id="class_master_history_insert" parameterClass="java.util.HashMap">
 		<![CDATA[
 			INSERT INTO CLASS_MASTER_HISTORY (
 				class_master_id,

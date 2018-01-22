@@ -449,17 +449,6 @@ public class CommonTools {
 		return df.parse(strDate).getTime();
 
 	}
-	
-	/**
-	 * 以傳入字串日期轉型date
-	 * 
-	 * @return date
-	 * @throws ParseException
-	 */
-	public static Date getDateForString(String strDate, String style) throws ParseException {
-		DateFormat df = new SimpleDateFormat(style);
-		return df.parse(strDate);
-	}
 
 	/**
 	 * 取得四捨五入
