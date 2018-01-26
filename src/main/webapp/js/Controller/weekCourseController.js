@@ -29,7 +29,7 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
 	$scope.checkCourse = function (classTimeId, time, day, determinPage) {
 		var today = new Date();//這裡寫錯了下個禮拜的就會錯
 		var date = getTwoDigits(getScopeValue(day));
-		var chooseDayStr = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + date;
+		var chooseDayStr = today.getFullYear() + "/" + getTwoDigits(today.getMonth() + 1) + "/" + getTwoDigits(date);
 		var chooseDateStr = chooseDayStr + " " + time;
 		var chooseDay = new Date(chooseDateStr);
 		var diff = chooseDay.getTime() - today.getTime();
@@ -182,7 +182,7 @@ app.controller('weekCourseCtrl', ['$scope' , 'apiService' , '$uibModal' , 'alert
     };
 	
     function getTwoDigits(num) {
-    	if (month < 10) {
+    	if (num < 10) {
     		num = "0" + num;
     	}
     	return num;

@@ -171,20 +171,20 @@ public class CurriculumController {
 		header.put("weekTitle",weekTitle);
 		int[] weekArray = {0,1,2,3,4,5,6};
 		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-		int day = cal.get(Calendar.DATE);  
+		int day = cal.get(Calendar.DATE);
+		dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
+		String strDate = dateStringFormat.format(cal.getTime());
 		for (int i=0;i<weekArray.length;i++) {
 			int diffDay = weekArray[i] - (dayOfWeek - 1);
-			cal.set(Calendar.DATE, day + diffDay);
+			cal.set(Calendar.DATE, (day + diffDay));
 			dateStringFormat = new SimpleDateFormat( "d" );
 		    String weekDate = dateStringFormat.format(cal.getTime());
 		    header.put("week" + weekArray[i],weekDate);
 		    if (i == 0) {
-		    	dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
-		    	param.put("date_between_start", dateStringFormat.format(cal.getTime()));
+		    	param.put("date_between_start", CommonTools.getAddDayAfterDate(strDate, diffDay, "yyyy/MM/dd"));
 		    }
 		    if (i == 6) {
-		    	dateStringFormat = new SimpleDateFormat( "yyyy/MM/dd" );
-		    	param.put("date_between_end", dateStringFormat.format(cal.getTime()));
+		    	param.put("date_between_end", CommonTools.getAddDayAfterDate(strDate, diffDay, "yyyy/MM/dd"));
 		    }
 		}
 		result.put("header", header);
