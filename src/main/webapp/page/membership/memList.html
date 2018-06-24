@@ -1,0 +1,477 @@
+<html>
+ 
+    <head>
+    <meta charset="UTF-8">
+<style>
+
+
+.banner{
+	border-bottom:#DDDDDD 1px solid;
+	margin-bottom:10px;
+	padding-left:20px;
+}
+.page-title-box{
+	
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.search{
+  padding:3px;
+}
+td{
+	word-wrap:break-word;
+	
+}
+table{
+	font-size:110%;
+}
+.modalWidth{
+	/* width:75%; */
+}
+h4{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+</style>
+
+
+
+<div class="">
+<div class="">
+<div class="row banner">
+	<nav style="float:left;">
+		<h4 class="font">基本資料清單</h4>
+	</nav>
+	<nav style="float:right;">
+		<ol class="breadcrumb">
+			<li>基本資料</li>
+			<li class="active">基本資料清單</li>
+		</ol>
+	</nav>
+	
+</div>
+</div>
+	<div class="row page-title-box">
+	<div class="col-md-12 col-xs-12">
+	
+	  <div class="col-md-3">
+	    <div class="input-group search">
+		    <span class="input-group-addon">會員編號</span>
+		    <input id="personId" type="text" class="form-control" >
+		</div>
+		</div>
+		<div class="col-md-3">
+		<div class="input-group search" >
+		    <span class="input-group-addon">姓名</span>
+	<!--	   <input  type="text" class="form-control" ng-model="memQuery.name">   -->
+		    <select class="form-control" id="selectName" name="type" >  
+                        <option value="" data-name="">請選擇 </option>  
+            </select>  
+		</div>
+		</div>
+	  
+	  <div class="col-md-3">
+	    <div class="input-group search" >
+		    <span class="input-group-addon">電話</span>
+		    <input  id="selectPhone" type="text" class="form-control" >
+		</div>
+		</div>
+		<div class="col-md-3">
+		<div class="input-group search" >
+		    <span class="input-group-addon">Email</span>
+		    <input  id="selectEmail" type="email" class="form-control" >
+		</div>
+		
+		</div>
+	  </div>
+	  
+	  
+	  
+	  	<nav aria-label="Page navigation " style="text-align:center">
+	  		<button type="button" class="btn btn-warning " id="searchBtn" style="margin-top:5px">查詢</button>
+	  	</nav>
+	  	
+	  	
+	  
+	  </div>
+	  
+	  	
+	  
+	 
+	
+	<div class="row ">
+	  <div class="col-md-12 " > 
+		<button id="addMemBtn" type="button" class="btn btn-info" >
+		  <span class="glyphicon glyphicon-plus" style="color:white"></span> 新增
+		</button>
+	  </div>
+	</div>
+	<div class="col-md-12 ">
+		<table class="table table-striped " style="table-layout:fixed">
+		  <thead>
+		    <tr>
+		      <th  scope="col">#</th>
+		      <th  scope="col">會員編號</th>
+		      <th  scope="col">姓名</th>
+		      <th scope="col">電話</th>
+		      <th scope="col">Email</th>
+		      <th  scope="col">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbodyC">
+			<tr >
+		      <td>{{ $index + 1 }}</td>
+		      <td>{{ row.person_id }}</td>
+		      <td>{{ row.name }}</td>
+		      <td>{{ row.phone }}</td>
+		      <td>{{ row.email }}</td>
+		      
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+	<div class="col-md-12 ">
+	<nav aria-label="Page navigation" style="text-align:center">
+	  <ul class="pagination ">
+	    <li class="disabled">
+	      <a href="#" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    <li class="active"><a href="#">1</a></li>
+	    <li>
+	      <a href="#" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade " role="dialog" data-backdrop="static">
+  <div class="modal-dialog modalWidth" >
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+    <form id="myForm" role="form">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="titlePro">新增會員</h4>
+      </div>
+      <div class="modal-body row">
+      
+        <div class="col-md-6 mb-3">
+		    <div id="accIcon2" class="form-group">
+				    <label for="inputName" class="control-label">帳號</label>
+	   				<input type="text" class="form-control" id="account">
+	   				<div id="accIcon" class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">密碼</label>
+				    <input type="password" class="form-control" id="password" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				     <label for="inputName" class="control-label">確認密碼</label>
+				    <input type="password" class="form-control" id="pwdCheck" data-match="#password" data-error="密碼未吻合！" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">姓名</label>
+				    <input type="text" class="form-control" id="name" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">身份證字號</label>
+				    <input type="text" class="form-control" id="id_number" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group ">
+				    <label for="inputName" class="control-label">角色</label>
+				    <select class="form-control" id="role" required>
+				    	<option value="">請選擇</option>
+						<option value="0">行政</option>
+					    <option value="1">老師</option>
+					    <option value="2">學生</option>
+					</select>
+					<div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">Email</label>
+				    <input type="email"  class="form-control" id="email" data-error="email格式錯誤" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+					<label for="inputName" class="control-label">市話</label>
+				    <input type="text" class="form-control" id="local_calls" >
+				    <div class="help-block with-errors"></div>
+			</div>
+		</div>
+	<div class="col-md-6 mb-3">
+		<div class="form-group ">
+			    <label for="inputName" class="control-label">性別</label>
+			    <select class="form-control" id="sex" required>
+			    	<option value="">請選擇</option>
+				    <option value="0">男</option>
+				    <option value="1">女</option>
+				</select>
+				<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">生日</label>
+			    <input type="text"  class="form-control" id="birthday" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+				<label for="inputName" class="control-label">手機號碼</label>
+			    <input type="text" class="form-control" id="phone" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">職業</label>
+			    <input type="text" class="form-control" id="career" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">Skype</label>
+			    <input type="text" class="form-control" id="skype">
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">收信人</label>
+			    <input type="text" class="form-control" id="recipient">
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">收信地址</label>
+			    <input type="text" class="form-control" id="rec_add">
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">收信人電話</label>
+			    <input type="text" class="form-control" id="rec_num">
+			    <div class="help-block with-errors"></div>
+		</div>
+	</div>
+	
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" id="formSubmit">送出</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+	
+  </div>
+</div>
+
+<!-- Modal -->
+
+</body>  
+<script type="text/javascript">  
+
+	//--------------初始化--------------
+	$(function () {
+		
+		$('#birthday').datetimepicker({
+	    	autoclose : true,
+	    	minView : "2",
+	    	viewMode: 'years',
+	        format: 'yyyy/mm/dd'
+	    });
+		
+		ajaxInit ();
+// 		$('#selectPhone').val("")
+// 	    $('#personId').val("");
+// 		$('#selectEmail').val("");
+// 		$('#selectName').val([]); 
+		selectOption ();  //取select option
+
+		
+		
+		$(window).resize(function() {  //隨螢幕大小控制modal
+            var wdth=$(window).width();
+      //      console.log(wdth)
+            if($(window).width()<768){
+            	$(".modal-dialog").removeClass("modalWidth");
+            }else{
+            	$(".modal-dialog").addClass("modalWidth");
+            }
+        });
+	}); 
+	
+	//--------------初始化--------------
+
+
+	
+	var queryUrl="/ren-sing/membership/query";		
+	
+ //   var data = [{ id: '韋小寶', text: '韋小寶'}, { id: '滅絕師太', text: '滅絕師太' }, { id: '安安', text: '安安' }, { id: '土豆S', text: '土豆S' }];
+	// select2 範例
+      
+   
+    function selectOption (){    //取selct option
+    	var data =commonAjax({},queryUrl);
+    	var opt=[];
+    	$(data).each(function(i){
+    		opt.push({ id: data[i].person_id, text: data[i].name });
+    	});
+//     	console.log(data)
+    	$('#selectName').select2({
+        	  data: opt,
+        	  placeholder:'請選擇',
+        	  allowClear:true
+        });
+    }
+    
+   
+    
+    
+ 	$('#addMemBtn').click(function() {
+ 		modalEmpty();
+ 		$("#myModal").modal();
+ 		$('#titlePro').text("新增會員");
+ 	});
+    
+ 	$("#tbodyC").on( "click", ".updateMemBtn", function() {
+ 		$("#myModal").modal();
+  		var searchObj={person_id:$(this).val()};
+//   		console.log(commonAjax(JSON.stringify(searchObj),"/ren-sing/membership/queryPerson"));
+  		var mem=commonAjax(searchObj,"/ren-sing/membership/queryPerson");
+//   		console.log(mem.person_id);
+  		modalEmpty();
+  		$('#account').val(mem.person_id);
+  		$('#name').val(mem.name);
+  		$('#id_number').val(mem.id_number);
+  		$('#role').val(mem.role);
+  		$('#email').val(mem.email);
+  		$('#local_calls').val(mem.local_calls);
+  		$('#sex').val(mem.sex);
+  		$('#birthday').val(mem.birthday);
+  		$('#phone').val(mem.phone);
+  		$('#career').val(mem.career);
+  		$('#skype').val(mem.skype);
+  		$('#recipient').val(mem.recipient);
+  		$('#rec_add').val(mem.rec_add);
+  		$('#rec_num').val(mem.rec_num);
+  		$('#titlePro').text("修改會員");
+ 	});
+    
+    function modalEmpty(){    //清空modal
+//   		$('.has-error ,.has-danger').removeClass('has-error has-danger');
+//   		$('.help-block').empty();
+  		$('#myForm').validator('destroy');
+  	//	document.getElementById("myForm").reset()
+  		$("#myForm")[0].reset();
+  		$('.has-success').removeClass('has-success');
+  		$('.has-error').removeClass('has-error');
+  		$('#accIcon').empty();
+    }
+    
+    $('#formSubmit').click(function(e) {
+   // 	alert(444)
+   		$('#myForm').validator('validate');
+   		valiAccount();
+   		if($('.has-error').length>0){
+   			console.log('no')
+   		}else{
+   			console.log('ok')
+   		}
+   		   		
+ 	})
+    
+   	$( "#account" ).blur(function() {
+   		valiAccount();
+	});
+    
+    function valiAccount(){   // 驗證帳號重複
+		if(""==$( "#account" ).val()){
+			$('#accIcon2').removeClass('has-success');
+			$('#accIcon2').addClass('has-error');
+    		$('#accIcon').html('<ul class="list-unstyled"><li class="input-group"></span>請填寫這個欄位。</li></ul>');
+		}else{
+	    	var flag = commonAjax({account:$("#account" ).val()},"/ren-sing/membership/validateAccount");
+	    	if(flag){
+	        	$('#accIcon2').addClass('has-success');
+	        	$('#accIcon2').removeClass('has-error');
+	    		$('#accIcon').html('<ul class="list-unstyled"><li class="input-group"><span style="height:20px" class="glyphicon  glyphicon-ok"></span>此帳號可以使用。</li></ul>');
+	        }else{
+	        	$('#accIcon2').removeClass('has-success');
+	        	$('#accIcon2').addClass('has-error');
+	    		$('#accIcon').html('<ul class="list-unstyled"><li class="input-group"><span style="height:20px" class="glyphicon  glyphicon-remove"></span>此帳號已經被使用。</li></ul>');
+	        }
+		}    	
+
+    }
+    
+    
+    //   var dataJson = { "name": "上帝視角"};  格式
+    
+    
+ 
+    //資料查詢 AJAX 
+    function ajaxInit (searchData){
+    	tdContent="";
+    	if(null==searchData){
+    		searchData={};
+    	}
+    	var data = commonAjax(searchData,queryUrl);
+    	$(data).each(function(i){
+                	
+           //	console.log(i)
+       		tdContent=tdContent+"<tr><td>"+i+"</td><td>"+data[i].person_id+"</td><td>"+data[i].name+"</td>"
+       		tdContent=tdContent+"<td>"+data[i].phone+"</td><td>"+data[i].email+"</td>"
+     		tdContent=tdContent+"<td><button type='button' class='btn btn-info updateMemBtn'value="+data[i].person_id+">修改</button></td></tr>"
+        });
+            $("#tbodyC").empty();
+            $("#tbodyC").html(tdContent);
+    
+    }
+    
+//     $('#selectName').on("change", function(e) {
+//     	console.log($('#selectName').select2("val")); 
+//     });
+    //查詢按鈕 click
+    $( "#searchBtn" ).click(function() {
+
+//     	  console.log($('#phone').val());
+//     	  console.log($('#personId').val());
+//     	  console.log($('#email').val());
+//     	  console.log($('#selectName').select2("val"));
+    	  var searchData='';
+    	  var count =0;
+    	  var searchObj={};  //查詢陣列
+    	  if(""!==$('#selectPhone').val()){
+    		  searchObj.phone=$('#selectPhone').val();
+    	  }
+    	  if(""!==$('#personId').val()){
+    		  searchObj.person_id= $('#personId').val();
+    	  }
+		  if(""!==$('#selectEmail').val()){
+			  searchObj.email= $('#selectEmail').val();
+    	  }
+		  if(""!==$('#selectName').select2("val")){
+		//	  searchObj.name=$('#selectName').select2("val");
+			  searchObj.name=$('#selectName').find("option:selected").text();
+		  }
+// 		  console.log(Object.keys(searchObj).length)
+ 		  console.log(JSON.stringify(searchObj))
+		  if(1>0){     //沒有篩選條件查不查
+			  ajaxInit(searchObj);  //Ajax查詢
+			 
+		  }
+ 		  
+ 		//  console.log(data[0].career);
+		  
+    });
+    
+    
+</script> 
+</html>

@@ -1,0 +1,402 @@
+<html>
+ 
+    <head>
+    <meta charset="UTF-8">
+<style>
+
+.font{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+.banner{
+	border-bottom:#DDDDDD 1px solid;
+	margin-bottom:10px;
+	padding-left:20px;
+}
+.page-title-box{
+	
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.search{
+  padding:3px;
+}
+td{
+	word-wrap:break-word;
+	
+}
+table{
+	font-size:110%;
+}
+h4{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+.select2{
+  width: 100%;
+}
+</style>
+
+
+
+<div class="">
+<div class="">
+<div class="row banner">
+	<nav style="float:left;">
+		<h4 class="font">課的定義</h4>
+	</nav>
+	<nav style="float:right;">
+		<ol class="breadcrumb">
+			<li>課程清單</li>
+			<li class="active">課程清單</li>
+		</ol>
+	</nav>
+	
+</div>
+</div>
+	<div class="row page-title-box">
+	<div class="col-md-12 col-xs-12">
+	
+	  <div class="col-md-3">
+	    <div class="input-group search">
+		    <span class="input-group-addon">日期</span>
+		    <input id="serchDate" type="text" class="form-control" >
+		</div>
+		</div>
+		<div class="col-md-3">
+		<div class="input-group search" >
+		    <span class="input-group-addon">類別</span>
+	<!--	   <input  type="text" class="form-control" ng-model="memQuery.name">   -->
+		    <select class="form-control" id="serchType" name="type" >  
+                        <option value="" data-name="">請選擇 </option>  
+            </select>  
+		</div>
+		</div>
+	  
+	  <div class="col-md-3">
+	    <div class="input-group search" >
+		    <span class="input-group-addon">老師</span>
+		    <select class="form-control" id="serchTeacher" name="type" >  
+                        <option value="" data-name="">請選擇 </option>  
+            </select> 
+		</div>
+		</div>
+		<div class="col-md-3">
+		<div class="input-group search" >
+		    <span class="input-group-addon">學生</span>
+		    <select class="form-control" id="serchStudent" name="type" >  
+                        <option value="" data-name="">請選擇 </option>  
+            </select> 
+		</div>
+		
+		</div>
+	  </div>
+	  
+	  
+	  	<nav aria-label="Page navigation " style="text-align:center">
+	  		<button type="button" class="btn btn-warning" id="searchBtn" style="margin-top:5px">查詢</button>
+	  	</nav>
+	  	
+	  
+	  </div>
+	  
+	  	
+	  
+	 
+	
+	<div class="row ">
+	  <div class="col-md-12 " > 
+		<button type="button" class="btn btn-info" id="addClassBtn">
+		  <span class="glyphicon glyphicon-plus" style="color:white"></span> 新增
+		</button>
+	  </div>
+	</div>
+	<div class="col-md-12 ">
+		<table class="table table-striped " style="table-layout:fixed">
+		  <thead>
+		    <tr>
+		      <th  scope="col">#</th>
+		      <th  scope="col">日期</th>
+		      <th  scope="col">類別</th>
+		      <th scope="col">老師</th>
+		      <th scope="col">學生</th>
+		      <th  scope="col">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody id="tbodyC">
+			<tr >
+		      <td>{{ $index + 1 }}</td>
+		      <td>{{ row.person_id }}</td>
+		      <td>{{ row.name }}</td>
+		      <td>{{ row.phone }}</td>
+		      <td>{{ row.email }}</td>
+		      <td><button type="button"  class="btn btn-info" >修改</button><button type="button"  class="btn btn-info" >課程明細</button></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+	<div class="col-md-12 ">
+	<nav aria-label="Page navigation" style="text-align:center">
+	  <ul class="pagination ">
+	    <li class="disabled">
+	      <a href="#" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    <li class="active"><a href="#">1</a></li>
+	    <li>
+	      <a href="#" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade " role="dialog" data-backdrop="static">
+  <div class="modal-dialog modalWidth" >
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+    <form id="myForm" role="form">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="titlePro">新增</h4>
+      </div>
+      <div class="modal-body row">
+      
+        <div class="col-md-6 mb-3">
+		    <div  class="form-group">
+				    <label for="inputName" class="control-label">課程名稱</label>
+	   				<input type="text" class="form-control" id="name" required>
+	   				<div  class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">課程類型</label>
+				    <input type="text" class="form-control" id="type" required>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group" >
+					<div>
+				     <label for="inputName" class="control-label">老師</label>
+				     </div>
+				    <select class="select2" id="teacher" style="width:100%" required>
+				    	<option value="">請選擇</option>
+					</select>
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">課堂總數</label>
+				    <input type="number" class="form-control " id="summary" required >
+				    <div class="help-block with-errors"></div>
+			</div>
+			<div class="form-group">
+				    <label for="inputName" class="control-label">目前上課次數</label>
+				    <input type="number" class="form-control " id="count" required >
+				    <div class="help-block with-errors"></div>
+			</div>
+			
+		</div>
+	<div class="col-md-6 mb-3">
+		<div class="form-group ">
+			    <label for="inputName" class="control-label">上課地點</label>
+			    <select class="form-control" id="place" required>
+			    	<option value="">請選擇</option>
+				</select>
+				<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">課程等級</label>
+			    <input type="text"  class="form-control" id="level" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+				<div>
+				<label for="inputName" class="control-label">學生</label>
+				</div>
+			    <select class="form-control" id="student" style="width:100%" required>
+			    	<option value="">請選擇</option>
+				</select>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">課程開啟時間</label>
+			    <input type="text" class="form-control" id="s_date" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			    <label for="inputName" class="control-label">課程狀態</label>
+			    <input type="text" class="form-control" id="status" required>
+			    <div class="help-block with-errors"></div>
+		</div>
+		
+	</div>
+	
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" id="formSubmit">送出</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+	
+  </div>
+</div>
+
+<!-- Modal -->
+
+</body>  
+<script type="text/javascript">  
+	//初始化
+	$(function () {
+	    $('#serchDate').datetimepicker({
+	    	autoclose : true,
+	    	minView : "2",
+	    	viewMode: 'years',
+	        format: 'yyyy/mm/dd'
+	    });
+	    $('#s_date').datetimepicker({
+	    	autoclose : true,
+	    	minView : "2",
+	    	viewMode: 'years',
+	        format: 'yyyy/mm/dd'
+	    });
+	    
+	    ajaxInit ();
+// 	    $('#datetimepicker10').val("");
+//     	$('#type').select2([]);
+//     	$('#teacher').select2([]);
+//     	$('#student').select2([]);
+    	selectOption ();  //取select option
+    	
+	});
+	
+ 	$('#addClassBtn').click(function() {
+ 		modalEmpty();
+ 		$("#myModal").modal();
+ 		$('#titlePro').text("新增課程");
+ 	});
+	
+ 	$('#formSubmit').click(function(e) {
+ 	   // 	alert(444)
+ 	   		$('#myForm').validator('validate');
+ 	   		valiAccount();
+ 	   		if($('.has-error').length>0){
+ 	   			console.log('no')
+ 	   		}else{
+ 	   			console.log('ok')
+ 	   		}
+ 	   		   		
+ 	 	})
+	
+	
+	var queryUrl="/ren-sing/class/query";		
+	
+       
+	  // select2 範例   
+      function selectOption (){
+    	var searchObj={role:"1"};
+    	var data =commonAjax({role:"1"},"/ren-sing/person/queryForRole");
+    	var opt=[];
+    //	console.log(data)
+    	$(data).each(function(i){
+    		opt.push({ id: data[i].person_id, text: data[i].name });
+    	});
+    	
+    	$('#serchTeacher').select2({
+        	  data: opt,
+        	  placeholder:'請選擇',
+        	  allowClear:true
+        });
+    	$('#teacher').select2({
+      	  data: opt,
+      	  placeholder:'請選擇',
+      	  allowClear:true
+      });
+    	var searchObj2={role:"2"};
+    	var data2 =commonAjax(searchObj2,"/ren-sing/person/queryForRole");
+    	var opt2=[];
+    	$(data2).each(function(i){
+    		opt2.push({ id: data2[i].person_id, text: data2[i].name });
+    	});
+    	
+    	$('#student').select2({
+        	  data: opt2,
+        	  placeholder:'請選擇',
+        	  allowClear:true
+        });
+    	$('#serchStudent').select2({
+      	  data: opt2,
+      	  placeholder:'請選擇',
+      	  allowClear:true
+      });
+    	var data3 = [{ id: '0', text: '個人課'}, { id: '1', text: '團體課' }];
+    	$('#serchType').select2({
+	      	  data: data3,
+	      	  placeholder:'請選擇',
+	      	  allowClear:true
+	      });
+    }
+    
+    //資料查詢 AJAX 
+    function ajaxInit (searchData){
+    	tdContent="";
+    	if(null==searchData){
+    		searchData={};
+    	}
+    	var data = commonAjax(searchData,queryUrl);
+    	$(data).each(function(i){
+                	
+    //        console.log(data)
+       		tdContent=tdContent+"<tr><td>"+i+"</td><td>"+data[i].s_date+"</td><td>"+data[i].type_name+"</td>"
+       		tdContent=tdContent+"<td>"+data[i].teacher_name+"</td><td>"+data[i].student_name+"</td>"
+     		tdContent=tdContent+"<td><button type='button' class='btn btn-info' updateClassBtn'value="+data[i].class_master_id+">修改</button></td></tr>"
+        });
+            $("#tbodyC").empty() ;
+            $("#tbodyC").html(tdContent);
+    
+    }
+    
+    //查詢按鈕 click
+    $( "#searchBtn" ).click(function() {
+//     	  console.log($('#phone').val());
+//     	  console.log($('#personId').val());
+//     	  console.log($('#email').val());
+//     	  console.log($('#selectName').select2("val"));
+    	  var searchData='';
+    	  var count =0;
+    	  var searchObj={};  //查詢陣列
+    	  if(""!==$('#serchDate').val()){
+    		  searchObj.s_date=$('#serchDate').val();
+    	  }
+    	  if(""!==$('#serchType').select2("val")){
+    		  searchObj.type= $('#serchType').select2("val");
+    	  }
+		  if(""!==$('#serchTeacher').select2("val")){
+			  searchObj.teacher_id=$('#serchType').select2("val");
+    	  }
+		  if(""!==$('#serchStudent').select2("val")){
+		//	  searchObj.name=$('#selectName').select2("val");
+			  searchObj.student_id=$('#serchStudent').select2("val");
+		  }
+// 		  console.log(Object.keys(searchObj).length)
+// 		  console.log(JSON.stringify(searchObj))
+		  if(1>0){     //沒有篩選條件查不查
+			  ajaxInit(searchObj);  //Ajax查詢
+			 
+		  }
+ 		  
+		  
+    	});
+    
+    
+</script> 
+</html>

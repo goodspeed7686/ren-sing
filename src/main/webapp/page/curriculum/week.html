@@ -1,0 +1,414 @@
+<html>
+ 
+    <head>
+    <meta charset="UTF-8">
+<style>
+
+
+.banner{
+	border-bottom:#DDDDDD 1px solid;
+	margin-bottom:10px;
+	padding-left:20px;
+}
+.page-title-box{
+	
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.search{
+  padding:3px;
+}
+td{
+	word-wrap:break-word;
+	
+}
+table{
+	font-size:110%;
+}
+.modalWidth{
+	/* width:75%; */
+}
+h4{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+th{
+   text-align:center;
+   color:gray;
+   
+}
+tr{
+	padding:10px;
+	text-align:center;
+}
+td{
+	padding:10px;
+	text-align:center;
+	border:1px 	#DDDDDD solid;
+	background-color:white;
+}
+/*  你的預約  */
+.reservation{
+	background-color:#FF8800;
+}
+/*  可以選擇  */
+.canUse{
+	background-color:#77DDFF;
+}
+/*  已被劃位  */
+.used{
+	background-color:#5500FF;
+}
+.nomal{
+	background-color:#FFCCCC;
+}
+#weekTitle{
+	font-size:180%;
+	font-weight:bold;
+	color:#666666;
+}
+td{
+	font-size:125%;
+}
+th{
+	font-size:110%;
+}
+.colorSquare{
+	display:inline-block;
+	height:25px;
+	width:25px;
+	margin-right:5px;
+}
+
+.footDiv{
+	margin-left:50px;
+}
+</style>
+
+
+
+
+<div class="">
+<div class="row banner">
+	<nav style="float:left;">
+		<h4 class="font">行事曆</h4>
+	</nav>
+	<nav style="float:right;">
+		<ol class="breadcrumb">
+			<li>參數設定</li>
+			<li class="active">基本資料清單</li>
+		</ol>
+	</nav>
+	
+</div>
+	<div class="container" style="text-align:center">
+		<div>
+	     		<input type="image" class="ss" style="float:left;" src="../img/left_arrow.png"  id="lastWeek"/>
+	     		<span style="text-align:center" id="weekTitle"></span>
+	     		<input type="image" class="ss" style="float:right;" src="../img/right_arrow.png"  id="nextWeek"/>
+	     </div>
+	     <table id="tdd" style="width:100%;table-layout:fixed">
+	<!--      	<tr>
+		     	<th></th>
+		     	<th>SUN</th>
+		     	<th>MON</th>
+		     	<th>TUE</th>
+		     	<th>WED</th>
+		     	<th>THU</th>
+		     	<th>FRI</th>
+		     	<th>SAT</th>
+	     	</tr>
+	     	<tr>
+	     		<td>13:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>13:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>14:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>15:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>15:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>16:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>17:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>18:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>18:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>19:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>20:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>20:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>21:20</td>
+	     	</tr>
+	     	
+	     	 -->
+	     </table >
+	     <table style="border:1px white solid; margin-left: 50px; ">
+	     	<tr class="footDiv" >
+	     		<td style="border:1px white solid;"><div class="colorSquare canUse"></div>可選時段&nbsp;&nbsp;</td>
+	     		<td style="border:1px white solid;"><div class="colorSquare used"></div>已劃位&nbsp;&nbsp;</td>
+	     		<td style="border:1px white solid;"><div class="colorSquare reservation"></div>已預約&nbsp;&nbsp;</td>
+	     	</tr>
+	     </table>
+	</div>
+</div>
+
+</body>  
+<script type="text/javascript">  
+
+	//--------------初始化--------------
+	 var page=0;
+	//	tableLoad();
+	$(function () {	
+//		var page=0;
+		load(page);
+//		console.log(monthChange("五月"))
+	});	
+	//	console.log(page)
+		
+		$(".ss").on( "click", function() {
+			
+			if($(this).attr("id")==="nextWeek"){
+				page=page+1;
+			}else{
+				page=page-1;
+			}
+			load(page);
+			console.log(page)
+		});
+		var dateTitle ="";
+		function load (page){
+			var searchObj={}; 
+			searchObj.date_between_start="2018\/05\/23";
+			searchObj.date_between_end="2018\/05\/29";
+			searchObj.page=page;
+			var data = commonAjax(searchObj,"/ren-sing/curriculum/queryWeekEvents");
+			console.log(data);
+			console.log(data.header.weekTitle);
+			var weekTitle=data.header.weekTitle;
+			console.log(weekTitle.substr(0,weekTitle.lastIndexOf(",")));
+			weekTitle1=weekTitle.substr(0,weekTitle.lastIndexOf(","));
+			dateTitle=weekTitle1;
+			weekTitle2=weekTitle.substr(weekTitle.lastIndexOf(",")+2,weekTitle.length)
+			$("#weekTitle").html(weekTitle1+",  第"+weekTitle2+"週");
+			var tdContent="<tr class='header'><th></th><th id='week0' day="+data.header.week0+"><p>"+data.header.week0+"&nbsp;</p>SUN</th><th id='week1' day="+data.header.week1+"><p>"+data.header.week1+"&nbsp;</p>MON</th><th id='week2' day="+data.header.week2+"><p>"+data.header.week2+"&nbsp;</p>TUE</th><th id='week3' day="+data.header.week3+"><p>"+data.header.week3+"&nbsp;</p>WED</th><th id='week4' day="+data.header.week4+"><p>"+data.header.week4+"&nbsp;</p>THU</th><th id='week5' day="+data.header.week5+"><p>"+data.header.week5+"&nbsp;</p>FRI</th><th id='week6' day="+data.header.week6+"><p>"+data.header.week6+"&nbsp;</p>SAT</th></tr>";
+			$(data.content).each(function(i){
+			//	console.log(data.content[i]);
+
+				tdContent=tdContent+"<tr>"+"<td class='timeStep' >"+data.content[i].start_time+"</td>";
+				switch(data.content[i].Sun){
+					case "0":
+						tdContent=tdContent+"<td class='canUse' order='0'>"+data.content[i].Sun+"</td>";
+						break;
+					case "1":
+						tdContent=tdContent+"<td class='reservation' order='0'>"+data.content[i].Sun+"</td>";
+						break;
+					case "2":
+						tdContent=tdContent+"<td class='used' order='0'>"+data.content[i].Sun+"</td>";
+						break;	
+					case "3":
+						tdContent=tdContent+"<td class='nomal' order='0'>"+data.content[i].Sun+"</td>";
+						break;	
+				}
+				switch(data.content[i].Mon){
+				case "0":
+					tdContent=tdContent+"<td class='canUse' order='1'>"+data.content[i].Mon+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='reservation' order='1'>"+data.content[i].Mon+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='used' order='1'>"+data.content[i].Mon+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='1'>"+data.content[i].Mon+"</td>";
+					break;	
+				}
+				switch(data.content[i].Tue){
+				case "0":
+					tdContent=tdContent+"<td class='canUse' order='2'>"+data.content[i].Tue+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='reservation' order='2'>"+data.content[i].Tue+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='used' order='2'>"+data.content[i].Tue+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='2'>"+data.content[i].Tue+"</td>";
+					break;	
+				}
+				switch(data.content[i].Wed){
+				case "0":
+					tdContent=tdContent+"<td class='nomal' order='3'>"+data.content[i].Wed+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='nomal' order='3'>"+data.content[i].Wed+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='nomal' order='3'>"+data.content[i].Wed+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='3'>"+data.content[i].Wed+"</td>";
+					break;	
+				}
+				switch(data.content[i].Thus){
+				case "0":
+					tdContent=tdContent+"<td class='canUse' order='4'>"+data.content[i].Thus+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='reservation' order='4'>"+data.content[i].Thus+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='used' order='4'>"+data.content[i].Thus+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='4'>"+data.content[i].Thus+"</td>";
+					break;	
+				}
+				switch(data.content[i].Fri){
+				case "0":
+					tdContent=tdContent+"<td class='canUse' order='5'>"+data.content[i].Fri+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='reservation' order='5'>"+data.content[i].Fri+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='used' order='5'>"+data.content[i].Fri+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='5'>"+data.content[i].Fri+"</td>";
+					break;	
+				}
+				switch(data.content[i].Sat){
+				case "0":
+					tdContent=tdContent+"<td class='canUse' order='6'>"+data.content[i].Sat+"</td>";
+					break;
+				case "1":
+					tdContent=tdContent+"<td class='reservation' order='6'>"+data.content[i].Sat+"</td>";
+					break;
+				case "2":
+					tdContent=tdContent+"<td class='used' order='6'>"+data.content[i].Sat+"</td>";
+					break;	
+				case "3":
+					tdContent=tdContent+"<td class='nomal' order='6'>"+data.content[i].Sat+"</td>";
+					break;	
+				}
+//	 			tdContent=tdContent+"<td>"+data.content[i].Sun+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Mon+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Tue+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Wed+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Thus+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Fri+"</td>";
+//	 			tdContent=tdContent+"<td>"+data.content[i].Sat+"</td>";
+				tdContent=tdContent+"</tr>";
+		        //	console.log(i)
+//	 	    		tdContent=tdContent+"<tr><td>"+i+"</td><td>"+data[i].person_id+"</td><td>"+data[i].name+"</td>"
+//	 	    		tdContent=tdContent+"<td>"+data[i].phone+"</td><td>"+data[i].email+"</td>"
+//	 	  		tdContent=tdContent+"<td><button type='button' class='btn btn-info updateMemBtn'value="+data[i].person_id+">修改</button></td></tr>"
+				$("#tdd").html(tdContent);
+			});
+
+
+			$(".canUse").on( "click", function() {
+		//	console.log($(this).siblings(".timeStep").text());  //幾點
+			console.log($(this).parent('.header').children());
+			console.log($(this).attr('order'));
+			var w=$(this).attr('order');
+			console.log($('#week'+w+'').text())
+			console.log(dateTitle);
+			var m = dateTitle.split(",");
+			console.log(monthChange(m[0]));
+			swal({
+				title: ""+m[1]+"/"+monthChange(m[0])+"/"+$('#week'+w+'').text(),
+				text: "You won't be able to revert this!",
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '確認預約!',
+				cancelButtonText: '取消!'
+				}).then((result) => {
+				if (result.value) {
+					swal(
+					'Deleted!',
+					'Your file has been deleted.',
+					'success'
+					)
+				}
+				})
+		});
+		}
+		function monthChange(month){
+			switch(month){
+				case "一月" :
+					month="1";
+					break;
+				case "二月" :
+					month="2";
+					break;
+				case "三月" :
+					month="3";
+					break;	
+				case "四月" :
+					month="4";
+					break;		
+				case "五月" :
+					month="5";
+					break;
+				case "六月" :
+					month="6";
+					break;
+				case "七月" :
+					month="7";
+					break;
+				case "八月" :
+					month="8";
+					break;
+				case "九月" :
+					month="9";
+					break;		
+				case "十月" :
+					month="10";
+					break;
+				case "十一月" :
+					month="11";
+					break;	
+				case "十二月" :
+					month="12";
+					break;	
+			}
+			return month;
+		}
+		
+		
+	
+	
+	 
+	//--------------初始化--------------
+	
+	
+    
+    
+</script> 
+</html>

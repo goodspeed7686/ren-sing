@@ -1,0 +1,235 @@
+<html>
+ 
+    <head>
+    <meta charset="UTF-8">
+<style>
+
+
+.banner{
+	border-bottom:#DDDDDD 1px solid;
+	margin-bottom:10px;
+	padding-left:20px;
+}
+
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.search{
+  padding:3px;
+}
+td{
+	word-wrap:break-word;
+	
+}
+table{
+	font-size:110%;
+}
+h4{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+th{
+   text-align:center;
+   color:gray;
+   
+}
+tr{
+	padding:10px;
+	text-align:center;
+}
+td{
+	padding:10px;
+	text-align:center;
+	border:1px 	#DDDDDD solid;
+	background-color:white;
+}
+.reservation{
+	background-color:#FF8800;
+}
+.canUse{
+	background-color:#77DDFF;
+}
+.used{
+	background-color:#5500FF;
+}
+.nomal{
+	background-color:#FFCCCC;
+}
+#weekTitle{
+	font-size:180%;
+	font-weight:bold;
+	color:#666666;
+}
+td{
+	font-size:125%;
+}
+th{
+	font-size:110%;
+}
+.colorSquare{
+	display:inline-block;
+	height:25px;
+	width:25px;
+	margin-right:5px;
+}
+
+.footDiv{
+	margin-left:50px;
+}
+.pp{
+	font-size:125%;
+}
+</style>
+
+
+
+
+<div class="">
+<div class="row banner">
+	<nav style="float:left;">
+		<h4 class="font">行事曆</h4>
+	</nav>
+	<nav style="float:right;">
+		<ol class="breadcrumb">
+			<li>參數設定</li>
+			<li class="active">基本資料清單</li>
+		</ol>
+	</nav>
+	
+</div>
+	<div class="container" style="text-align:center">
+		<div>
+	     		<input type="image" class="ss" style="float:left;" src="../img/left_arrow.png"  id="lastWeek"/>
+	     		<span style="text-align:center" id="weekTitle"></span>
+	     		<input type="image" class="ss" style="float:right;" src="../img/right_arrow.png"  id="nextWeek"/>
+	     </div>
+	     <table id="tdd" style="width:100%;table-layout:fixed">
+	<!--      	<tr>
+		     	<th></th>
+		     	<th>SUN</th>
+		     	<th>MON</th>
+		     	<th>TUE</th>
+		     	<th>WED</th>
+		     	<th>THU</th>
+		     	<th>FRI</th>
+		     	<th>SAT</th>
+	     	</tr>
+	     	<tr>
+	     		<td>13:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>13:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>14:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>15:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>15:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>16:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>17:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>18:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>18:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>19:20</td>
+	     	</tr>
+	     	<tr>
+	     		<td>20:00</td>
+	     	</tr>
+	     	<tr>
+	     		<td>20:40</td>
+	     	</tr>
+	     	<tr>
+	     		<td>21:20</td>
+	     	</tr>
+	     	
+	     	 -->
+	     </table >
+	     <table style="border:1px white solid; margin-left: 50px; ">
+	     	<tr class="footDiv" >
+	     		<td style="border:1px white solid;"><div class="colorSquare canUse"></div>可選時段&nbsp;&nbsp;</td>
+	     		<td style="border:1px white solid;"><div class="colorSquare used"></div>已簽到&nbsp;&nbsp;</td>
+	     		<td style="border:1px white solid;"><div class="colorSquare reservation"></div>未簽到&nbsp;&nbsp;</td>
+	     	</tr>
+	     </table>
+	</div>
+</div>
+
+</body>  
+<script type="text/javascript">  
+	
+	//--------------初始化--------------
+	// var page=0;
+	(function ($) {
+	//	tableLoad();
+		var page=0;
+		load(page);
+	//	console.log(page)
+		
+		$(".ss").on( "click", function() {
+			
+			if($(this).attr("id")==="nextWeek"){
+				page=page+1;
+			}else{
+				page=page-1;
+			}
+			load(page);
+			console.log(page)
+		});
+		
+		function load (page){
+			var searchObj={}; 
+			searchObj.page=page
+			var data = commonAjax(searchObj,"/ren-sing/curriculum/queryDailyEvents");
+			console.log(data);
+			var weekTitle=data.header.dayTitle;
+			console.log(weekTitle.substr(0,weekTitle.lastIndexOf(",")));
+			weekTitle1=weekTitle.substr(0,weekTitle.lastIndexOf(","));
+			weekTitle2=weekTitle.substr(weekTitle.lastIndexOf(",")+2,weekTitle.length)
+			$("#weekTitle").html(weekTitle1+",  第"+weekTitle2+"週");
+			var tdContent="<tr><th></th><th><p class='pp'>"+data.header.date+"   ("+data.header.day+")</p></th></tr>";
+ 			$(data.content).each(function(i){
+ 	//			console.log(data.content[i].sign);
+
+ 				tdContent=tdContent+"<tr>"+"<td>"+data.content[i].start_time+"</td>";
+				switch(data.content[i].sign){
+					case 2:
+						tdContent=tdContent+"<td class='canUse'>"+data.content[i].sign+"</td>";
+						break;	
+					case 3:
+						tdContent=tdContent+"<td class='nomal'>"+data.content[i].sign+"</td>";
+						break;	
+				}
+ 				tdContent=tdContent+"</tr>";
+// 		        //	console.log(i)
+// //	 	    		tdContent=tdContent+"<tr><td>"+i+"</td><td>"+data[i].person_id+"</td><td>"+data[i].name+"</td>"
+// //	 	    		tdContent=tdContent+"<td>"+data[i].phone+"</td><td>"+data[i].email+"</td>"
+// //	 	  		tdContent=tdContent+"<td><button type='button' class='btn btn-info updateMemBtn'value="+data[i].person_id+">修改</button></td></tr>"
+// 				console.log(tdContent);
+ 				$("#tdd").html(tdContent);
+ 			});
+		}
+	
+	})($); 
+	
+	 
+	//--------------初始化--------------
+	
+	
+    
+    
+</script> 
+</html>

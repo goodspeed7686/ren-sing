@@ -1,0 +1,121 @@
+<html>
+ 
+    <head>
+    <meta charset="UTF-8">
+<style>
+
+
+.banner{
+	border-bottom:#DDDDDD 1px solid;
+	margin-bottom:10px;
+	padding-left:20px;
+}
+.page-title-box{
+	
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.search{
+  padding:3px;
+}
+td{
+	word-wrap:break-word;
+	
+}
+table{
+	font-size:110%;
+}
+.modalWidth{
+	/* width:75%; */
+}
+h4{
+	font-family: Microsoft JhengHei;
+	vertical-align:middle;
+}
+</style>
+
+
+
+
+<div class="">
+<div class="row banner">
+	<nav style="float:left;">
+		<h4 class="font">行事曆</h4>
+	</nav>
+	<nav style="float:right;">
+		<ol class="breadcrumb">
+			<li>參數設定</li>
+			<li class="active">基本資料清單</li>
+		</ol>
+	</nav>
+	
+</div>
+	<div class="container" id="calendar">
+	</div>
+</div>
+
+
+
+
+
+</body>  
+<script type="text/javascript">  
+
+	//--------------初始化--------------
+	$(function () {
+		 $('#calendar').fullCalendar({
+			 firstDay: 1,
+			 aspectRatio:3,
+			 height:700,
+			 defaultView:'month',
+			 
+			 eventClick: function(date, event, view) {
+				 	console.log('add event');
+			//	    alert(date.description);
+					console.log(date);
+				    console.log(event);
+				    console.log(view);
+				    var title=date.title;
+				    var content=date.description;
+				    swal({
+				    	  title: '<h3>'+title+'</h3>',
+				    	  text: content,
+				    	  animation: true,
+				    	  showConfirmButton: false,
+				    	  width: 400,
+				    	  showCloseButton: true,
+				    	  position: 'top-end'
+				    	})
+				  }
+			    
+		 });
+		 
+		 test();
+	}); 
+	function test(){
+		$('#calendar').fullCalendar('renderEvent', {
+		    title: '19:20 XXX老師個人課',
+		    start: '2018-05-04',
+		    description: '課程時間:19:20~21:00'
+		  }, 'stick');
+		$('#calendar').fullCalendar('renderEvent', {
+		    title: '16:30 團體班-XXX演講',
+		    start: '2018-05-04',
+		    description: '課程時間:16:30~17:30',
+		    color: '#EE7700'
+		  }, 'stick');
+		
+	}
+	 
+	//--------------初始化--------------
+
+
+	
+	
+    
+    
+</script> 
+</html>

@@ -1,0 +1,172 @@
+<style>
+.page-title-box {
+  background: #ffffff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+  padding: 20px;
+  margin:0px 0px 20px 0px;
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.page-title-box .breadcrumb {
+  margin-top: 0px;
+  padding-top: 2px;
+}
+.card-box {
+  padding: 20px;
+  background-color:#00ff00;
+}
+.font{
+	font-family: Microsoft JhengHei;
+}
+</style>
+<script type="text/javascript">
+        $(function () {
+            $('#datetimepicker10').datetimepicker({
+            	autoclose : true,
+            	minView : "2",
+            	viewMode: 'years',
+                format: 'yyyy/mm/dd'
+            });
+        });
+</script>
+<div ng-init="loadEvents()">
+<div class="row">
+<div class="page-title-box">
+	<ol class="breadcrumb pull-right">
+		<li>會員基本資料</li>
+		<li class="active">{{ title_name }}會員</li>
+	</ol>
+	<h4 class="page-title font">{{ title_name }}會員</h4>
+</div>
+ <form class=" " >
+	<div class="col-md-6 mb-3">
+	    <div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">帳號</span>
+			    <input type="text" class="form-control" ng-model="mem.account" disabled>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">密碼</span>
+			    <input type="password" class="form-control" ng-model="mem.password" ng-change="pwdChange()">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">確認密碼</span>
+			    <input type="password" class="form-control" ng-model="mem.pwdCheck">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">名字</span>
+			    <input type="text" class="form-control" ng-model="mem.name">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">身份證字號</span>
+			    <input type="text" class="form-control" ng-model="mem.id_number">
+			</div>
+		</div>
+		<div class="form-group ">
+			<div class="input-group">
+			    <span class="input-group-addon">角色</span>
+			    <select class="form-control" ng-model="mem.role" ng-disabled="role != 0" >
+			    	<option value="">請選擇</option>
+					<option value="0">行政</option>
+				    <option value="1">老師</option>
+				    <option value="2">學生</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">Email</span>
+			    <input type="text" class="form-control" ng-model="mem.email">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">市話</span>
+			    <input type="text" class="form-control" ng-model="mem.local_calls">
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 mb-3">
+		<div class="form-group ">
+			<div class="input-group">
+			    <span class="input-group-addon">性別</span>
+			    <select class="form-control" ng-model="mem.sex">
+			    	<option value="">請選擇</option>
+				    <option value="0">男</option>
+				    <option value="1">女</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">生日</span>
+			    <input type="text" id='datetimepicker10' class="form-control" ng-model="mem.birthday">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">手機號碼</span>
+			    <input type="text" class="form-control" ng-model="mem.phone">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">職業</span>
+			    <input type="text" class="form-control" ng-model="mem.career">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">Skype</span>
+			    <input type="text" class="form-control" ng-model="mem.skype">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">收信人</span>
+			    <input type="text" class="form-control" ng-model="mem.recipient">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">收信地址</span>
+			    <input type="text" class="form-control" ng-model="mem.rec_add">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+			    <span class="input-group-addon">收信人電話</span>
+			    <input type="text" class="form-control" ng-model="mem.rec_num">
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-12 ">
+		<div class="form-group text-center m-t-20">
+		<button type="button" class=" btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
+				ng-click="insertMem()" ng-show="title_name == '新增'">
+			新增
+		</button>
+		<button type="button" class=" btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light"
+				ng-click="updateMem()" ng-show="title_name == '編輯'">
+			更新
+		</button>
+		<button type="button" class=" btn btn-error btn-lg btn-block text-uppercase waves-effect waves-light" ng-click="ibackToMem()">
+			取消
+		</button>
+		</div>
+	</div>
+	</form>
+</div>
+</div>

@@ -1,0 +1,132 @@
+<style>
+.page-title-box {
+  background: #ffffff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+  padding: 10px;
+  margin:0px 0px 5px 0px;
+}
+.breadcrumb {
+  background-color: transparent;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.page-title-box .breadcrumb {
+  margin-top: 0px;
+  padding-top: 2px;
+}
+.card-box {
+  padding: 20px;
+  background-color:#00ff00;
+}
+.font{
+	font-family: Microsoft JhengHei;
+}
+</style>
+<script type="text/javascript">
+   $(function () {
+       $('#datetimepicker10').datetimepicker({
+       	autoclose : true,
+       	minView : "2",
+       	viewMode: 'years',
+           format: 'yyyy/mm/dd'
+       });
+   });
+</script>
+<div ng-init="loadEvents()">
+<div class="row">
+	<div class="page-title-box">
+		<ol class="breadcrumb pull-right">
+			<li>課的定義</li>
+			<li class="active">課程清單</li>
+		</ol>
+		<h4 class="page-title font">課程清單</h4>
+	</div>
+	<div class="row page-title-box">
+	<div class="col-md-12 ">
+	  <div class="col-xs-2">
+	   
+	  </div>
+	  <div class="col-xs-4">
+	    <div class="input-group">
+		    <span class="input-group-addon">日期</span>
+                <input type='text' id='datetimepicker10'  class="form-control" ng-model="classDetailQuery.s_date"/>
+		</div>
+		
+		<div class="input-group" style="margin-top:15px;">
+		    <span class="input-group-addon">老師</span>
+		    <input  type="text" class="form-control" ng-model="classDetailQuery.teacher_name">
+		</div>
+	  </div>
+	  <div class="col-xs-4">
+	    <div class="input-group" >
+		    <span class="input-group-addon">類別</span>
+		    <select class="form-control" ng-model="classDetailQuery.type"
+					ng-options="opt.type as opt.name for opt in typeList">
+					<option value="">請選擇</option>
+			</select>
+		</div>
+		<div class="input-group" style="margin-top:15px;">
+		    <span class="input-group-addon">學生</span>
+		    <input  type="text" class="form-control" ng-model="classDetailQuery.student_name">
+		</div>
+	  </div>
+	  
+	  <div class="col-xs-2 ">
+	  	<div style="margin-top:47px;">
+	  		<button type="button" class="btn btn-warning" ng-click="query()">查詢</button>
+	  	</div>
+	  </div>
+	 </div>
+	</div>
+	<div class="row ">
+		<button type="button" class="btn btn-info" ng-click="tranToInsertClass()" ng-show="role == 0" style="float:right">
+			<span class="glyphicon glyphicon-plus" style="color:white"></span> 新增
+		</button>
+	</div>
+	
+	<div class="col-md-12 ">
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">日期</th>
+		      <th scope="col">時間</th>
+		      <th scope="col">類別</th>
+		      <th scope="col">老師</th>
+		      <th scope="col">學生</th>
+		      <th scope="col">操作</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr ng-repeat="row in classDetailList">
+		      <td>{{ $index + 1 }}</td>
+		      <td>{{ row.date }}</td>
+		      <td>{{ row.interval_time }}</td>
+		      <td>{{ row.type_name }}</td>
+		      <td>{{ row.teacher_name }}</td>
+		      <td>{{ row.student_name }}</td>
+		      <td><button type="button"  class="btn btn-info" ng-click="update(row)">修改</button></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+	
+	<div class="col-md-12 ">
+	<nav aria-label="Page navigation example" style="text-align:center">
+	  <ul class="pagination justify-content-end">
+	    <li class="page-item" ng-class="{disabled : theFirstPage}">
+	      <a class="page-link" tabindex="-1" ng-click="preClick()">Previous</a>
+	    </li>
+	    <li class="page-item" ng-repeat="page in pageSize">
+	    	<a class="page-link" ng-click="changePage(page.page)">{{ page.page }}</a>
+    	</li>
+	    <li class="page-item" ng-class="{disabled : theLastPage}">
+	      <a class="page-link" ng-click="nextClick()">Next</a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+</div>
+
+
+</div>

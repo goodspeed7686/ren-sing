@@ -1,0 +1,276 @@
+<html lang="">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>acac.com</title>
+		
+		<!-- css -->
+<!-- 		<link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.0.3/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+		<link rel="stylesheet" href="../css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="../css/calendar.min.css">
+<!-- 		<link rel="stylesheet" href="css/calendar.css"> -->
+		<link rel="stylesheet" href="../css/home.css">   
+<!--		<link rel="stylesheet" href="../css/select.css">   -->
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.9.1/sweetalert2.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
+ <!--   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css"> -->
+		
+		<!-- lib -->
+		<script src="../js/lib/jquery/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+		<script src="../js/lib/common/bootstrap-datetimepicker.min.js"></script>
+		<script src="../js/lib/sweetAlert/sweetalert2.all.js"></script>
+		
+		<!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<!-- 		<script src="js/lib/angular/angular.min.js"></script> -->
+		
+		
+		<!--  common JS-->
+		<script src="../js/common.js"></script>
+		
+		<!--  select2 -->
+		<script src="../js/lib/select2.full.min.js"></script>
+		<link rel="stylesheet" href="../css/select2.min.css">
+		
+		<!-- Moment js -->
+		<script src="../js/lib/fullcalendar/Moment.js"></script>
+		<script src="../js/lib/fullcalendar/fullcalendar.js"></script>
+		<link rel="stylesheet" href="../js/lib/fullcalendar/fullcalendar.css">  
+		
+		<!-- jquery-ui-->
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+		
+		<!--  bootstrap valid -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+		
+		<!--  slidereveal(dialog) --> 
+		<script src="../js/lib/slidereveal.min.js"></script>
+		
+		<!--  blockUI(遮罩) --> 
+		<script src="../js/lib/blockUI.js"></script>
+		
+		<!--  sweetalert --> 
+		<script src="../js/lib/sweetAlert/sweetalert2.all.js"></script>
+
+		
+<!-- 		<base href="/ren-sing/home.html" /> -->
+		<style type="text/css">
+		
+    </style>
+    <script type="text/javascript">
+   
+    window.onload = function() {
+        initialiseStateFromURL();
+
+        if ("onhashchange" in window) {
+            window.onhashchange = initialiseStateFromURL;
+        } else {
+            setInterval(pollHash, 1000);
+        }
+    }
+
+    var recentHash;
+    function pollHash() {
+        if (window.location.hash == recentHash) {
+            return; //hash沒有變化，不做任何事情
+        }
+        recentHash = window.location.hash;
+      
+        // URL has changed, update the UI accordingly.
+        initialiseStateFromURL();
+    }
+
+    function initialiseStateFromURL() {
+        var hash = window.location.hash;
+    //    alert(hash);
+        // ...判斷state並執行對應(ajax)動作
+        $('.drawer-item').removeClass( "btnSel" );
+			
+        if(hash=="#!/membership"){
+    		$.get("./membership/memList.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#memBtn div').addClass( "btnSel" )
+    	}else if(hash=="#!/class"){
+    		$.get("./class/classList.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#classBtn div').addClass( "btnSel" );
+    	}else if(hash=="#!/properties"){
+    		$.get("./properties/propertiesList.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#proBtn div').addClass( "btnSel" );
+    	}else if(hash=="#!/curriculum"){
+    		$.get("./curriculum/month.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#curriculumBtn div').addClass( "btnSel" );
+    	}else if(hash=="#!/curriculum/week"){
+    		$.get("./curriculum/week.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#weekBtn div').addClass( "btnSel" );
+    	}else if(hash=="#!/curriculum/day"){
+    		$.get("./curriculum/day.html",function(data){
+    			$("#con").html(data);
+    		});
+    		$('#dayBtn div').addClass( "btnSel" );
+    	}
+    }
+    
+    
+    $(document).ready(function(){
+   // 	alert('location.href: '+location.href);
+//     	var str=location.href;
+//     	str=str.substr(45,str.length)
+//     //	alert(str);
+//     	if(str=="#!/membership"){
+//     		$.get("./membership/memList.html",function(data){
+//     			$("#con").html(data);
+//     		});
+//     	}else if(str=="#!/class"){
+//     		$.get("./class/classList.html",function(data){
+//     			$("#con").html(data);
+//     		});
+//     	}
+		  
+		//-----menu按鈕導頁-----
+// 		$('#memBtn').click(function(){
+// 			$.get("./membership/memList.html",function(data){
+// 				$("#con").html(data);
+// 			});
+			
+// 		});
+// 		$('#classBtn').click(function(){
+// 			$.get("./class/classList.html",function(data){
+// 				$("#con").html(data);
+// 			});
+			
+// 		});
+		
+		
+		//-----menu按鈕導頁-----
+		
+		$('#slider').slideReveal({
+			  trigger: $("#trigger"),
+			  push:false,
+			  width:280,
+		});
+		var time = 0;
+		$("#trigger").bind("click",function(){
+		//	$.blockUI({ message: null });
+        time = 0; //设定间隔时间（秒）
+ 
+        //启动计时器，倒计时time秒后自动关闭计时器。
+        var index = setInterval(function(){
+            time++;
+            if (time == 0) {
+                clearInterval(index);
+            }
+        }, 100);
+		 coverDiv()
+			
+		});
+		$('body').click(function(e){
+			//hide();
+		//	remove($("#mybg"))
+	//	console.log(this)
+		var targetObj = e.srcElement ? e.srcElement : e.target;
+		if(!$(targetObj).is('#slider')){
+			if(time>=1){
+				
+				$("#mybg").remove()
+				$('#slider').slideReveal("hide"); 
+			}
+		}	
+		});
+		
+	})
+//	$('body').click($.unblockUI);
+    function coverDiv(){
+		var procbg = document.createElement("div"); //首先创建一个div
+		procbg.setAttribute("id","mybg"); //定义该div的id
+		procbg.style.background = "#000000";
+		procbg.style.width = "100%";
+		procbg.style.height = "100%";
+		procbg.style.position = "fixed";
+		procbg.style.top = "0";
+		procbg.style.left = "0";
+		procbg.style.zIndex = "500";
+		procbg.style.opacity = "0.6";
+		procbg.style.filter = "Alpha(opacity=70)";
+		document.body.appendChild(procbg);
+	}
+    function hide() {
+		/* document.getElementById('light').style.display="none"; */
+		$("div[class='xucun_content']").hide();
+		var body = document.getElementsByTagName("body");
+		var mybg = document.getElementById("mybg");
+		body[0].removeChild(mybg);
+	}
+ //   $('#slider').slideReveal("show");
+	</script>
+    
+    
+    
+	</head>
+	<body>
+		<div class="row" style="background-color:#3367d6;height:56px">
+			 <ul class="navbar-left menu-buttom" id="trigger" >
+				      <span class="glyphicon glyphicon-tasks glyphicon-3" ></span> 選單
+             </ul>
+		</div>
+		
+				<div id="con" class=""></div>
+		
+		<!-- slidereveal  -->
+		<div id="slider" class="slider" style="background-color:white;z-index:999;">
+		    <div id="drawer-header" class="drawer-header">
+		    	選單
+		    </div>
+		    <a href="#!/curriculum" id="curriculumBtn">
+				<div class="drawer-item" >
+					<span class="glyphicon glyphicon-calendar glyphicon-2"></span>行事曆
+				</div>
+			</a>
+			<a href="#!/class" id="classBtn">
+				<div class="drawer-item" >
+					<span class="glyphicon glyphicon-book glyphicon-2"></span>課的定義
+				</div>
+			</a>
+			<a href="#!/membership" id="memBtn" >
+				<div class="drawer-item" >
+					<span class="glyphicon glyphicon-credit-card glyphicon-2" ></span>基本資料
+				</div>
+			</a>
+			<a href="#!/properties" id="proBtn">
+				<div class="drawer-item" >
+					<span class="glyphicon glyphicon-exclamation-sign glyphicon-2"></span>參數設定
+				</div>
+			</a>
+			<a href="#!/curriculum/week" id="weekBtn">
+				<div class="drawer-item">
+					<span class="glyphicon glyphicon-list-alt glyphicon-2" ></span>選課
+				</div> 
+			</a>
+			<a href="#!/curriculum/day" id="dayBtn">
+				<div class="drawer-item" >
+					<span class="glyphicon glyphicon-pencil glyphicon-2" ></span>簽到
+				</div> 
+			</a>
+			<a>
+				<div class="drawer-item">
+					<span class="glyphicon glyphicon-off glyphicon-2"></span>登出
+				</div> 
+			</a> 
+		</div>
+		
+	</body>
+</html>
